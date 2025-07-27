@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Facebook Story Downloader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(66, 103, 178, 0.3); /* Facebook blue shadow */
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: bold;
+      color: #4267B2; /* Facebook Blue */
+    }
+
+    label, input, button {
+      display: block;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #4267B2;
+      border-radius: 6px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #29487D; /* Darker Facebook Blue */
+      outline: none;
+      box-shadow: 0 0 8px #29487D33;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 14px;
+      background-color: #4267B2;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.4s ease;
+    }
+
+    button:hover {
+      background-color: #29487D;
+    }
+
+    .other-platforms {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .other-platforms button {
+      margin: 10px;
+      padding: 12px 28px;
+      background-color: #007bff;
+      border-radius: 6px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .other-platforms button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Facebook Story Downloader</h1>
+
+  <label for="fbLink">Paste Facebook Story Link:</label>
+  <input type="text" id="fbLink" placeholder="Enter Facebook story URL" />
+  <button id="fbDownloadBtn">Download Facebook Story</button>
+
+  <div class="other-platforms">
+    <p>Or go to:</p>
+    <button onclick="location.href='index.html'">Instagram Downloader</button>
+    <button onclick="location.href='wa.html'">WhatsApp Downloader</button>
+  </div>
+
+  <script>
+    document.getElementById('fbDownloadBtn').addEventListener('click', () => {
+      const url = document.getElementById('fbLink').value.trim();
+      if (!url) {
+        alert('Please enter a Facebook story URL!');
+        return;
+      }
+      alert('Downloading Facebook story from: ' + url);
+      // Future: integrate actual download logic/API
+    });
+  </script>
+</body>
+</html>
