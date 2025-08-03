@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Go Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(to right, #4f5bd5, #962fbf, #d62976);
+      color: white;
+      padding: 35px 20px;
+      text-align: center;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      animation: slideDown 0.8s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .plans {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 30px;
+    }
+
+    .plan-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 420px;
+      padding: 25px 30px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .plan-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .plan-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .price {
+      font-size: 20px;
+      color: #4CAF50;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 15px;
+    }
+
+    ul li {
+      padding: 6px 0;
+      color: #444;
+    }
+
+    button {
+      background: linear-gradient(to right, #43cea2, #185a9d);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: not-allowed;
+      opacity: 0.7;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      opacity: 1;
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 26px;
+        padding: 25px 10px;
+      }
+
+      .plan-title {
+        font-size: 20px;
+      }
+
+      .price {
+        font-size: 18px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    💎 Go Premium
+  </header>
+
+  <div class="plans">
+
+    <div class="plan-card">
+      <div class="plan-title">Monthly Plan</div>
+      <div class="price">₹49 / month</div>
+      <ul>
+        <li>✅ No Ads</li>
+        <li>✅ Fast UI</li>
+        <li>✅ Clean Experience</li>
+      </ul>
+      <button disabled>Coming Soon</button>
+      <div class="note">In-app purchase launching soon.</div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-title">Yearly Plan</div>
+      <div class="price">₹399 / year</div>
+      <ul>
+        <li>✅ No Ads</li>
+        <li>✅ Fast UI</li>
+        <li>✅ 24/7 Priority Support</li>
+      </ul>
+      <button disabled>Coming Soon</button>
+      <div class="note">Save more with yearly plan!</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
