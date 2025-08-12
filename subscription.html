@@ -1,112 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Subscription Page</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Instant Story Saver — Subscription</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
+    :root{
+      --bg1:#071032; --bg2:#0c1a2a;
+      --panel: rgba(255,255,255,0.03);
+      --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+      --muted: rgba(230,238,248,0.72);
+      --success: #25D366;
     }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f3f6fb;
-      display: flex;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,Arial;
+      background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:#e6eef8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      min-height:100vh;
     }
-    .sidebar {
-      width: 220px;
-      background: linear-gradient(to bottom, #833ab4, #fd1d1d, #fcb045);
-      color: white;
-      height: 100vh;
-      padding: 30px 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      overflow-y: auto;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.2);
-      animation: slideIn 0.5s ease;
+
+    /* Device frame */
+    .device{
+      width:380px; max-width:96vw; height:820px; border-radius:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      position:relative; overflow:hidden;
     }
-    @keyframes slideIn {
-      from { transform: translateX(-100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+
+    /* status/header */
+    .status{
+      height:56px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between;
+      backdrop-filter: blur(6px); border-bottom:1px solid rgba(255,255,255,0.02);
     }
-    .sidebar h2 {
-      font-size: 22px;
-      margin-bottom: 30px;
+    .brand{display:flex;gap:10px;align-items:center}
+    .brand .logo-sm{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent3));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(129,52,175,0.18)}
+    .brand .title{font-weight:700;font-size:15px}
+    .menu-btn{font-size:20px;background:transparent;border:none;color:inherit;cursor:pointer;padding:8px;border-radius:10px}
+
+    /* hero */
+    .hero{
+      padding:20px; text-align:center; animation:fadeInDown .6s ease;
     }
-    .sidebar a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin: 12px 0;
-      padding: 10px;
-      border-radius: 6px;
-      transition: background 0.3s;
+    @keyframes fadeInDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+    .hero h1{font-size:20px;font-weight:700;margin-bottom:6px; background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+    .hero p{color:var(--muted);font-size:13px;margin-top:6px}
+
+    /* subscription area */
+    .wrap{padding:12px 16px; display:flex;flex-direction:column;gap:12px;align-items:center}
+    .plans{width:100%;display:flex;flex-direction:column;gap:12px}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.5); transition:transform .22s ease, box-shadow .22s ease;
+      display:flex;flex-direction:column;gap:10px;
     }
-    .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.2);
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.6)}
+
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white}
+    .price{font-size:20px;font-weight:700;color:#fff}
+    .plan-features{font-size:13px;color:var(--muted);margin-top:6px}
+
+    .subscribe-btn{
+      margin-top:8px;padding:12px;border-radius:12px;border:none;color:white;font-weight:700;
+      background:linear-gradient(90deg,var(--accent3),var(--accent4));cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      box-shadow:0 12px 30px rgba(81,91,212,0.12);
+      transition:transform .14s, box-shadow .14s;
     }
-    .main {
-      margin-left: 220px;
-      width: calc(100% - 220px);
-      padding: 60px 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      animation: fadeIn 1s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .content {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    @media (max-width: 700px) {
-      .sidebar {
-        display: none;
-      }
-      .main {
-        margin-left: 0;
-        width: 100%;
-        padding: 40px 20px;
-      }
+    .subscribe-btn:active{transform:scale(.98)}
+    .subscribe-btn[disabled]{opacity:.6;cursor:not-allowed}
+
+    .features-list{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+    .feature{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}
+
+    .login-section{margin-top:10px;display:flex;flex-direction:column;gap:10px;align-items:stretch}
+    .login-btn{padding:11px;border-radius:12px;border:none;font-weight:700;color:#fff;cursor:pointer;background:linear-gradient(90deg,#4267B2,#254b9b)}
+    .login-btn.ig{background:linear-gradient(90deg,var(--accent1),var(--accent2))}
+    .login-btn[disabled]{opacity:.6;cursor:not-allowed}
+
+    .note{font-size:12px;color:var(--muted);text-align:center;margin-top:6px;padding:0 6px}
+
+    /* footer action */
+    .footer{position:absolute;left:0;right:0;bottom:0;padding:12px 18px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12));display:flex;gap:10px;justify-content:center}
+    .ghost{padding:10px 12px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+
+    /* modal (demo purchase) */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);opacity:0;pointer-events:none;transition:opacity .18s}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal .box{width:320px;max-width:94%;background:#071428;padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 18px 40px rgba(0,0,0,0.6);text-align:center}
+    .modal h3{margin-bottom:8px}
+    .modal p{color:var(--muted);font-size:13px;margin-bottom:12px}
+    .modal .ok{padding:10px 16px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent3),var(--accent4));color:#fff;font-weight:700;cursor:pointer}
+
+    @media (max-width:420px){
+      .device{height:92vh}
+      .modal .box{width:90%}
     }
   </style>
 </head>
 <body>
 
-  <div class="sidebar">
-    <h2>📱 Instant Saver</h2>
-    <a href="index.html">📸 Instagram</a>
-    <a href="facebook.html">📘 Facebook</a>
-    <a href="whatsapp.html">🟢 WhatsApp</a>
-    <a href="subscription.html">💳 Subscription</a>
-    <a href="privacy.html">🔒 Privacy</a>
-    <a href="terms.html">📄 Terms</a>
-    <a href="contact.html">📬 Contact</a>
-    <a href="about.html">ℹ️ About</a>
-    <a href="success.html"><strong>✅ Feedback</strong></a>
-  </div>
+  <div class="device" role="application" aria-label="Instant Story Saver - Subscription">
 
-  <div class="main">
-    <div class="content">
-      <h1>Subscription Page</h1>
+    <!-- header / status -->
+    <div class="status">
+      <div class="brand">
+        <div class="logo-sm" aria-hidden="true"></div>
+        <div>
+          <div class="title">Instant Story Saver</div>
+          <div style="font-size:11px;color:rgba(230,238,248,0.75)">Premium Plans</div>
+        </div>
+      </div>
+      <button class="menu-btn" id="menuOpen" aria-label="Open menu">☰</button>
     </div>
+
+    <!-- hero -->
+    <div class="hero">
+      <h1>Go Premium — Unlock everything</h1>
+      <p>Remove ads, enable Facebook & Instagram integrations, priority support and faster downloads.</p>
+    </div>
+
+    <div class="wrap">
+      <div class="plans">
+
+        <!-- Monthly -->
+        <div class="card" id="monthlyCard" data-plan="monthly" aria-live="polite">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="badge">Most Popular</div>
+              <div class="price">₹49 <span style="font-size:13px;color:var(--muted);font-weight:600">/ month</span></div>
+            </div>
+            <div style="text-align:right;font-size:12px;color:var(--muted)">Auto-renews monthly</div>
+          </div>
+
+          <div class="plan-features">
+            <div class="features-list">
+              <div class="feature">✅ No ads while using app</div>
+              <div class="feature">✅ Facebook & Instagram login</div>
+              <div class="feature">✅ Faster downloads</div>
+            </div>
+          </div>
+
+          <button class="subscribe-btn" data-price="49" data-plan="monthly">Subscribe ₹49</button>
+        </div>
+
+        <!-- Yearly -->
+        <div class="card" id="yearlyCard" data-plan="yearly">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="badge">Best value</div>
+              <div class="price">₹399 <span style="font-size:13px;color:var(--muted);font-weight:600">/ year</span></div>
+            </div>
+            <div style="text-align:right;font-size:12px;color:var(--muted)">Save ~3 months</div>
+          </div>
+
+          <div class="plan-features">
+            <div class="features-list">
+              <div class="feature">✅ No ads</div>
+              <div class="feature">✅ Priority support</div>
+              <div class="feature">✅ All platforms unlocked</div>
+            </div>
+          </div>
+
+          <button class="subscribe-btn" data-price="399" data-plan="yearly">Subscribe ₹399</button>
+        </div>
+
+      </div>
+
+      <!-- Login CTAs -->
+      <div class="card" aria-hidden="false" style="margin-top:8px">
+        <div style="font-weight:700;margin-bottom:8px">Connect Platform Accounts</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px">Facebook & Instagram features require subscription and login.</div>
+
+        <div class="login-section">
+          <button id="fbLogin" class="login-btn" aria-disabled="true">Login with Facebook</button>
+          <button id="igLogin" class="login-btn ig" aria-disabled="true">Login with Instagram</button>
+          <div class="note" id="loginNote">Not subscribed? Tap any Subscribe button above to unlock logins.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- footer quick actions -->
+    <div class="footer">
+      <button class="ghost" onclick="location.href='index.html'">Back</button>
+      <button class="ghost" onclick="location.href='contact.html'">Support</button>
+    </div>
+
+    <!-- side drawer -->
+    <div class="drawer" id="drawer" aria-hidden="true">
+      <div class="back" id="drawerBack" tabindex="-1"></div>
+      <nav class="panel" role="navigation">
+        <h3>Instant Story Saver</h3>
+        <a href="index.html">Home — Instagram</a>
+        <a href="facebook.html">Facebook Downloader</a>
+        <a href="whatsapp.html">WhatsApp Downloader</a>
+        <a href="subscription.html">Subscription</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="about.html">About</a>
+        <a href="success.html"><strong>Feedback</strong></a>
+      </nav>
+    </div>
+
+    <!-- demo modal -->
+    <div class="modal" id="modal">
+      <div class="box" role="dialog" aria-modal="true">
+        <h3 id="modalTitle">Complete subscription</h3>
+        <p id="modalText">You will be charged. (Demo) This will simulate a successful purchase.</p>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+          <button class="ok" id="confirmBuy">Confirm</button>
+          <button class="ok" id="cancelBuy" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Cancel</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
+<script>
+  /* Drawer controls */
+  const drawer = document.getElementById('drawer');
+  const menuOpen = document.getElementById('menuOpen');
+  const drawerBack = document.getElementById('drawerBack');
+
+  function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
+  function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+  menuOpen.addEventListener('click', openDrawer);
+  drawerBack.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
+
+  /* Subscription demo logic (localStorage) */
+  const subscribeButtons = document.querySelectorAll('.subscribe-btn');
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalText = document.getElementById('modalText');
+  const confirmBuy = document.getElementById('confirmBuy');
+  const cancelBuy = document.getElementById('cancelBuy');
+  let selectedPlan = null;
+
+  function isSubscribed(){ return localStorage.getItem('issub') === '1'; }
+  function setSubscribed(val){ localStorage.setItem('issub', val ? '1' : '0'); updateUIForSubscription(); }
+
+  function updateUIForSubscription(){
+    const fbBtn = document.getElementById('fbLogin');
+    const igBtn = document.getElementById('igLogin');
+    if(isSubscribed()){
+      fbBtn.removeAttribute('disabled'); fbBtn.removeAttribute('aria-disabled');
+      igBtn.removeAttribute('disabled'); igBtn.removeAttribute('aria-disabled');
+      document.getElementById('loginNote').textContent = 'You are a premium user — login to connect accounts.';
+      subscribeButtons.forEach(b=>{ b.textContent = 'Subscribed'; b.disabled = true; });
+    } else {
+      fbBtn.setAttribute('disabled',''); fbBtn.setAttribute('aria-disabled','true');
+      igBtn.setAttribute('disabled',''); igBtn.setAttribute('aria-disabled','true');
+      document.getElementById('loginNote').textContent = 'Not subscribed? Tap any Subscribe button above to unlock logins.';
+      subscribeButtons.forEach(b=>{ b.disabled = false; const p = b.dataset.plan; const price = b.dataset.price; b.textContent = (p==='monthly'?'Subscribe ₹'+price:'Subscribe ₹'+price); });
+    }
+  }
+
+  // initialize UI
+  updateUIForSubscription();
+
+  subscribeButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      selectedPlan = {plan: btn.dataset.plan, price: btn.dataset.price};
+      modalTitle.textContent = `Confirm ${selectedPlan.plan} plan`;
+      modalText.textContent = `Demo checkout: you will pay ₹${selectedPlan.price}. Click Confirm to simulate purchase.`;
+      modal.classList.add('open');
+    });
+  });
+
+  cancelBuy.addEventListener('click', ()=>{ modal.classList.remove('open'); selectedPlan = null; });
+  confirmBuy.addEventListener('click', ()=>{
+    // Simulate network delay + success
+    confirmBuy.disabled = true;
+    confirmBuy.textContent = 'Processing...';
+    setTimeout(()=>{
+      setSubscribed(true); // mark subscribed in localStorage
+      modal.classList.remove('open');
+      confirmBuy.disabled = false;
+      confirmBuy.textContent = 'Confirm';
+      selectedPlan = null;
+      alert('Subscription successful (demo). In real app, verify purchase token on server.');
+    }, 1100);
+  });
+
+  /* Login CTA behavior */
+  document.getElementById('fbLogin').addEventListener('click', ()=>{
+    if(!isSubscribed()){ 
+      // highlight subscription card & scroll
+      document.getElementById('monthlyCard').scrollIntoView({behavior:'smooth', block:'center'});
+      flashElement(document.getElementById('monthlyCard'));
+      return;
+    }
+    // In real app: start Facebook OAuth flow here
+    alert('Proceed to Facebook login (demo).');
+  });
+
+  document.getElementById('igLogin').addEventListener('click', ()=>{
+    if(!isSubscribed()){
+      document.getElementById('yearlyCard').scrollIntoView({behavior:'smooth', block:'center'});
+      flashElement(document.getElementById('yearlyCard'));
+      return;
+    }
+    // Real app: Instagram login / OAuth flow here
+    alert('Proceed to Instagram login (demo).');
+  });
+
+  function flashElement(el){
+    el.style.transition='box-shadow .15s';
+    const orig = el.style.boxShadow;
+    el.style.boxShadow = '0 0 0 4px rgba(129,52,175,0.18)';
+    setTimeout(()=>{ el.style.boxShadow = orig; }, 900);
+  }
+
+  /* On load: slight entrance animation for cards (already via CSS) */
+  // optional: clear demo subscription with console (for testing)
+  // localStorage.removeItem('issub');
+</script>
 </body>
 </html>
