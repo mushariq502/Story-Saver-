@@ -1,132 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Instant Story Saver</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Instant Story Saver — World-Class</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg1:#0f1724; --bg2:#071032;
+  --bg1:#0a0f1f; --bg2:#061024;
+  --glass: rgba(255,255,255,0.04);
+  --stroke: rgba(255,255,255,0.06);
+  --muted: rgba(230,238,248,0.78);
+  --txt:#e9f1ff;
   --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+  --ok:#25D366; --fb:#4267B2; --warn:#ffb74d;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;font-family:'Poppins',system-ui,Arial;background:linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;}
-.device{width:380px;max-width:96vw;height:780px;border-radius:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 18px 50px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03);}
-.status{height:54px;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;backdrop-filter: blur(6px);}
-.menu-btn{font-size:20px;padding:8px;border:none;background:transparent;color:#fff;border-radius:10px;cursor:pointer;transition:transform .18s ease;}
-.menu-btn:active{transform:scale(.96);}
-.hero{padding:22px;display:flex;flex-direction:column;align-items:center;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);}
-.hero .splash{width:120px;height:120px;border-radius:26px;background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));box-shadow:0 10px 30px rgba(129,52,175,0.18),0 2px 8px rgba(0,0,0,0.6);margin-bottom:12px;}
-.hero h1{font-size:20px;font-weight:700;color:#fff;}
-.hero p{font-size:13px;color:rgba(230,238,248,0.78);}
-.card{margin:18px auto;width:88%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));border-radius:14px;padding:16px;box-shadow:0 12px 30px rgba(2,6,23,0.5);border:1px solid rgba(255,255,255,0.03);}
-.row{display:flex;gap:10px;align-items:center;}
-.input{flex:1;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));color:#fff;font-size:14px;outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);}
-.input:focus{box-shadow:0 8px 30px rgba(81,91,212,0.08);transform:translateY(-2px);border-color:rgba(129,52,175,0.65);}
-.btn{padding:11px 14px;border-radius:12px;border:none;color:#fff;font-weight:700;background:linear-gradient(90deg,#ff8a65,#f06292);cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:transform .16s ease;}
-.btn:active{transform:scale(.98);}
-.link-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
-.chip{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600;font-size:13px;border:1px solid rgba(255,255,255,0.02);}
-.device-footer{position:absolute;bottom:0;left:0;right:0;padding:12px 18px;display:flex;justify-content:center;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12));}
-.mini-btn{padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02);color:#fff;font-weight:600;}
-/* Drawer */
-.drawer{position:fixed;inset:0;pointer-events:none;z-index:999;display:flex;}
-.drawer .back{position:absolute;inset:0;background:rgba(0,0,0,0.55);opacity:0;transition:opacity .3s;}
-.drawer .panel{width:260px;background:linear-gradient(180deg,#071032,#0b1530);transform:translateX(-100%);transition:transform .35s ease;}
-.drawer.open{pointer-events:auto;}
-.drawer.open .back{opacity:1;}
-.drawer.open .panel{transform:translateX(0);}
-.panel a{display:block;color:rgba(230,238,248,0.95);text-decoration:none;padding:10px;border-radius:8px;margin-bottom:6px;transition:background .2s;}
-.panel a:hover{background:rgba(255,255,255,0.03);}
+
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Poppins',system-ui,Arial;
+  color:var(--txt);
+  background:
+    radial-gradient(1400px 800px at 10% 5%, rgba(129,52,175,0.18), transparent 30%),
+    radial-gradient(1100px 600px at 110% 120%, rgba(81,91,212,0.16), transparent 40%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  display:flex;align-items:center;justify-content:center; padding:18px; min-height:100vh;
+}
+
+/* DEVICE FRAME */
+.device{
+  width:392px; max-width:96vw; height:820px; border-radius:28px; position:relative; overflow:hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 24px 70px rgba(2,6,23,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* TOP BAR */
+.topbar{
+  height:60px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
+  border-bottom:1px solid rgba(255,255,255,0.02);
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:38px;height:38px;border-radius:12px;
+  background: linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
+  box-shadow:0 8px 24px rgba(129,52,175,0.24);
+}
+.title{font-weight:700;letter-spacing:.2px}
+.menu-btn{
+  font-size:20px;border:none;background:transparent;color:inherit;padding:8px;border-radius:10px;cursor:pointer;
+  transition:transform .18s ease;
+}
+.menu-btn:active{transform:scale(.96)}
+
+/* HERO */
+.hero{
+  padding:20px 20px 12px; text-align:center;
+}
+.hero .badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 12px; border-radius:999px; font-weight:700; font-size:12px;
+  background:linear-gradient(90deg,var(--accent3),var(--accent4));
+  box-shadow:0 10px 26px rgba(81,91,212,0.18);
+}
+.hero h1{font-size:20px;margin:10px 0 6px;font-weight:800;letter-spacing:.2px}
+.hero p{font-size:13px;color:var(--muted)}
+
+/* CARD */
+.card{
+  margin:14px auto; width:90%;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border:1px solid var(--stroke); border-radius:16px; padding:14px;
+  box-shadow:0 14px 34px rgba(2,6,23,0.5);
+}
+.row{display:flex;gap:10px;align-items:center}
+.input{
+  flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--stroke);
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+  color:inherit;font-size:14px;outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);
+  transition:box-shadow .15s, transform .12s, border-color .12s;
+}
+.input:focus{box-shadow:0 10px 34px rgba(81,91,212,0.1);transform:translateY(-2px);border-color:rgba(129,52,175,0.6)}
+.btn{
+  padding:12px 14px;border-radius:12px;border:none;color:#fff;font-weight:800;letter-spacing:.2px;
+  background:linear-gradient(90deg,#ff8a65,#f06292); cursor:pointer; display:inline-flex; align-items:center; gap:10px;
+  box-shadow:0 10px 26px rgba(208,64,118,0.18), 0 2px 6px rgba(0,0,0,0.45);
+  transition:transform .16s ease, box-shadow .16s;
+}
+.btn:active{transform:scale(.98)}
+.btn .loader{width:16px;height:16px;border:2px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* QUICK ACTIONS */
+.actions{display:flex;gap:10px;margin-top:12px}
+.action{
+  flex:1; padding:12px;border-radius:14px;border:1px solid var(--stroke); text-align:left; cursor:pointer;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  display:flex; align-items:center; gap:10px; transition:transform .14s, box-shadow .14s, border-color .14s;
+}
+.action:active{transform:translateY(1px)}
+.icon{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(255,255,255,0.06)
+}
+
+/* PREMIUM STRIP */
+.premium{
+  margin:14px auto; width:90%; padding:12px; border-radius:14px; border:1px solid var(--stroke);
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.cta{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.08); background:linear-gradient(90deg,var(--accent3),var(--accent4)); color:#fff; font-weight:800; cursor:pointer}
+
+/* RECENTS */
+.section-title{width:90%; margin:12px auto 6px; font-weight:800; font-size:13px; color:var(--muted)}
+.grid{
+  width:90%; margin:8px auto 20px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
+}
+.thumb{
+  aspect-ratio:1/1; border-radius:12px; overflow:hidden; position:relative; border:1px solid var(--stroke);
+  background:linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+}
+.thumb .play{
+  position:absolute; right:6px; bottom:6px; font-size:11px; padding:6px 8px; border-radius:999px;
+  background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.06)
+}
+
+/* TOAST */
+.toast{
+  position:absolute; left:50%; bottom:82px; transform:translateX(-50%); 
+  background:#0b1220; color:#fff; padding:10px 14px; border-radius:10px; 
+  border:1px solid rgba(255,255,255,0.06); box-shadow:0 10px 24px rgba(0,0,0,0.45);
+  opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+}
+
+/* BOTTOM NAV */
+.bottom{
+  position:absolute; left:0; right:0; bottom:0; height:64px; display:flex; align-items:center; justify-content:space-around;
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+  backdrop-filter: blur(6px);
+  border-top:1px solid rgba(255,255,255,0.02);
+}
+.tab{display:flex; flex-direction:column; align-items:center; gap:4px; font-size:11px; color:var(--muted)}
+.tab-btn{border:none;background:transparent;color:#fff;cursor:pointer;padding:6px 10px;border-radius:10px}
+.tab.active .tab-btn{background:rgba(255,255,255,0.06)}
+
+/* DRAWER */
+.drawer{position:fixed; inset:0; pointer-events:none; z-index:999; display:flex}
+.drawer .back{position:absolute; inset:0; background:rgba(2,6,23,0.55); opacity:0; transition:opacity .3s}
+.drawer .panel{
+  position:absolute; left:0; top:0; bottom:0; width:280px;
+  transform:translateX(-100%); transition:transform .36s cubic-bezier(.2,.9,.3,1);
+  background:linear-gradient(180deg,#071032,#0b1530);
+  border-right:1px solid rgba(255,255,255,0.04);
+  box-shadow: 10px 0 34px rgba(2,6,23,0.6);
+  padding:18px;
+  z-index:1000;
+}
+.drawer.open{pointer-events:auto}
+.drawer.open .back{opacity:1}
+.drawer.open .panel{transform:translateX(0)}
+.navlink{
+  display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; color:#fff; text-decoration:none;
+  transition:background .18s, transform .12s; border:1px solid transparent;
+}
+.navlink:hover{background:rgba(255,255,255,0.04)}
+.navlink svg{opacity:.95}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important}
+}
+
+/* MOBILE HEIGHT */
+@media (max-width:420px){
+  .device{height:92vh}
+}
 </style>
 </head>
 <body>
 
-<div class="device">
-  <div class="status">
-    <div class="logo">
-      <div class="brand-title">Instant Story Saver</div>
+<div class="device" role="application" aria-label="Instant Story Saver">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div class="title">Instant Story Saver</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Instagram · Facebook · WhatsApp</div>
+      </div>
     </div>
-    <button class="menu-btn" id="openMenu">☰</button>
+    <button class="menu-btn" id="openMenu" aria-label="Open menu">☰</button>
   </div>
 
+  <!-- Hero -->
   <div class="hero">
-    <div class="splash"></div>
-    <h1>Save stories instantly</h1>
-    <p>Fast downloader for Instagram, Facebook & WhatsApp — native WhatsApp coming soon.</p>
+    <div class="badge">🚀 Ultra-Fast · Safe · Clean</div>
+    <h1>Save stories in one tap</h1>
+    <p>No ads in Premium · High-quality downloads · Login integrations</p>
   </div>
 
-  <div class="card">
-    <div class="row" style="margin-bottom:12px">
-      <input id="link" class="input" placeholder="Paste story link">
+  <!-- Link Card -->
+  <div class="card" aria-label="Paste link card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="font-weight:800;letter-spacing:.2px">Paste story link</div>
+      <div style="font-size:12px;color:var(--muted)">Demo mode</div>
     </div>
-    <div class="row" style="margin-top:8px">
-      <button id="paste" class="btn">📋 Paste</button>
+    <div class="row">
+      <input id="link" class="input" placeholder="https://www.instagram.com/stories/..." aria-label="Story link input">
+      <button id="paste" class="btn" title="Paste"><span>📋 Paste</span></button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button id="download" class="btn" title="Download">
+        <span id="dlText">▶️ Download</span>
+      </button>
       <div style="flex:1"></div>
-      <button id="download" class="btn">▶️ Download</button>
+      <button class="btn" onclick="location.href='subscription.html'">⭐ Go Premium</button>
     </div>
-    <div class="link-row">
-      <div class="chip">Instagram</div>
-      <div class="chip">Facebook</div>
-      <div class="chip">WhatsApp</div>
+    <div class="actions">
+      <button class="action" onclick="location.href='index.html'">
+        <div class="icon">📸</div><div><div style="font-weight:700">Instagram</div><div style="font-size:12px;color:var(--muted)">Stories & reels</div></div>
+      </button>
+      <button class="action" onclick="location.href='facebook.html'">
+        <div class="icon">📘</div><div><div style="font-weight:700">Facebook</div><div style="font-size:12px;color:var(--muted)">Public stories</div></div>
+      </button>
+      <button class="action" onclick="location.href='whatsapp.html'">
+        <div class="icon">💬</div><div><div style="font-weight:700">WhatsApp</div><div style="font-size:12px;color:var(--muted)">Native (Android)</div></div>
+      </button>
     </div>
   </div>
 
-  <div class="device-footer">
-    <button class="mini-btn" onclick="location.href='subscription.html'">Go Premium</button>
-    <div style="width:12px"></div>
-    <button class="mini-btn" onclick="location.href='contact.html'">Contact</button>
+  <!-- Premium Strip -->
+  <div class="premium">
+    <div>Unlock <strong>Facebook & Instagram login</strong> + remove ads</div>
+    <button class="cta" onclick="location.href='subscription.html'">Upgrade</button>
   </div>
 
-  <div class="drawer" id="drawer">
-    <div class="back" id="backdrop"></div>
-    <nav class="panel">
-      <a href="index.html">Home</a>
-      <a href="facebook.html">Facebook</a>
-      <a href="whatsapp.html">WhatsApp</a>
-      <a href="subscription.html">Subscription</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="contact.html">Contact</a>
-      <a href="about.html">About</a>
+  <!-- Recents -->
+  <div class="section-title">Recent downloads (demo)</div>
+  <div class="grid" aria-hidden="false">
+    <div class="thumb"><div class="play">MP4</div></div>
+    <div class="thumb"><div class="play">JPG</div></div>
+    <div class="thumb"><div class="play">MP4</div></div>
+    <div class="thumb"><div class="play">JPG</div></div>
+    <div class="thumb"><div class="play">MP4</div></div>
+    <div class="thumb"><div class="play">JPG</div></div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom" role="navigation" aria-label="Bottom navigation">
+    <div class="tab active">
+      <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
+      <div>Home</div>
+    </div>
+    <div class="tab">
+      <button class="tab-btn" onclick="location.href='subscription.html'">⭐</button>
+      <div>Premium</div>
+    </div>
+    <div class="tab">
+      <button class="tab-btn" onclick="location.href='contact.html'">📨</button>
+      <div>Contact</div>
+    </div>
+  </div>
+
+  <!-- Drawer -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="back" id="backdrop" tabindex="-1"></div>
+    <nav class="panel" role="navigation" aria-label="Main menu">
+      <a class="navlink" href="index.html">🏠 Home — Instagram</a>
+      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
+      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
+      <a class="navlink" href="subscription.html">⭐ Subscription</a>
+      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
+      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
+      <a class="navlink" href="contact.html">📨 Contact Us</a>
+      <a class="navlink" href="about.html">ℹ️ About</a>
+      <a class="navlink" href="success.html"><strong>💬 Feedback</strong></a>
     </nav>
   </div>
+
 </div>
 
 <script>
-const drawer = document.getElementById('drawer');
+/* Drawer controls */
+const drawer   = document.getElementById('drawer');
 const openMenu = document.getElementById('openMenu');
 const backdrop = document.getElementById('backdrop');
-let startX=0, currentX=0, isDragging=false;
 
-function openDrawer(){ drawer.classList.add('open'); }
-function closeDrawer(){ drawer.classList.remove('open'); }
-
+function openDrawer(){
+  drawer.classList.add('open');
+  drawer.setAttribute('aria-hidden','false');
+}
+function closeDrawer(){
+  drawer.classList.remove('open');
+  drawer.setAttribute('aria-hidden','true');
+}
 openMenu.addEventListener('click', openDrawer);
 backdrop.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
 
-// swipe to close
-drawer.addEventListener('touchstart', e=>{startX=e.touches[0].clientX; isDragging=true;});
-drawer.addEventListener('touchmove', e=>{currentX=e.touches[0].clientX;});
+/* Swipe to close (mobile) */
+let startX=0, dragging=false;
+drawer.addEventListener('touchstart', e=>{
+  if(!drawer.classList.contains('open')) return;
+  startX = e.touches[0].clientX; dragging=true;
+}, {passive:true});
 drawer.addEventListener('touchend', e=>{
-  if(isDragging && startX-currentX>50) closeDrawer();
-  isDragging=false;
+  if(!dragging) return;
+  const endX = (e.changedTouches?.[0]?.clientX)||startX;
+  if(startX - endX > 50) closeDrawer();
+  dragging=false;
 });
 
-// paste & download
-const pasteBtn=document.getElementById('paste');
-const downloadBtn=document.getElementById('download');
-const linkInput=document.getElementById('link');
+/* Toast helper */
+const toast = document.getElementById('toast');
+function showToast(msg, ms=2000){
+  toast.textContent = msg;
+  toast.style.opacity='1';
+  toast.style.transform='translateX(-50%) translateY(-4px)';
+  setTimeout(()=>{ toast.style.opacity='0'; toast.style.transform='translateX(-50%)'; }, ms);
+}
+
+/* Clipboard + Download demo */
+const pasteBtn    = document.getElementById('paste');
+const downloadBtn = document.getElementById('download');
+const linkInput   = document.getElementById('link');
 
 pasteBtn.addEventListener('click', async ()=>{
-  try{ const t=await navigator.clipboard.readText(); if(t.length>5) linkInput.value=t; else alert('Clipboard empty'); }catch(e){alert('Clipboard blocked');}
+  try{
+    const t = await navigator.clipboard.readText();
+    if(t && t.length>5){ linkInput.value = t; showToast('Pasted from clipboard'); }
+    else showToast('Clipboard empty');
+  }catch(e){ showToast('Clipboard access blocked'); }
 });
+
 downloadBtn.addEventListener('click', ()=>{
-  if(!linkInput.value){ alert('Enter link'); return;}
-  alert('Downloaded (simulated)'); linkInput.value='';
+  const url = (linkInput.value||'').trim();
+  if(!url){ showToast('Please enter a link'); return; }
+  if(url.length < 10){ showToast('Link looks invalid'); return; }
+
+  // button loader
+  const prev = downloadBtn.innerHTML;
+  downloadBtn.disabled = true;
+  downloadBtn.innerHTML = '<span class="loader"></span><span>Processing…</span>';
+
+  setTimeout(()=>{
+    downloadBtn.disabled = false;
+    downloadBtn.innerHTML = prev;
+    showToast('Downloaded (simulated) — connect backend later');
+    linkInput.value='';
+  }, 1400);
 });
 </script>
-
 </body>
 </html>
