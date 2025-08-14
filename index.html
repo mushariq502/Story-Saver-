@@ -132,9 +132,8 @@
     }
     .drawer .back{
       position:absolute;inset:0;background:rgba(2,6,23,0.55);opacity:0;transition:opacity .28s;
-      pointer-events:none;
     }
-    .drawer.open .back{opacity:1;pointer-events:auto}
+    .drawer.open .back{opacity:1;}
     .drawer .panel{
       position:absolute;left:0;top:0;bottom:0;width:260px;background:linear-gradient(180deg,#071032,#0b1530);
       transform:translateX(-100%);transition:transform .32s cubic-bezier(.2,.9,.3,1);padding:24px 18px;border-right:1px solid rgba(255,255,255,0.03);
@@ -258,7 +257,7 @@
   const openMenu = document.getElementById('openMenu');
   const backdrop = document.getElementById('backdrop');
 
-  function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); backdrop.focus(); }
+  function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
   function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
 
   openMenu.addEventListener('click', openDrawer);
