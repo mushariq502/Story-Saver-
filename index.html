@@ -187,7 +187,7 @@ body{
 }
 .action{
   position: relative;
-  flex:1 1 calc(50% - 10px);
+  flex:1 1 clamp(120px, 50%, 200px);
   padding:12px;
   border-radius:14px;
   border:1px solid var(--stroke);
@@ -378,7 +378,9 @@ body{
   .grind{ grid-template-columns: repeat(2, 1fr);}
 /* Very narrow phones */
 @media (max-width:480px){
-  .action{flex:1 1 100%}
+  .action{
+    flex:1 1 100%.; 
+  }
 }
 </style>
 </head>
