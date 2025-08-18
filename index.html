@@ -32,7 +32,15 @@ body{
 
 /* DEVICE FRAME */
 .device{
-  width:392px; max-width:96vw; height:820px; border-radius:28px; position:relative; overflow:hidden;
+  width:392px; max-width:96vw;
+  /* FIX: scrollable & auto height so nothing cuts */
+  height:auto; min-height:100%;
+  display:flex; flex-direction:column;
+  overflow:auto; -webkit-overflow-scrolling:touch;
+  /* Reserve space so content isn't hidden behind bottom nav */
+  padding-bottom:76px;
+
+  border-radius:28px; position:relative;
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
   border:1px solid rgba(255,255,255,0.03);
   box-shadow: 0 24px 70px rgba(2,6,23,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
@@ -97,11 +105,17 @@ body{
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* QUICK ACTIONS */
-.actions{display:flex;gap:10px;margin-top:12px}
+.actions{
+  display:flex;gap:10px;margin-top:12px;
+  /* FIX: allow wrap so WhatsApp never cuts */
+  flex-wrap:wrap;
+}
 .action{
   flex:1; padding:12px;border-radius:14px;border:1px solid var(--stroke); text-align:left; cursor:pointer;
   background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   display:flex; align-items:center; gap:10px; transition:transform .14s, box-shadow .14s, border-color .14s;
+  /* FIX: keep minimum width for readability */
+  min-width:120px; flex:1 1 calc(33.33% - 10px);
 }
 .action:active{transform:translateY(1px)}
 .icon{
@@ -179,7 +193,13 @@ body{
 
 /* MOBILE HEIGHT */
 @media (max-width:420px){
-  .device{height:92vh}
+  /* FIX: allow full-height on small screens without cutting */
+  .device{ height:auto; min-height:100vh; }
+}
+
+/* Very narrow phones */
+@media (max-width:360px){
+  .action{flex:1 1 100%}
 }
 </style>
 </head>
