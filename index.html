@@ -16,75 +16,105 @@
   --sidebar-bg:#111827;
 }
 
-*{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
 body{
   background:linear-gradient(135deg,var(--bg1),var(--bg2));
   color:var(--text);
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
   min-height:100vh;
-  flex-direction:column;
-  padding:20px;
   overflow-x:hidden;
+  padding:20px;
+}
+
+/* Animated particles background */
+body::before{
+  content:"";
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size:20px 20px;
+  animation: moveParticles 20s linear infinite;
+  z-index:-1;
+}
+
+@keyframes moveParticles{
+  0%{background-position:0 0;}
+  100%{background-position:200px 200px;}
 }
 
 /* Sidebar */
 .sidebar{
   position:fixed;
   top:0;
-  left:-250px;
-  width:250px;
+  left:-270px;
+  width:270px;
   height:100%;
   background:var(--sidebar-bg);
-  transition: left 0.4s ease;
-  padding:20px;
+  transition:left 0.4s ease;
+  padding:25px;
   z-index:100;
+  border-right:1px solid rgba(255,255,255,0.1);
 }
-
 .sidebar.active{left:0;}
-.sidebar h2{color:var(--text); margin-bottom:20px;}
+.sidebar h2{color:var(--text); margin-bottom:25px;}
 .sidebar button{
   display:block;
   width:100%;
-  padding:12px;
-  margin-bottom:10px;
+  padding:14px;
+  margin-bottom:15px;
   border:none;
-  border-radius:6px;
+  border-radius:8px;
   background:var(--accent);
   color:#fff;
   cursor:pointer;
+  font-weight:600;
   transition:0.3s;
 }
 .sidebar button:hover{background:var(--btn-hover); transform:scale(1.05);}
 
-/* Main container */
+/* Sidebar toggle */
+.sidebar-toggle{
+  position:fixed;
+  top:25px;
+  left:25px;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:12px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  z-index:101;
+  transition:0.3s;
+  font-size:1.1rem;
+}
+.sidebar-toggle:hover{background:var(--btn-hover); transform:scale(1.1);}
+
+/* Main app container */
 .app-container{
   background:rgba(255,255,255,0.05);
-  border-radius:15px;
-  padding:25px;
+  border-radius:20px;
+  padding:30px;
   text-align:center;
   width:100%;
-  max-width:420px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  max-width:450px;
+  margin:80px auto 20px auto;
+  box-shadow:0 12px 30px rgba(0,0,0,0.4);
   animation: fadeIn 1.2s ease forwards;
   opacity:0;
-  margin-left:0;
 }
 
 @keyframes fadeIn{to{opacity:1;}}
 
 .logo{
-  width:80px;
-  height:80px;
+  width:90px;
+  height:90px;
   background:var(--accent);
   border-radius:50%;
-  margin:0 auto 15px auto;
+  margin:0 auto 20px auto;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:28px;
+  font-size:32px;
   font-weight:700;
   color:#fff;
   transform: scale(0);
@@ -97,40 +127,26 @@ body{
   100%{transform:scale(1);}
 }
 
-h1{font-size:1.6rem; margin-bottom:10px; opacity:0; animation: fadeText 1.5s ease forwards 0.5s;}
-p{font-size:0.95rem; line-height:1.5; margin-bottom:20px; opacity:0; animation: fadeText 1.5s ease forwards 0.8s;}
+h1{font-size:1.8rem;margin-bottom:12px;opacity:0;animation: fadeText 1.5s ease forwards 0.5s;}
+p{font-size:1rem; line-height:1.6;margin-bottom:25px;opacity:0;animation: fadeText 1.5s ease forwards 0.8s;}
 @keyframes fadeText{to{opacity:1;}}
 
-.button-group{display:flex; flex-direction:column; gap:12px; opacity:0; animation: fadeText 1.5s ease forwards 1.2s;}
+.button-group{display:flex; flex-direction:column; gap:15px; opacity:0; animation: fadeText 1.5s ease forwards 1.2s;}
 .button-group button{
-  padding:12px; border:none; border-radius:8px; background:var(--btn-bg);
-  color:#fff; font-weight:600; cursor:pointer; transition: all 0.3s ease;
+  padding:14px; border:none; border-radius:10px; background:var(--btn-bg);
+  color:#fff; font-weight:600; cursor:pointer; transition:all 0.3s ease;
+  font-size:1rem;
 }
 .button-group button:hover{background:var(--btn-hover); transform:scale(1.05);}
 
-/* Sidebar toggle */
-.sidebar-toggle{
-  position:fixed;
-  top:20px;
-  left:20px;
-  background:var(--accent);
-  color:#fff;
-  border:none;
-  padding:10px 12px;
-  border-radius:6px;
-  cursor:pointer;
-  z-index:101;
-  transition:0.3s;
-}
-.sidebar-toggle:hover{background:var(--btn-hover); transform:scale(1.1);}
-
-.footer{margin-top:20px; font-size:0.8rem; color:rgba(255,255,255,0.6); opacity:0; animation: fadeText 1.5s ease forwards 1.5s;}
+/* Footer */
+.footer{margin-top:25px; font-size:0.85rem; color:rgba(255,255,255,0.6); opacity:0; animation: fadeText 1.5s ease forwards 1.5s;}
 
 @media (max-width:480px){
-  h1{font-size:1.4rem;}
-  p{font-size:0.85rem;}
-  .logo{width:65px;height:65px;font-size:22px;}
-  .button-group button{font-size:0.9rem;padding:10px;}
+  h1{font-size:1.5rem;}
+  p{font-size:0.9rem;}
+  .logo{width:70px;height:70px;font-size:24px;}
+  .button-group button{font-size:0.9rem;padding:12px;}
 }
 </style>
 </head>
@@ -146,8 +162,9 @@ p{font-size:0.95rem; line-height:1.5; margin-bottom:20px; opacity:0; animation: 
 
 <button class="sidebar-toggle" id="sidebarToggle">☰ Menu</button>
 
+<!-- Main App Container -->
 <div class="app-container">
-  <div class="logo">IS</div> <!-- Placeholder logo -->
+  <div class="logo">IS</div>
   <h1>Instant Story Saver App</h1>
   <p>Save Facebook, Instagram & WhatsApp stories instantly with one click. Fast, secure, and mobile-friendly.</p>
   
@@ -167,14 +184,10 @@ const toggleBtn = document.getElementById('sidebarToggle');
 toggleBtn.addEventListener('click',()=>{sidebar.classList.toggle('active');});
 
 // Placeholder story saving
-function saveStory(platform){
-  alert(platform + " story saved! (Demo Function)");
-}
+function saveStory(platform){alert(platform + " story saved! (Demo)");}
 
 // Placeholder login
-function login(platform){
-  alert("Logged in with " + platform + " (Demo Function)");
-}
+function login(platform){alert("Logged in with " + platform + " (Demo)");}
 
 // Placeholder subscription
 function subscribe(){
