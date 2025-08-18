@@ -1,566 +1,622 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1, viewport-fit=cover"/>
-<title>Instant Story Saver — World-Class</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg1:#0a0f1f; --bg2:#061024;
-  --glass: rgba(255,255,255,0.04);
-  --stroke: rgba(255,255,255,0.06);
-  --muted: rgba(230,238,248,0.78);
-  --txt:#e9f1ff;
-  --accent1:#f58529;
-  --accent2:#dd2a7b; 
-  --accent3:#8134af;
-  --accent4:#515bd4;
-  --ok:#25D366; 
-  --fb:#4267B2; 
-  --warn:#ffb74d;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YourAppName - Story Saver</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --glass: rgba(255,255,255,0.1);
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.2);
+        }
 
-/* RESET */
-*{box-sizing:border-box;
-  margin:0;
-  padding:0}
-html,body{height:100%}
-body{
-  font-family:'Poppins',system-ui,Arial;
-  color:var(--txt);
-  background:
-    radial-gradient(1400px 800px at 10% 5%, rgba(129,52,175,0.18), transparent 30%),
-    radial-gradient(1100px 600px at 110% 120%, rgba(81,91,212,0.16), transparent 40%),
-    linear-gradient(180deg,var(--bg1),var(--bg2));
-  -webkit-font-smoothing:antialiased; 
-  -moz-osx-font-smoothing:grayscale;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:18px; 
-  min-height:100vh;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-/* DEVICE FRAME */
-.device{
-  width:392px;
-  max-width:96vw;
-  /* FIX: scrollable & auto height so nothing cuts */
-  height: 100vh; 
-  min-height: 640px;
-  display:flex;
-  flex-direction:column;
-  overflow:auto; 
-  -webkit-overflow-scrolling:touch;
-  /* Reserve space so content isn't hidden behind bottom nav */
-  padding-bottom:76px;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #0f172a, #1e293b);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-  border-radius:28px;
-  position:relative;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
-  border:1px solid rgba(255,255,255,0.03);
-  box-shadow: 0 24px 70px rgba(2,6,23,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
-}
-  .device::after{
-    content:"";
-    display:block;
-    height: calc(64px + env(safe-area-inset-bottom, 0px) + 10px);
-  }
-@supports (height: 100dvh){
-  .device{ height: 100dvh; }
-/* TOP BAR */
-.topbar{
-  height:60px; 
-  padding:12px 16px;
-  display:flex;
-  align-items:center; 
-  justify-content:space-between;
-  backdrop-filter: blur(8px);
-  background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
-  border-bottom:1px solid rgba(255,255,255,0.02);
-}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  background: linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
-  box-shadow:0 8px 24px rgba(129,52,175,0.24);
-}
-.title{font-weight:700;
-       letter-spacing:.2px}
-.menu-btn{
-  font-size:20px;
-  border:none;
-  background:transparent;
-  color:inherit;
-  padding:8px;
-  border-radius:10px;
-  cursor:pointer;
-  transition:transform .18s ease;
-}
-.menu-btn:active{transform:scale(.96)}
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            height: 90vh;
+            max-height: 800px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
 
-/* HERO */
-.hero{
-  padding:20px 20px 12px; 
-  text-align:center;
-}
-.hero .badge{
-  display:inline-flex; 
-  align-items:center; 
-  gap:8px;
-  padding:6px 12px; 
-  border-radius:999px; 
-  font-weight:700; 
-  font-size:12px;
-  background:linear-gradient(90deg,var(--accent3),var(--accent4));
-  box-shadow:0 10px 26px rgba(81,91,212,0.18);
-}
-.hero h1{font-size:20px;
-         margin:10px 0 6px;
-         font-weight:800;
-         letter-spacing:.2px}
-  
-.hero p{font-size:13px;
-        color:var(--muted)}
+        /* App Header - Customize this with your logo */
+        .app-header {
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.6);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 10;
+        }
 
-/* CARD */
-.card{
-  margin:14px auto; 
-  width:90%;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
-  border:1px solid var(--stroke); border-radius:16px; padding:14px;
-  box-shadow:0 14px 34px rgba(2,6,23,0.5);
-}
-.row{display:flex;
-     gap:10px;
-     align-items:center}
-.input{
-  flex:1;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid var(--stroke);
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
-  color:inherit;
-  font-size:14px;
-  outline:none;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);
-  transition:box-shadow .15s, transform .12s, border-color .12s;
-}
-.input:focus{box-shadow:0 10px 34px rgba(81,91,212,0.1);
-             transform:translateY(-2px);
-             border-color:rgba(129,52,175,0.6)}
-.btn{
-  padding:12px 14px;
-  border-radius:12px;
-  border:none;
-  color:#fff;
-  font-weight:800;
-  letter-spacing:.2px;
-  background:linear-gradient(90deg,#ff8a65,#f06292);
-  cursor:pointer; 
-  display:inline-flex; 
-  align-items:center;
-  gap:10px;
-  box-shadow:0 10px 26px rgba(208,64,118,0.18), 0 2px 6px rgba(0,0,0,0.45);
-  transition:transform .16s ease, box-shadow .16s;
-}
-.btn:active{transform:scale(.98)}
-.btn .loader{width:16px;
-             height:16px;
-             border:2px solid rgba(255,255,255,0.35);
-             border-top-color:#fff;
-             border-radius:50%;
-             display:inline-block;
-             animation:spin .9s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-/* QUICK ACTIONS */
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-  /* FIX: allow wrap so WhatsApp never cuts */
-  flex-wrap:wrap;
-}
-.action{
-  position: relative;
-  flex:1 1 clamp(120px, 50%, 200px);
-  padding:12px;
-  border-radius:14px;
-  border:1px solid var(--stroke);
-  text-align:left; 
-  cursor:pointer;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  display:flex;
-  align-items:center;
-  gap:10px;
-  transition:transform .14s, box-shadow .14s, border-color .14s;
-  
-  /* FIX: keep minimum width for readability */
-  min-width:120px; }
-.action::after {
-  content: "" ;
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: transparent;
-}
-.action:active{transform:translateY(1px)}
-.icon{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  background:rgba(255,255,255,0.06)
-}
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+        }
 
-/* PREMIUM STRIP */
-.premium{
-  margin:14px auto;
-  width:90%; 
-  padding:12px;
-  border-radius:14px;
-  border:1px solid var(--stroke);
-  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  display:flex; 
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-.cta{padding:10px 12px;
-     border-radius:12px;
-     border:1px solid rgba(255,255,255,0.08);
-     background:linear-gradient(90deg,var(--accent3),var(--accent4));
-     color:#fff; 
-     font-weight:800;
-     cursor:pointer}
+        .logo-text {
+            font-weight: 700;
+            font-size: 18px;
+            background: linear-gradient(to right, #fff, #c7d2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-/* RECENTS */
-.section-title{width:90%; 
-               margin:12px 
-                 auto 6px; 
-               font-weight:800;
-               font-size:13px; 
-               color:var(--muted)}
-.grid{
-  width:90%;
-  margin:8px auto 20px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr); 
-  gap:10px;
-}
-.thumb{
-  aspect-ratio:1/1; 
-  border-radius:12px;
-  overflow:hidden;
-  position:relative; 
-  border:1px solid var(--stroke);
-  background:linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-}
-.thumb .play{
-  position:absolute; 
-  right:6px;
-  bottom:6px;
-  font-size:11px; 
-  padding:6px 8px; 
-  border-radius:999px;
-  background:rgba(0,0,0,0.45);
-  border:1px solid rgba(255,255,255,0.06)
-}
+        /* Main Content Area */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
 
-/* TOAST */
-.toast{
-  position:absolute; 
-  left:50%; 
-  bottom:82px; 
-  transform:translateX(-50%); 
-  background:#0b1220;
-  color:#fff;
-  padding:10px 14px; 
-  border-radius:10px; 
-  border:1px solid rgba(255,255,255,0.06); 
-  box-shadow:0 10px 24px rgba(0,0,0,0.45);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .2s, transform .2s;
-}
+        /* Hero Section */
+        .hero {
+            padding: 30px 20px;
+            text-align: center;
+        }
 
-/* BOTTOM NAV */
-.bottom{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:64px;
-  display:flex; 
-  align-items:center; 
-  justify-content:space-around;
-  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
-  backdrop-filter: blur(6px);
-  border-top:1px solid rgba(255,255,255,0.02);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.tab{display:flex;
-     flex-direction:column;
-     align-items:center;
-     gap:4px;
-     font-size:11px; 
-     color:var(--muted)}
-.tab-btn{border:none;
-         background:transparent;
-         color:#fff;
-         cursor:pointer;
-         padding:6px 10px;
-         border-radius:10px}
-.tab.active .tab-btn{background:rgba(255,255,255,0.06)}
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(99,102,241,0.2);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(99,102,241,0.3);
+        }
 
-/* DRAWER */
-.drawer{position:fixed;
-        inset:0;
-        pointer-events:none; 
-        z-index:999; 
-        display:flex}
-.drawer .back{position:absolute; 
-              inset:0; 
-              background:rgba(2,6,23,0.55);
-              opacity:0;
-              transition:opacity .3s}
-.drawer .panel{
-  position:absolute;
-  left:0; 
-  top:0; 
-  bottom:0; 
-  width:280px;
-  transform:translateX(-100%); 
-  transition:transform .36s cubic-bezier(.2,.9,.3,1);
-  background:linear-gradient(180deg,#071032,#0b1530);
-  border-right:1px solid rgba(255,255,255,0.04);
-  box-shadow: 10px 0 34px rgba(2,6,23,0.6);
-  padding:18px;
-  z-index:1000;
-}
-.drawer.open{pointer-events:auto}
-.drawer.open .back{opacity:1}
-.drawer.open .panel{transform:translateX(0)}
-.navlink{
-  display:flex; 
-  align-items:center;
-  gap:10px; 
-  padding:10px 12px;
-  border-radius:10px; 
-  color:#fff;
-  text-decoration:none;
-  transition:background .18s, transform .12s;
-  border:1px solid transparent;
-}
-.navlink:hover{background:rgba(255,255,255,0.04)}
-.navlink svg{opacity:.95}
+        .hero-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #fff, #ddd6fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-/* REDUCED MOTION */
-@media (prefers-reduced-motion: reduce){
-  *{animation:none !important; 
-    transition:none !important}
-}
+        .hero-subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.6;
+            max-width: 320px;
+            margin: 0 auto;
+        }
 
-/* MOBILE HEIGHT */
-@media (max-width:420px){
-  /* FIX: allow full-height on small screens without cutting */
-  .device{ height:auto; 
-          min-height:100vh; }
-}
-@media (max-width: 340px){
-  .grind{ grid-template-columns: repeat(2, 1fr);}
-/* Very narrow phones */
-@media (max-width:480px){
-  .action{
-    flex:1 1 100%.; 
-  }
-}
-</style>
+        /* Download Card */
+        .download-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 0 20px 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(8px);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: none;
+            background: rgba(15, 23, 42, 0.8);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .url-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.3);
+        }
+
+        .action-btn {
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .primary-btn {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(99,102,241,0.4);
+        }
+
+        .button-icon {
+            font-size: 18px;
+        }
+
+        /* Platform Grid */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .platform-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+        }
+
+        .platform-card:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .platform-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+
+        .facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .tiktok {
+            background: #000;
+            color: white;
+        }
+
+        .platform-info {
+            flex: 1;
+        }
+
+        .platform-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .platform-desc {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        /* Downloads Section */
+        .downloads-section {
+            padding: 0 20px 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title-icon {
+            color: var(--primary);
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .download-item {
+            aspect-ratio: 9/16;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .download-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .download-source {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            font-size: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .source-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 20px;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(16px);
+            display: flex;
+            justify-content: space-around;
+            z-index: 10;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active {
+            background: rgba(99,102,241,0.2);
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .nav-item.active .nav-icon {
+            color: var(--primary);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .nav-item.active .nav-label {
+            color: white;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 400px) {
+            .hero-title {
+                font-size: 24px;
+            }
+            
+            .hero-subtitle {
+                font-size: 14px;
+            }
+            
+            .action-btn {
+                padding: 14px 18px;
+                font-size: 14px;
+            }
+            
+            .platform-name {
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<div class="device" role="application" aria-label="Instant Story Saver">
-
-  <!-- Top Bar -->
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <div>
-        <div class="title">Instant Story Saver</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">Instagram · Facebook · WhatsApp</div>
-      </div>
+    <div class="app-container">
+        <!-- App Header - Customize this section with your logo and app name -->
+        <div class="app-header">
+            <div class="logo">
+                <div class="logo-icon">YL</div> <!-- Replace with your logo initials -->
+                <div class="logo-text">YourAppName</div> <!-- Replace with your app name -->
+            </div>
+            <div>
+                <button class="action-btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px;">
+                    <span class="button-icon">⭐</span> Premium
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main App Content -->
+        <div class="app-content">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-badge">
+                    <span>🚀</span> World-Class Story Saver
+                </div>
+                <h1 class="hero-title">Download Any Story Instantly</h1>
+                <p class="hero-subtitle">Save Instagram, WhatsApp and Facebook stories with highest quality - No watermark!</p>
+            </div>
+            
+            <!-- Download Card -->
+            <div class="download-card">
+                <div class="input-group">
+                    <input type="text" class="url-input" placeholder="Paste story link here...">
+                    <button class="action-btn primary-btn" id="downloadBtn">
+                        <span class="button-icon">📥</span> Download
+                    </button>
+                </div>
+                
+                <div class="platform-grid">
+                    <div class="platform-card" id="instagramBtn">
+                        <div class="platform-icon instagram">📸</div>
+                        <div class="platform-info">
+                            <div class="platform-name">Instagram</div>
+                            <div class="platform-desc">Stories & Reels</div>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-card" id="facebookBtn">
+                        <div class="platform-icon facebook">📘</div>
+                        <div class="platform-info">
+                            <div class="platform-name">Facebook</div>
+                            <div class="platform-desc">Stories & Videos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-card" id="whatsappBtn">
+                        <div class="platform-icon whatsapp">💬</div>
+                        <div class="platform-info">
+                            <div class="platform-name">WhatsApp</div>
+                            <div class="platform-desc">Status Saver</div>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-card" id="tiktokBtn">
+                        <div class="platform-icon tiktok">🎵</div>
+                        <div class="platform-info">
+                            <div class="platform-name">TikTok</div>
+                            <div class="platform-desc">No Watermark</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Downloads Section -->
+            <div class="downloads-section">
+                <div class="section-title">
+                    <span class="section-title-icon">📥</span> Recent Downloads
+                </div>
+                
+                <div class="downloads-grid">
+                    <div class="download-item">
+                        <img src="https://placehold.co/300x500/333/fff?text=Instagram+Story" class="download-thumb">
+                        <div class="download-source">
+                            <div class="source-icon instagram">IG</div>
+                            Instagram
+                        </div>
+                    </div>
+                    
+                    <div class="download-item">
+                        <img src="https://placehold.co/300x500/555/fff?text=WhatsApp+Status" class="download-thumb">
+                        <div class="download-source">
+                            <div class="source-icon whatsapp">WA</div>
+                            WhatsApp
+                        </div>
+                    </div>
+                    
+                    <div class="download-item">
+                        <img src="https://placehold.co/300x500/777/fff?text=FB+Story" class="download-thumb">
+                        <div class="download-source">
+                            <div class="source-icon facebook">FB</div>
+                            Facebook
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📥</div>
+                <div class="nav-label">Downloads</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⭐</div>
+                <div class="nav-label">Premium</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-label">Settings</div>
+            </div>
+        </div>
     </div>
-    <button class="menu-btn" id="openMenu" aria-label="Open menu">☰</button>
-  </div>
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="badge">🚀 Ultra-Fast · Safe · Clean</div>
-    <h1>Save stories in one tap</h1>
-    <p>No ads in Premium · High-quality downloads · Login integrations</p>
-  </div>
-
-  <!-- Link Card -->
-  <div class="card" aria-label="Paste link card">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <div style="font-weight:800;letter-spacing:.2px">Paste story link</div>
-      <div style="font-size:12px;color:var(--muted)">Demo mode</div>
-    </div>
-    <div class="row">
-      <input id="link" class="input" placeholder="https://www.instagram.com/stories/..." aria-label="Story link input">
-      <button id="paste" class="btn" title="Paste"><span>📋 Paste</span></button>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <button id="download" class="btn" title="Download">
-        <span id="dlText">▶️ Download</span>
-      </button>
-      <div style="flex:1"></div>
-      <button class="btn" onclick="location.href='subscription.html'">⭐ Go Premium</button>
-    </div>
-    <div class="actions">
-      <button class="action" onclick="location.href='index.html'">
-        <div class="icon">📸</div><div><div style="font-weight:700">Instagram</div><div style="font-size:12px;color:var(--muted)">Stories & reels</div></div>
-      </button>
-      <button class="action" onclick="location.href='facebook.html'">
-        <div class="icon">📘</div><div><div style="font-weight:700">Facebook</div><div style="font-size:12px;color:var(--muted)">Public stories</div></div>
-      </button>
-      <button class="action" onclick="location.href='whatsapp.html'">
-        <div class="icon">💬</div><div><div style="font-weight:700">WhatsApp</div><div style="font-size:12px;color:var(--muted)">Native (Android)</div></div>
-      </button>
-    </div>
-  </div>
-
-  <!-- Premium Strip -->
-  <div class="premium">
-    <div>Unlock <strong>Facebook & Instagram login</strong> + remove ads</div>
-    <button class="cta" onclick="location.href='subscription.html'">Upgrade</button>
-  </div>
-
-  <!-- Recents -->
-  <div class="section-title">Recent downloads (demo)</div>
-  <div class="grid" aria-hidden="false">
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <!-- Bottom Nav -->
-  <div class="bottom" role="navigation" aria-label="Bottom navigation">
-    <div class="tab active">
-      <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
-      <div>Home</div>
-    </div>
-    <div class="tab">
-      <button class="tab-btn" onclick="location.href='subscription.html'">⭐</button>
-      <div>Premium</div>
-    </div>
-    <div class="tab">
-      <button class="tab-btn" onclick="location.href='contact.html'">📨</button>
-      <div>Contact</div>
-    </div>
-  </div>
-
-  <!-- Drawer -->
-  <div class="drawer" id="drawer" aria-hidden="true">
-    <div class="back" id="backdrop" tabindex="-1"></div>
-    <nav class="panel" role="navigation" aria-label="Main menu">
-      <a class="navlink" href="index.html">🏠 Home — Instagram</a>
-      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
-      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
-      <a class="navlink" href="subscription.html">⭐ Subscription</a>
-      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
-      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
-      <a class="navlink" href="contact.html">📨 Contact Us</a>
-      <a class="navlink" href="about.html">ℹ️ About</a>
-      <a class="navlink" href="success.html"><strong>💬 Feedback</strong></a>
-    </nav>
-  </div>
-
-</div>
-
-<script>
-/* Drawer controls */
-const drawer   = document.getElementById('drawer');
-const openMenu = document.getElementById('openMenu');
-const backdrop = document.getElementById('backdrop');
-
-function openDrawer(){
-  drawer.classList.add('open');
-  drawer.setAttribute('aria-hidden','false');
-}
-function closeDrawer(){
-  drawer.classList.remove('open');
-  drawer.setAttribute('aria-hidden','true');
-}
-openMenu.addEventListener('click', openDrawer);
-backdrop.addEventListener('click', closeDrawer);
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
-
-/* Swipe to close (mobile) */
-let startX=0, dragging=false;
-drawer.addEventListener('touchstart', e=>{
-  if(!drawer.classList.contains('open')) return;
-  startX = e.touches[0].clientX; dragging=true;
-}, {passive:true});
-drawer.addEventListener('touchend', e=>{
-  if(!dragging) return;
-  const endX = (e.changedTouches?.[0]?.clientX)||startX;
-  if(startX - endX > 50) closeDrawer();
-  dragging=false;
-});
-
-/* Toast helper */
-const toast = document.getElementById('toast');
-function showToast(msg, ms=2000){
-  toast.textContent = msg;
-  toast.style.opacity='1';
-  toast.style.transform='translateX(-50%) translateY(-4px)';
-  setTimeout(()=>{ toast.style.opacity='0'; toast.style.transform='translateX(-50%)'; }, ms);
-}
-
-/* Clipboard + Download demo */
-const pasteBtn    = document.getElementById('paste');
-const downloadBtn = document.getElementById('download');
-const linkInput   = document.getElementById('link');
-
-pasteBtn.addEventListener('click', async ()=>{
-  try{
-    const t = await navigator.clipboard.readText();
-    if(t && t.length>5){ linkInput.value = t; showToast('Pasted from clipboard'); }
-    else showToast('Clipboard empty');
-  }catch(e){ showToast('Clipboard access blocked'); }
-});
-
-downloadBtn.addEventListener('click', ()=>{
-  const url = (linkInput.value||'').trim();
-  if(!url){ showToast('Please enter a link'); return; }
-  if(url.length < 10){ showToast('Link looks invalid'); return; }
-
-  // button loader
-  const prev = downloadBtn.innerHTML;
-  downloadBtn.disabled = true;
-  downloadBtn.innerHTML = '<span class="loader"></span><span>Processing…</span>';
-
-  setTimeout(()=>{
-    downloadBtn.disabled = false;
-    downloadBtn.innerHTML = prev;
-    showToast('Downloaded (simulated) — connect backend later');
-    linkInput.value='';
-  }, 1400);
-});
-</script>
+    <script>
+        // App Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Download Button Functionality
+            const downloadBtn = document.getElementById('downloadBtn');
+            const urlInput = document.querySelector('.url-input');
+            
+            downloadBtn.addEventListener('click', function() {
+                if (!urlInput.value) {
+                    alert('Please paste a story link first!');
+                    urlInput.focus();
+                    return;
+                }
+                
+                // Show loading state
+                const originalText = downloadBtn.innerHTML;
+                downloadBtn.innerHTML = '<span class="button-icon">⏳</span> Processing...';
+                downloadBtn.disabled = true;
+                
+                // Simulate download process
+                setTimeout(() => {
+                    // Show success
+                    downloadBtn.innerHTML = '<span class="button-icon">✅</span> Downloaded!';
+                    
+                    // Reset after 1.5 seconds
+                    setTimeout(() => {
+                        downloadBtn.innerHTML = originalText;
+                        downloadBtn.disabled = false;
+                        urlInput.value = '';
+                        
+                        // Add to recent downloads (demo)
+                        addToRecentDownloads();
+                    }, 1500);
+                }, 2000);
+            });
+            
+            // Platform Button Handlers
+            document.getElementById('instagramBtn').addEventListener('click', function() {
+                alert('Opening Instagram downloader...');
+                // In a real app, this would open Instagram-specific download interface
+            });
+            
+            document.getElementById('facebookBtn').addEventListener('click', function() {
+                alert('Opening Facebook downloader...');
+                // In a real app, this would open Facebook-specific download interface
+            });
+            
+            document.getElementById('whatsappBtn').addEventListener('click', function() {
+                alert('Opening WhatsApp status saver...');
+                // In a real app, this would open WhatsApp-specific interface
+            });
+            
+            document.getElementById('tiktokBtn').addEventListener('click', function() {
+                alert('Opening TikTok downloader...');
+                // In a real app, this would open TikTok-specific interface
+            });
+            
+            // Navigation Handling
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-item').forEach(nav => {
+                        nav.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // In a real app, this would load different sections
+                    alert(`Opening ${this.querySelector('.nav-label').textContent} section...`);
+                });
+            });
+            
+            // Helper function to simulate adding to recent downloads
+            function addToRecentDownloads() {
+                const downloadsGrid = document.querySelector('.downloads-grid');
+                const firstItem = downloadsGrid.children[0].cloneNode(true);
+                
+                // Randomly select a platform
+                const platforms = ['Instagram', 'WhatsApp', 'Facebook'];
+                const platform = platforms[Math.floor(Math.random() * platforms.length)];
+                
+                // Update the thumbnail and source
+                firstItem.querySelector('.download-thumb').src = `https://placehold.co/300x500/444/fff?text=${platform}+Story`;
+                firstItem.querySelector('.source-icon').textContent = platform.substring(0, 2);
+                firstItem.querySelector('.download-source').lastChild.textContent = platform;
+                
+                // Add to the beginning and remove the last item
+                downloadsGrid.insertBefore(firstItem, downloadsGrid.firstChild);
+                downloadsGrid.removeChild(downloadsGrid.lastChild);
+            }
+        });
+    </script>
 </body>
 </html>
