@@ -1,622 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YourAppName - Story Saver</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --glass: rgba(255,255,255,0.1);
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px rgba(0,0,0,0.2);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instant Story Saver App</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0a0f1f;
+  --bg2:#141a2e;
+  --accent:#ff4757;
+  --text:#ffffff;
+  --btn-bg:#ff4757;
+  --btn-hover:#ff6b81;
+  --sidebar-bg:#111827;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to bottom, #0f172a, #1e293b);
-            color: var(--light);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+body{
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  min-height:100vh;
+  flex-direction:column;
+  padding:20px;
+  overflow-x:hidden;
+}
 
-        .app-container {
-            width: 100%;
-            max-width: 420px;
-            height: 90vh;
-            max-height: 800px;
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(16px);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+/* Sidebar */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-250px;
+  width:250px;
+  height:100%;
+  background:var(--sidebar-bg);
+  transition: left 0.4s ease;
+  padding:20px;
+  z-index:100;
+}
 
-        /* App Header - Customize this with your logo */
-        .app-header {
-            padding: 18px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(15, 23, 42, 0.6);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            position: relative;
-            z-index: 10;
-        }
+.sidebar.active{left:0;}
+.sidebar h2{color:var(--text); margin-bottom:20px;}
+.sidebar button{
+  display:block;
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:6px;
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+}
+.sidebar button:hover{background:var(--btn-hover); transform:scale(1.05);}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+/* Main container */
+.app-container{
+  background:rgba(255,255,255,0.05);
+  border-radius:15px;
+  padding:25px;
+  text-align:center;
+  width:100%;
+  max-width:420px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  animation: fadeIn 1.2s ease forwards;
+  opacity:0;
+  margin-left:0;
+}
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 18px;
-            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
-        }
+@keyframes fadeIn{to{opacity:1;}}
 
-        .logo-text {
-            font-weight: 700;
-            font-size: 18px;
-            background: linear-gradient(to right, #fff, #c7d2fe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.logo{
+  width:80px;
+  height:80px;
+  background:var(--accent);
+  border-radius:50%;
+  margin:0 auto 15px auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:28px;
+  font-weight:700;
+  color:#fff;
+  transform: scale(0);
+  animation: logoPop 1s ease forwards;
+}
 
-        /* Main Content Area */
-        .app-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-bottom: 80px;
-        }
+@keyframes logoPop{
+  0%{transform:scale(0);}
+  70%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
 
-        /* Hero Section */
-        .hero {
-            padding: 30px 20px;
-            text-align: center;
-        }
+h1{font-size:1.6rem; margin-bottom:10px; opacity:0; animation: fadeText 1.5s ease forwards 0.5s;}
+p{font-size:0.95rem; line-height:1.5; margin-bottom:20px; opacity:0; animation: fadeText 1.5s ease forwards 0.8s;}
+@keyframes fadeText{to{opacity:1;}}
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(99,102,241,0.2);
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(99,102,241,0.3);
-        }
+.button-group{display:flex; flex-direction:column; gap:12px; opacity:0; animation: fadeText 1.5s ease forwards 1.2s;}
+.button-group button{
+  padding:12px; border:none; border-radius:8px; background:var(--btn-bg);
+  color:#fff; font-weight:600; cursor:pointer; transition: all 0.3s ease;
+}
+.button-group button:hover{background:var(--btn-hover); transform:scale(1.05);}
 
-        .hero-title {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            background: linear-gradient(to right, #fff, #ddd6fe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* Sidebar toggle */
+.sidebar-toggle{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:10px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  z-index:101;
+  transition:0.3s;
+}
+.sidebar-toggle:hover{background:var(--btn-hover); transform:scale(1.1);}
 
-        .hero-subtitle {
-            font-size: 16px;
-            opacity: 0.8;
-            line-height: 1.6;
-            max-width: 320px;
-            margin: 0 auto;
-        }
+.footer{margin-top:20px; font-size:0.8rem; color:rgba(255,255,255,0.6); opacity:0; animation: fadeText 1.5s ease forwards 1.5s;}
 
-        /* Download Card */
-        .download-card {
-            background: rgba(30, 41, 59, 0.6);
-            border-radius: 16px;
-            padding: 24px;
-            margin: 0 20px 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(8px);
-        }
-
-        .input-group {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .url-input {
-            flex: 1;
-            padding: 16px 20px;
-            border-radius: 12px;
-            border: none;
-            background: rgba(15, 23, 42, 0.8);
-            color: white;
-            font-size: 16px;
-            outline: none;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .url-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(99,102,241,0.3);
-        }
-
-        .action-btn {
-            padding: 16px 24px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: var(--shadow);
-        }
-
-        .primary-btn {
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(99,102,241,0.4);
-        }
-
-        .button-icon {
-            font-size: 18px;
-        }
-
-        /* Platform Grid */
-        .platform-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .platform-card {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 12px;
-            padding: 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s;
-            border: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer;
-        }
-
-        .platform-card:hover {
-            background: rgba(30, 41, 59, 0.8);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
-        }
-
-        .platform-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .instagram {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            color: white;
-        }
-
-        .facebook {
-            background: #1877f2;
-            color: white;
-        }
-
-        .whatsapp {
-            background: #25d366;
-            color: white;
-        }
-
-        .tiktok {
-            background: #000;
-            color: white;
-        }
-
-        .platform-info {
-            flex: 1;
-        }
-
-        .platform-name {
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-
-        .platform-desc {
-            font-size: 13px;
-            opacity: 0.8;
-        }
-
-        /* Downloads Section */
-        .downloads-section {
-            padding: 0 20px 20px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-title-icon {
-            color: var(--primary);
-        }
-
-        .downloads-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .download-item {
-            aspect-ratio: 9/16;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .download-thumb {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .download-source {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            font-size: 10px;
-            background: rgba(0,0,0,0.7);
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .source-icon {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8px;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 12px 20px;
-            background: rgba(15, 23, 42, 0.9);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            backdrop-filter: blur(16px);
-            display: flex;
-            justify-content: space-around;
-            z-index: 10;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            padding: 8px 12px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .nav-item.active {
-            background: rgba(99,102,241,0.2);
-        }
-
-        .nav-icon {
-            font-size: 22px;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .nav-item.active .nav-icon {
-            color: var(--primary);
-        }
-
-        .nav-label {
-            font-size: 10px;
-            font-weight: 500;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .nav-item.active .nav-label {
-            color: white;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 400px) {
-            .hero-title {
-                font-size: 24px;
-            }
-            
-            .hero-subtitle {
-                font-size: 14px;
-            }
-            
-            .action-btn {
-                padding: 14px 18px;
-                font-size: 14px;
-            }
-            
-            .platform-name {
-                font-size: 15px;
-            }
-        }
-    </style>
+@media (max-width:480px){
+  h1{font-size:1.4rem;}
+  p{font-size:0.85rem;}
+  .logo{width:65px;height:65px;font-size:22px;}
+  .button-group button{font-size:0.9rem;padding:10px;}
+}
+</style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- App Header - Customize this section with your logo and app name -->
-        <div class="app-header">
-            <div class="logo">
-                <div class="logo-icon">YL</div> <!-- Replace with your logo initials -->
-                <div class="logo-text">YourAppName</div> <!-- Replace with your app name -->
-            </div>
-            <div>
-                <button class="action-btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px;">
-                    <span class="button-icon">⭐</span> Premium
-                </button>
-            </div>
-        </div>
-        
-        <!-- Main App Content -->
-        <div class="app-content">
-            <!-- Hero Section -->
-            <div class="hero">
-                <div class="hero-badge">
-                    <span>🚀</span> World-Class Story Saver
-                </div>
-                <h1 class="hero-title">Download Any Story Instantly</h1>
-                <p class="hero-subtitle">Save Instagram, WhatsApp and Facebook stories with highest quality - No watermark!</p>
-            </div>
-            
-            <!-- Download Card -->
-            <div class="download-card">
-                <div class="input-group">
-                    <input type="text" class="url-input" placeholder="Paste story link here...">
-                    <button class="action-btn primary-btn" id="downloadBtn">
-                        <span class="button-icon">📥</span> Download
-                    </button>
-                </div>
-                
-                <div class="platform-grid">
-                    <div class="platform-card" id="instagramBtn">
-                        <div class="platform-icon instagram">📸</div>
-                        <div class="platform-info">
-                            <div class="platform-name">Instagram</div>
-                            <div class="platform-desc">Stories & Reels</div>
-                        </div>
-                    </div>
-                    
-                    <div class="platform-card" id="facebookBtn">
-                        <div class="platform-icon facebook">📘</div>
-                        <div class="platform-info">
-                            <div class="platform-name">Facebook</div>
-                            <div class="platform-desc">Stories & Videos</div>
-                        </div>
-                    </div>
-                    
-                    <div class="platform-card" id="whatsappBtn">
-                        <div class="platform-icon whatsapp">💬</div>
-                        <div class="platform-info">
-                            <div class="platform-name">WhatsApp</div>
-                            <div class="platform-desc">Status Saver</div>
-                        </div>
-                    </div>
-                    
-                    <div class="platform-card" id="tiktokBtn">
-                        <div class="platform-icon tiktok">🎵</div>
-                        <div class="platform-info">
-                            <div class="platform-name">TikTok</div>
-                            <div class="platform-desc">No Watermark</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Downloads Section -->
-            <div class="downloads-section">
-                <div class="section-title">
-                    <span class="section-title-icon">📥</span> Recent Downloads
-                </div>
-                
-                <div class="downloads-grid">
-                    <div class="download-item">
-                        <img src="https://placehold.co/300x500/333/fff?text=Instagram+Story" class="download-thumb">
-                        <div class="download-source">
-                            <div class="source-icon instagram">IG</div>
-                            Instagram
-                        </div>
-                    </div>
-                    
-                    <div class="download-item">
-                        <img src="https://placehold.co/300x500/555/fff?text=WhatsApp+Status" class="download-thumb">
-                        <div class="download-source">
-                            <div class="source-icon whatsapp">WA</div>
-                            WhatsApp
-                        </div>
-                    </div>
-                    
-                    <div class="download-item">
-                        <img src="https://placehold.co/300x500/777/fff?text=FB+Story" class="download-thumb">
-                        <div class="download-source">
-                            <div class="source-icon facebook">FB</div>
-                            Facebook
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Bottom Navigation -->
-        <div class="bottom-nav">
-            <div class="nav-item active">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">Home</div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">📥</div>
-                <div class="nav-label">Downloads</div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">⭐</div>
-                <div class="nav-label">Premium</div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">⚙️</div>
-                <div class="nav-label">Settings</div>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        // App Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Download Button Functionality
-            const downloadBtn = document.getElementById('downloadBtn');
-            const urlInput = document.querySelector('.url-input');
-            
-            downloadBtn.addEventListener('click', function() {
-                if (!urlInput.value) {
-                    alert('Please paste a story link first!');
-                    urlInput.focus();
-                    return;
-                }
-                
-                // Show loading state
-                const originalText = downloadBtn.innerHTML;
-                downloadBtn.innerHTML = '<span class="button-icon">⏳</span> Processing...';
-                downloadBtn.disabled = true;
-                
-                // Simulate download process
-                setTimeout(() => {
-                    // Show success
-                    downloadBtn.innerHTML = '<span class="button-icon">✅</span> Downloaded!';
-                    
-                    // Reset after 1.5 seconds
-                    setTimeout(() => {
-                        downloadBtn.innerHTML = originalText;
-                        downloadBtn.disabled = false;
-                        urlInput.value = '';
-                        
-                        // Add to recent downloads (demo)
-                        addToRecentDownloads();
-                    }, 1500);
-                }, 2000);
-            });
-            
-            // Platform Button Handlers
-            document.getElementById('instagramBtn').addEventListener('click', function() {
-                alert('Opening Instagram downloader...');
-                // In a real app, this would open Instagram-specific download interface
-            });
-            
-            document.getElementById('facebookBtn').addEventListener('click', function() {
-                alert('Opening Facebook downloader...');
-                // In a real app, this would open Facebook-specific download interface
-            });
-            
-            document.getElementById('whatsappBtn').addEventListener('click', function() {
-                alert('Opening WhatsApp status saver...');
-                // In a real app, this would open WhatsApp-specific interface
-            });
-            
-            document.getElementById('tiktokBtn').addEventListener('click', function() {
-                alert('Opening TikTok downloader...');
-                // In a real app, this would open TikTok-specific interface
-            });
-            
-            // Navigation Handling
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    document.querySelectorAll('.nav-item').forEach(nav => {
-                        nav.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // In a real app, this would load different sections
-                    alert(`Opening ${this.querySelector('.nav-label').textContent} section...`);
-                });
-            });
-            
-            // Helper function to simulate adding to recent downloads
-            function addToRecentDownloads() {
-                const downloadsGrid = document.querySelector('.downloads-grid');
-                const firstItem = downloadsGrid.children[0].cloneNode(true);
-                
-                // Randomly select a platform
-                const platforms = ['Instagram', 'WhatsApp', 'Facebook'];
-                const platform = platforms[Math.floor(Math.random() * platforms.length)];
-                
-                // Update the thumbnail and source
-                firstItem.querySelector('.download-thumb').src = `https://placehold.co/300x500/444/fff?text=${platform}+Story`;
-                firstItem.querySelector('.source-icon').textContent = platform.substring(0, 2);
-                firstItem.querySelector('.download-source').lastChild.textContent = platform;
-                
-                // Add to the beginning and remove the last item
-                downloadsGrid.insertBefore(firstItem, downloadsGrid.firstChild);
-                downloadsGrid.removeChild(downloadsGrid.lastChild);
-            }
-        });
-    </script>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <h2>Menu</h2>
+  <button onclick="login('Facebook')">Login Facebook</button>
+  <button onclick="login('Instagram')">Login Instagram</button>
+  <button onclick="subscribe()">Subscribe / Premium</button>
+</div>
+
+<button class="sidebar-toggle" id="sidebarToggle">☰ Menu</button>
+
+<div class="app-container">
+  <div class="logo">IS</div> <!-- Placeholder logo -->
+  <h1>Instant Story Saver App</h1>
+  <p>Save Facebook, Instagram & WhatsApp stories instantly with one click. Fast, secure, and mobile-friendly.</p>
+  
+  <div class="button-group">
+    <button onclick="saveStory('Facebook')">Save Facebook Story</button>
+    <button onclick="saveStory('Instagram')">Save Instagram Story</button>
+    <button onclick="saveStory('WhatsApp')">Save WhatsApp Story</button>
+  </div>
+  
+  <div class="footer">&copy; 2025 Instant Story Saver. All rights reserved.</div>
+</div>
+
+<script>
+// Sidebar toggle
+const sidebar = document.getElementById('sidebar');
+const toggleBtn = document.getElementById('sidebarToggle');
+toggleBtn.addEventListener('click',()=>{sidebar.classList.toggle('active');});
+
+// Placeholder story saving
+function saveStory(platform){
+  alert(platform + " story saved! (Demo Function)");
+}
+
+// Placeholder login
+function login(platform){
+  alert("Logged in with " + platform + " (Demo Function)");
+}
+
+// Placeholder subscription
+function subscribe(){
+  let isPremium = confirm("Do you want Premium Ads-Free mode? (Demo)");
+  if(isPremium){alert("Premium activated! (Demo)");}
+  else{alert("Subscription cancelled.");}
+}
+</script>
+
 </body>
 </html>
