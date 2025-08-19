@@ -32,7 +32,10 @@ body{
 
 /* DEVICE FRAME */
 .device{
-  width:392px; max-width:96vw; height:820px; border-radius:28px; position:relative; overflow:hidden;
+  width:96vw; 
+  max-width:392px; height:92vh;
+  min-height: 600px; 
+  border-radius:28px; position:relative; overflow:hidden;
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
   border:1px solid rgba(255,255,255,0.03);
   box-shadow: 0 24px 70px rgba(2,6,23,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
@@ -68,8 +71,12 @@ body{
   background:linear-gradient(90deg,var(--accent3),var(--accent4));
   box-shadow:0 10px 26px rgba(81,91,212,0.18);
 }
-.hero h1{font-size:20px;margin:10px 0 6px;font-weight:800;letter-spacing:.2px}
-.hero p{font-size:13px;color:var(--muted)}
+.hero h1{font-size: calc(16px + 1.5vw);
+         margin:10px 0 6px;
+         font-weight:800;
+         letter-spacing:.2px}
+.hero p{font-size: calc(12px + 0.8vw);
+        color:var(--muted)}
 
 /* CARD */
 .card{
@@ -179,7 +186,9 @@ body{
 
 /* MOBILE HEIGHT */
 @media (max-width:420px){
-  .device{height:92vh}
+  .device{
+    height: calc(var(--vh, 1vh) * 92);
+  }
 }
 </style>
 </head>
@@ -317,10 +326,16 @@ drawer.addEventListener('touchstart', e=>{
 drawer.addEventListener('touchend', e=>{
   if(!dragging) return;
   const endX = (e.changedTouches?.[0]?.clientX)||startX;
-  if(startX - endX > 50) closeDrawer();
+  const diffX = startX - endX;
+  if(diffX > 70) closeDrawer();
   dragging=false;
 });
-
+let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  window.addEventListener('resize', ()=>{
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  });
 /* Toast helper */
 const toast = document.getElementById('toast');
 function showToast(msg, ms=2000){
@@ -341,6 +356,10 @@ pasteBtn.addEventListener('click', async ()=>{
     if(t && t.length>5){ linkInput.value = t; showToast('Pasted from clipboard'); }
     else showToast('Clipboard empty');
   }catch(e){ showToast('Clipboard access blocked'); }
+} else {
+  linkInput.focus();
+  showToast('Manually paste the link');
+}
 });
 
 downloadBtn.addEventListener('click', ()=>{
