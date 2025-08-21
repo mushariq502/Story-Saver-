@@ -412,12 +412,15 @@ const linkInput   = document.getElementById('link');
 pasteBtn.addEventListener('click', async ()=>{
   try{
     const t = await navigator.clipboard.readText();
-    if(t && t.length>5){ linkInput.value = t; showToast('Pasted from clipboard'); }
-    else showToast('Clipboard empty');
-  }catch(e){ showToast('Clipboard access blocked'); }
-} else {
-  linkInput.focus();
-  showToast('Manually paste the link');
+    if(t && t.length>5){
+      linkInput.value = t;
+      showToast('Pasted from clipboard'); 
+    } else { 
+      linkInput.focus();
+      showToast('Manually paste the link');
+    }
+  }catch(e){ 
+    showToast('Clipboard access blocked');
 }
 });
 
