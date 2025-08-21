@@ -29,12 +29,26 @@
 
     /* Device frame */
     .device{
-      width:380px; max-width:96vw; height:820px; border-radius:28px;
+      width:96vw;
+      max-width:380px; 
+      height: calc(var(--vh, 1vh) * 92);
+      min-height: 600px;
+      border-radius:28px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border:1px solid rgba(255,255,255,0.03);
       box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-      position:relative; overflow:hidden;
+      position:relative;
+      overflow-y: auto;
     }
+    
+    .device-inner {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto; /* vertical scroll */
+      -webkit-overflow-scrolling: touch; /* smooth scrolling iOS */
+      padding-bottom: 80px; /* optional, bottom nav ke liye gap */
+}
+
 
     /* status/header */
     .status{
@@ -90,17 +104,39 @@
     .note{font-size:12px;color:var(--muted);text-align:center;margin-top:6px;padding:0 6px}
      /* Nav drawer overlay */
     .drawer{
-      position:fixed;left:0;top:0;bottom:0;width:100%;height:100%;pointer-events:none;
+      position:fixed;
+      inset:0;
+      left:0;
+      top:0;
+      bottom:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      z-index:999;
     }
     .drawer .back{
-      position:absolute;inset:0;background:rgba(2,6,23,0.55);opacity:0;transition:opacity .28s;
+      position:absolute;
+      inset:0;
+      background:rgba(2,6,23,0.55);
+      opacity:0;
+      transition:opacity .28s;
       pointer-events:none;
     }
-    .drawer.open .back{opacity:1;pointer-events:auto}
+    .drawer.open .back{opacity:1;
+                       pointer-events:auto}
     .drawer .panel{
-      position:absolute;left:0;top:0;bottom:0;width:260px;background:linear-gradient(180deg,#071032,#0b1530);
-      transform:translateX(-100%);transition:transform .32s cubic-bezier(.2,.9,.3,1);padding:24px 18px;border-right:1px solid rgba(255,255,255,0.03);
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:260px;
+      background:linear-gradient(180deg,#071032,#0b1530);
+      transform:translateX(-100%);
+      transition:transform .32s cubic-bezier(.2,.9,.3,1);
+      padding:24px 18px;
+      border-right:1px solid rgba(255,255,255,0.03);
       box-shadow: 8px 0 30px rgba(2,6,23,0.6);
+      z-index: 1000;
     }
     .drawer.open .panel{transform:translateX(0)}
     .panel h3{color:#fff;margin-bottom:18px;font-size:18px}
@@ -121,7 +157,7 @@
     .modal .ok{padding:10px 16px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent3),var(--accent4));color:#fff;font-weight:700;cursor:pointer}
 
     @media (max-width:420px){
-      .device{height:92vh}
+      .device{height:calc(var(--vh, 1vh) * 92);}
       .modal .box{width:90%}
     }
 
@@ -131,6 +167,7 @@
 
   <div class="device" role="application" aria-label="Instant Story Saver - Subscription">
 
+   <div class="device-inner">
     <!-- header / status -->
     <div class="status">
       <div class="brand">
@@ -247,15 +284,29 @@
     </div>
 
   </div>
-
+  </div>
+    
 <script>
+  let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', ()=>{
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
   /* Drawer controls */
   const drawer = document.getElementById('drawer');
   const menuOpen = document.getElementById('menuOpen');
-  const drawerBack = document.getElementById('drawerBack');
+  const drawerBack = document.getElementById('backdrop');
 
-  function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
-  function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+  function openDrawer(){ 
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden','false'); 
+  }
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden','true'); 
+  }
   menuOpen.addEventListener('click', openDrawer);
   drawerBack.addEventListener('click', closeDrawer);
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
