@@ -32,13 +32,12 @@
       width:96vw;
       max-width:380px; 
       height: calc(var(--vh, 1vh) * 92);
-      min-height: 600px;
       border-radius:28px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border:1px solid rgba(255,255,255,0.03);
       box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
       position:relative;
-      overflow-y: auto;
+      overflow-y: hidden;
     }
     
     .device-inner {
@@ -103,48 +102,50 @@
 
     .note{font-size:12px;color:var(--muted);text-align:center;margin-top:6px;padding:0 6px}
      /* Nav drawer overlay */
-    .drawer{
-      position:fixed;
-      left:0;
-      top:0;
-      bottom:0;
-      width:280px;
-      height:100%;
-      background: 0a0f2c#;
-      transform:translateX(-100%);
-      transition: transform 0.3s ease;
-      z-index: 9999;
-      overflow-y: auto;
-      pointer-events: auto;
-    }
-    .drawer .back{
-      position:absolute;
-      inset:0;
-      background:rgba(2,6,23,0.55);
-      opacity:0;
-      transition:opacity .28s;
-      pointer-events:none;
-    }
-    .drawer.open .back{opacity:1;
-                       pointer-events:auto}
-    .drawer .panel{
-      position:absolute;
-      left:0;
-      top:0;
-      bottom:0;
-      width:260px;
-      background:linear-gradient(180deg,#071032,#0b1530);
-      transform:translateX(-100%);
-      transition:transform .32s cubic-bezier(.2,.9,.3,1);
-      padding:24px 18px;
-      border-right:1px solid rgba(255,255,255,0.03);
-      box-shadow: 8px 0 30px rgba(2,6,23,0.6);
-      z-index: 1000;
-    }
-    .drawer.open .panel{transform:translateX(0)}
-    .panel h3{color:#fff;margin-bottom:18px;font-size:18px}
-    .panel a{display:block;color:rgba(230,238,248,0.95);text-decoration:none;padding:10px;border-radius:8px;margin-bottom:6px}
-    .panel a:hover{background:rgba(255,255,255,0.03)}
+    /* Nav drawer */
+.drawer{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none; /* By default off */
+}
+
+.drawer.open{
+  pointer-events: auto; /* Active hone par clickable */
+}
+
+.drawer .back{
+  position: absolute;
+  inset: 0;
+  background: rgba(2,6,23,0.55);
+  opacity: 0;
+  transition: opacity .28s;
+  z-index: 1;
+}
+
+.drawer.open .back{
+  opacity: 1;
+}
+
+.drawer .panel{
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 260px;
+  background: linear-gradient(180deg,#071032,#0b1530);
+  transform: translateX(-100%);
+  transition: transform .32s cubic-bezier(.2,.9,.3,1);
+  padding: 24px 18px;
+  border-right: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 8px 0 30px rgba(2,6,23,0.6);
+  z-index: 2;
+}
+
+.drawer.open .panel{
+  transform: translateX(0);
+}
+
 
 
     /* footer action */
