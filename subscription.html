@@ -257,7 +257,23 @@
       <button class="ghost" onclick="location.href='contact.html'">Support</button>
     </div>
 
-    <!-- side drawer -->
+
+
+    <!-- demo modal -->
+    <div class="modal" id="modal">
+      <div class="box" role="dialog" aria-modal="true">
+        <h3 id="modalTitle">Complete subscription</h3>
+        <p id="modalText">You will be charged. (Demo) This will simulate a successful purchase.</p>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+          <button class="ok" id="confirmBuy">Confirm</button>
+          <button class="ok" id="cancelBuy" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+      <!-- side drawer -->
       <!-- Drawer -->
   <div class="drawer" id="drawer" aria-hidden="true">
     <div class="back" id="backdrop" tabindex="-1"></div>
@@ -274,22 +290,6 @@
     </nav>
   </div>
 </div>
-
-    <!-- demo modal -->
-    <div class="modal" id="modal">
-      <div class="box" role="dialog" aria-modal="true">
-        <h3 id="modalTitle">Complete subscription</h3>
-        <p id="modalText">You will be charged. (Demo) This will simulate a successful purchase.</p>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
-          <button class="ok" id="confirmBuy">Confirm</button>
-          <button class="ok" id="cancelBuy" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  </div>
-    
 <script>
   let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
