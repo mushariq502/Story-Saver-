@@ -3,17 +3,21 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Instant Story Saver — World-Class</title>
+<title>Instant Story Saver — Home</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  /* THEME */
   --bg1:#0a0f1f; --bg2:#061024;
-  --glass: rgba(255,255,255,0.04);
-  --stroke: rgba(255,255,255,0.06);
+  --glass: rgba(255,255,255,0.05);
+  --stroke: rgba(255,255,255,0.08);
   --muted: rgba(230,238,248,0.78);
   --txt:#e9f1ff;
-  --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+  --accent1:#4cc9f0; --accent2:#4361ee;
+  --ig1:#f58529; --ig2:#dd2a7b; --ig3:#8134af; --ig4:#515bd4;
   --ok:#25D366; --fb:#4267B2; --warn:#ffb74d;
+  --shadow: 0 24px 70px rgba(2,6,23,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
+  --r-lg: 28px; --r-md: 16px; --r-sm: 12px;
 }
 
 /* RESET */
@@ -33,38 +37,42 @@ body{
 /* DEVICE FRAME */
 .device{
   width:96vw; 
-  max-width:392px; height:92vh;
-  min-height: 600px; 
-  border-radius:28px; position:relative; overflow:hidden;
+  max-width:410px; height:92vh;
+  min-height: 640px; 
+  border-radius:var(--r-lg); position:relative; overflow:hidden;
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
-  border:1px solid rgba(255,255,255,0.03);
-  box-shadow: 0 24px 70px rgba(2,6,23,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow: var(--shadow);
 }
 .device-inner{
   width:100%;
   height:100%;
   overflow-y:auto;
   padding-bottom:80px;
+  scroll-behavior:smooth;
 }
 
 /* TOP BAR */
 .topbar{
-  height:60px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between;
-  backdrop-filter: blur(8px);
-  background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
-  border-bottom:1px solid rgba(255,255,255,0.02);
+  height:64px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  position:sticky; top:0; z-index:10;
+  animation: slideDown .5s ease;
 }
 .brand{display:flex;align-items:center;gap:12px}
 .logo{
-  width:38px;height:38px;border-radius:12px;
-  background: linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
+  width:40px;height:40px;border-radius:12px;
+  background: conic-gradient(from 120deg at 50% 50%, var(--ig1),var(--ig2),var(--ig3),var(--ig4));
   box-shadow:0 8px 24px rgba(129,52,175,0.24);
 }
-.title{font-weight:700;letter-spacing:.2px}
+.title{font-weight:800;letter-spacing:.2px}
 .menu-btn{
-  font-size:20px;border:none;background:transparent;color:inherit;padding:8px;border-radius:10px;cursor:pointer;
-  transition:transform .18s ease;
+  font-size:22px;border:none;background:transparent;color:inherit;padding:8px;border-radius:10px;cursor:pointer;
+  transition:transform .18s ease, background .18s;
 }
+.menu-btn:hover{background:rgba(255,255,255,0.06)}
 .menu-btn:active{transform:scale(.96)}
 
 /* HERO */
@@ -74,23 +82,24 @@ body{
 .hero .badge{
   display:inline-flex; align-items:center; gap:8px;
   padding:6px 12px; border-radius:999px; font-weight:700; font-size:12px;
-  background:linear-gradient(90deg,var(--accent3),var(--accent4));
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
   box-shadow:0 10px 26px rgba(81,91,212,0.18);
 }
-.hero h1{font-size: calc(16px + 1.5vw);
-         margin:10px 0 6px;
-         font-weight:800;
-         letter-spacing:.2px}
-.hero p{font-size: calc(12px + 0.8vw);
-        color:var(--muted)}
+.hero h1{
+  font-size: 22px; margin:10px 0 6px; font-weight:800; letter-spacing:.2px
+}
+.hero p{font-size:13px; color:var(--muted)}
 
 /* CARD */
 .card{
   margin:14px auto; width:90%;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
-  border:1px solid var(--stroke); border-radius:16px; padding:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.012));
+  border:1px solid var(--stroke); border-radius:var(--r-md); padding:14px;
   box-shadow:0 14px 34px rgba(2,6,23,0.5);
+  transition: transform .2s ease, border-color .2s ease;
 }
+.card:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,0.14); }
+
 .row{display:flex;gap:10px;align-items:center}
 .input{
   flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--stroke);
@@ -98,7 +107,7 @@ body{
   color:inherit;font-size:14px;outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);
   transition:box-shadow .15s, transform .12s, border-color .12s;
 }
-.input:focus{box-shadow:0 10px 34px rgba(81,91,212,0.1);transform:translateY(-2px);border-color:rgba(129,52,175,0.6)}
+.input:focus{box-shadow:0 10px 34px rgba(81,91,212,0.12);transform:translateY(-2px);border-color:rgba(129,52,175,0.6)}
 .btn{
   padding:12px 14px;border-radius:12px;border:none;color:#fff;font-weight:800;letter-spacing:.2px;
   background:linear-gradient(90deg,#ff8a65,#f06292); cursor:pointer; display:inline-flex; align-items:center; gap:10px;
@@ -106,57 +115,31 @@ body{
   transition:transform .16s ease, box-shadow .16s;
 }
 .btn:active{transform:scale(.98)}
+.btn.ghost{background:transparent;border:1px solid var(--stroke)}
+.btn.ok{background:linear-gradient(90deg,#16a34a,#22c55e)}
+.btn.fb{background:linear-gradient(90deg,#3b5998,#4267B2)}
+.btn.warn{background:linear-gradient(90deg,#eab308,#f59e0b)}
 .btn .loader{width:16px;height:16px;border:2px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin .9s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* QUICK ACTIONS */
-.actions{display:flex;
-         gap:10px;
-         margin-top:12px;
-         flex-wrap:wrap;
-        }
+.actions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
 .action{
   flex:1 1 calc(33.33% - 10px);
-  padding:12px;
-  border-radius:14px;
-  border:1px solid var(--stroke);
-  display:flex; 
-  align-items:center;
-  gap:10px;
-  cursor:pointer;
+  padding:12px; border-radius:14px; border:1px solid var(--stroke);
+  display:flex; align-items:center; gap:10px; cursor:pointer;
   background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   transition:transform .14s, box-shadow .14s, border-color .14s;
-  min-width:100px;
-  box-sizing:border-box;
+  min-width:100px; box-sizing:border-box; position:relative; overflow:hidden;
 }
-.action:active{transform:translateY(1px);
-              }
-
+.action:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,0.14); }
 .icon{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  background:rgba(255,255,255,0.06)
+  width:34px; height:34px; border-radius:10px; display:grid; place-items:center; background:rgba(255,255,255,0.06);
   flex-shrink:0;
 }
-.action-text{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap:2px;
-}
- .action-title{
-   font-weight: 700;
-   font-size: 14px;
-   text-align: left;
- }
-  .action-subtitle {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: left;
-  }
+.action-text{ display:flex; flex-direction:column; gap:2px }
+.action-title{ font-weight:700; font-size:14px; text-align:left }
+.action-subtitle{ font-size:12px; color:var(--muted); text-align:left }
 
 /* PREMIUM STRIP */
 .premium{
@@ -164,28 +147,31 @@ body{
   background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   display:flex; align-items:center; justify-content:space-between; gap:10px;
 }
-.cta{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.08); background:linear-gradient(90deg,var(--accent3),var(--accent4)); color:#fff; font-weight:800; cursor:pointer}
 
 /* RECENTS */
-.section-title{width:90%; margin:12px auto 6px; font-weight:800; font-size:13px; color:var(--muted)}
-.grid{
-  width:90%; margin:8px auto 20px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
-}
+.section-title{width:90%; margin:12px auto 6px; font-weight:800; font-size:13px; color:var(--muted); display:flex; align-items:center; justify-content:space-between}
+.grid{ width:90%; margin:8px auto 20px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
 .thumb{
   aspect-ratio:1/1; border-radius:12px; overflow:hidden; position:relative; border:1px solid var(--stroke);
   background:linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  display:flex; align-items:center; justify-content:center; font-size:12px; color:#cfe4ff;
 }
 .thumb .play{
   position:absolute; right:6px; bottom:6px; font-size:11px; padding:6px 8px; border-radius:999px;
   background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.06)
+}
+.thumb .meta{
+  position:absolute; left:6px; top:6px; font-size:10px; padding:4px 6px; border-radius:999px;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08)
 }
 
 /* TOAST */
 .toast{
   position:absolute; left:50%; bottom:82px; transform:translateX(-50%); 
   background:#0b1220; color:#fff; padding:10px 14px; border-radius:10px; 
-  border:1px solid rgba(255,255,255,0.06); box-shadow:0 10px 24px rgba(0,0,0,0.45);
-  opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+  border:1px solid rgba(255,255,255,0.08); box-shadow:0 10px 24px rgba(0,0,0,0.45);
+  opacity:0; pointer-events:none; transition:opacity .22s, transform .22s;
+  max-width: 85%; text-align:center;
 }
 
 /* BOTTOM NAV */
@@ -193,7 +179,7 @@ body{
   position:absolute; left:0; right:0; bottom:0; height:64px; display:flex; align-items:center; justify-content:space-around;
   background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
   backdrop-filter: blur(6px);
-  border-top:1px solid rgba(255,255,255,0.02);
+  border-top:1px solid rgba(255,255,255,0.06);
 }
 .tab{display:flex; flex-direction:column; align-items:center; gap:4px; font-size:11px; color:var(--muted)}
 .tab-btn{border:none;background:transparent;color:#fff;cursor:pointer;padding:6px 10px;border-radius:10px}
@@ -206,7 +192,7 @@ body{
   position:absolute; left:0; top:0; bottom:0; width:280px;
   transform:translateX(-100%); transition:transform .36s cubic-bezier(.2,.9,.3,1);
   background:linear-gradient(180deg,#071032,#0b1530);
-  border-right:1px solid rgba(255,255,255,0.04);
+  border-right:1px solid rgba(255,255,255,0.06);
   box-shadow: 10px 0 34px rgba(2,6,23,0.6);
   padding:18px;
   z-index:1000;
@@ -218,24 +204,34 @@ body{
   display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; color:#fff; text-decoration:none;
   transition:background .18s, transform .12s; border:1px solid transparent;
 }
-.navlink:hover{background:rgba(255,255,255,0.04)}
+.navlink:hover{background:rgba(255,255,255,0.06)}
 .navlink svg{opacity:.95}
+
+/* PROGRESS STRIP (fake) */
+.progress{
+  height:10px; background:#0c1220; border:1px solid var(--stroke); border-radius:999px; overflow:hidden;
+  margin-top:10px;
+}
+.progress .bar{
+  width:0%; height:100%;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  animation: flow 2.2s linear infinite;
+}
+@keyframes flow{ 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(360deg)} }
 
 /* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important; transition:none !important}
 }
-@media (max-width: 420px) {
-  .action {
-    flex: 1 1 100%;
-  }
-}
+@media (max-width: 420px) { .action { flex: 1 1 100%; } }
 /* MOBILE HEIGHT */
+@supports(height: 1dvh){ :root{ --vh: 1dvh; } }
 @media (max-width:420px){
-  .device{
-    height: calc(var(--vh, 1vh) * 92);
-  }
+  .device{ height: calc(var(--vh, 1vh) * 92); }
 }
+
+/* Keyframe entrances */
+@keyframes slideDown{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
 </style>
 </head>
 <body>
@@ -268,7 +264,7 @@ body{
       <div style="font-size:12px;color:var(--muted)">Demo mode</div>
     </div>
     <div class="row">
-      <input id="link" class="input" placeholder="https://www.instagram.com/stories/..." aria-label="Story link input">
+      <input id="link" class="input" placeholder="https://www.instagram.com/stories/..." aria-label="Story link input" inputmode="url" autocomplete="off">
       <button id="paste" class="btn" title="Paste"><span>📋 Paste</span></button>
     </div>
     <div class="row" style="margin-top:10px">
@@ -278,48 +274,52 @@ body{
       <div style="flex:1"></div>
       <button class="btn" onclick="location.href='subscription.html'">⭐ Go Premium</button>
     </div>
-    <div class="actions">
-  <button class="action" onclick="location.href='index.html'">
-    <div class="icon">📸</div>
-    <div class="action-text">
-      <div class="action-title">Instagram</div>
-      <div class="action-subtitle">Stories & reels</div>
-    </div>
-  </button>
-  <button class="action" onclick="location.href='facebook.html'">
-    <div class="icon">📘</div>
-    <div class="action-text">
-      <div class="action-title">Facebook</div>
-      <div class="action-subtitle">Public stories</div>
-    </div>
-  </button>
-  <button class="action" onclick="location.href='whatsapp.html'">
-    <div class="icon">💬</div>
-    <div class="action-text">
-      <div class="action-title">WhatsApp</div>
-      <div class="action-subtitle">Native (Android)</div>
-    </div>
-  </button>
-</div>
 
+    <div class="actions" style="margin-top:12px">
+      <button class="action" onclick="location.href='index.html'">
+        <div class="icon">📸</div>
+        <div class="action-text">
+          <div class="action-title">Instagram</div>
+          <div class="action-subtitle">Stories & reels</div>
+        </div>
+      </button>
+      <button class="action" onclick="location.href='facebook.html'">
+        <div class="icon">📘</div>
+        <div class="action-text">
+          <div class="action-title">Facebook</div>
+          <div class="action-subtitle">Public videos</div>
+        </div>
+      </button>
+      <button class="action" onclick="location.href='whatsapp.html'">
+        <div class="icon">💬</div>
+        <div class="action-text">
+          <div class="action-title">WhatsApp</div>
+          <div class="action-subtitle">Native (Android)</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- Fake progress strip (visible during processing) -->
+    <div id="progress" class="progress" hidden>
+      <div id="bar" class="bar"></div>
+    </div>
   </div>
 
   <!-- Premium Strip -->
   <div class="premium">
     <div>Unlock <strong>Facebook & Instagram login</strong> + remove ads</div>
-    <button class="cta" onclick="location.href='subscription.html'">Upgrade</button>
+    <button class="cta btn fb" onclick="location.href='subscription.html'">Upgrade</button>
   </div>
 
   <!-- Recents -->
-  <div class="section-title">Recent downloads (demo)</div>
-  <div class="grid" aria-hidden="false">
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
+  <div class="section-title">
+    <span>Recent downloads</span>
+    <div style="display:flex; gap:8px">
+      <button id="copyLast" class="btn ghost" style="padding:8px 10px;font-weight:600">Copy last link</button>
+      <button id="clearRecents" class="btn warn" style="padding:8px 10px">Clear</button>
+    </div>
   </div>
+  <div class="grid" id="recentsGrid" aria-live="polite"></div>
 
   <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -359,7 +359,19 @@ body{
 </div>
 
 <script>
-/* Drawer controls */
+/* ======================
+   Mobile vh fix
+====================== */
+function setVH(){
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+setVH();
+addEventListener('resize', setVH);
+
+/* ======================
+   Drawer controls + swipe
+====================== */
 const drawer   = document.getElementById('drawer');
 const openMenu = document.getElementById('openMenu');
 const backdrop = document.getElementById('backdrop');
@@ -375,39 +387,51 @@ function closeDrawer(){
 openMenu.addEventListener('click', openDrawer);
 backdrop.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
-
-/* Swipe to close (mobile) */
 let startX=0, dragging=false;
 drawer.addEventListener('touchstart', e=>{
   if(!drawer.classList.contains('open')) return;
   startX = e.touches[0].clientX; dragging=true;
-}, {passive:true});
+},{passive:true});
 drawer.addEventListener('touchend', e=>{
   if(!dragging) return;
   const endX = (e.changedTouches?.[0]?.clientX)||startX;
-  const diffX = startX - endX;
-  if(diffX > 70) closeDrawer();
+  if(startX - endX > 70) closeDrawer();
   dragging=false;
 });
-let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-  window.addEventListener('resize', ()=>{
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  });
-/* Toast helper */
+
+/* ======================
+   Toast helper
+====================== */
 const toast = document.getElementById('toast');
-function showToast(msg, ms=2000){
+function showToast(msg, ms=2200){
   toast.textContent = msg;
   toast.style.opacity='1';
   toast.style.transform='translateX(-50%) translateY(-4px)';
-  setTimeout(()=>{ toast.style.opacity='0'; toast.style.transform='translateX(-50%)'; }, ms);
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>{
+    toast.style.opacity='0';
+    toast.style.transform='translateX(-50%)';
+  }, ms);
 }
 
-/* Clipboard + Download demo */
+/* ======================
+   URL validation helpers
+====================== */
+function isInstagramUrl(u){
+  try{
+    const url = new URL(u.trim());
+    return /(instagram\.com|instagr\.am)$/i.test(url.hostname) || /instagram\.com/i.test(url.href);
+  }catch{ return false }
+}
+
+/* ======================
+   Clipboard + Download demo
+====================== */
 const pasteBtn    = document.getElementById('paste');
 const downloadBtn = document.getElementById('download');
 const linkInput   = document.getElementById('link');
+const progressEl  = document.getElementById('progress');
+const barEl       = document.getElementById('bar');
 
 pasteBtn.addEventListener('click', async ()=>{
   try{
@@ -415,31 +439,144 @@ pasteBtn.addEventListener('click', async ()=>{
     if(t && t.length>5){
       linkInput.value = t;
       showToast('Pasted from clipboard'); 
+      linkInput.dispatchEvent(new Event('change'));
     } else { 
       linkInput.focus();
       showToast('Manually paste the link');
     }
   }catch(e){ 
     showToast('Clipboard access blocked');
-}
+  }
 });
 
-downloadBtn.addEventListener('click', ()=>{
+linkInput.addEventListener('change', ()=>{
+  const v = (linkInput.value||'').trim();
+  if(!v) return;
+  if(!isInstagramUrl(v)){
+    showToast('Please paste a valid Instagram link');
+  } else {
+    showToast('Link looks good ✅');
+  }
+});
+
+async function fakeProgress(){
+  progressEl.hidden = false; barEl.style.width = '0%';
+  for(let i=0;i<=100;i+=3){
+    barEl.style.width = i+'%';
+    await new Promise(r=>setTimeout(r, 35));
+  }
+  progressEl.hidden = true;
+}
+
+downloadBtn.addEventListener('click', async ()=>{
   const url = (linkInput.value||'').trim();
   if(!url){ showToast('Please enter a link'); return; }
-  if(url.length < 10){ showToast('Link looks invalid'); return; }
+  if(!isInstagramUrl(url)){ showToast('Invalid Instagram link'); return; }
 
   // button loader
   const prev = downloadBtn.innerHTML;
   downloadBtn.disabled = true;
   downloadBtn.innerHTML = '<span class="loader"></span><span>Processing…</span>';
+  await fakeProgress();
+  downloadBtn.disabled = false;
+  downloadBtn.innerHTML = prev;
 
-  setTimeout(()=>{
-    downloadBtn.disabled = false;
-    downloadBtn.innerHTML = prev;
-    showToast('Downloaded (simulated) — connect backend later');
-    linkInput.value='';
-  }, 1400);
+  // Simulated result
+  addRecent({
+    platform: 'Instagram',
+    format: Math.random()>0.5 ? 'MP4' : 'JPG',
+    url,
+    ts: Date.now()
+  });
+  renderRecents();
+  showToast('Downloaded (demo) — connect backend later');
+  linkInput.value='';
+});
+
+/* ======================
+   Recents (localStorage)
+====================== */
+const GRID = document.getElementById('recentsGrid');
+function getRecents(){
+  try{ return JSON.parse(localStorage.getItem('iss_recents')||'[]'); }catch{ return [] }
+}
+function setRecents(arr){
+  localStorage.setItem('iss_recents', JSON.stringify(arr));
+}
+function addRecent(it){
+  const arr = getRecents();
+  arr.unshift(it);
+  setRecents(arr.slice(0,12)); // keep last 12
+}
+
+function timeAgo(ts){
+  const s = Math.max(1, Math.floor((Date.now()-ts)/1000));
+  if(s<60) return `${s}s ago`;
+  const m = Math.floor(s/60); if(m<60) return `${m}m ago`;
+  const h = Math.floor(m/60); if(h<24) return `${h}h ago`;
+  const d = Math.floor(h/24); return `${d}d ago`;
+}
+
+function renderRecents(){
+  const items = getRecents();
+  GRID.innerHTML = '';
+  if(!items.length){
+    GRID.innerHTML = `
+      <div class="thumb"><div class="meta">Empty</div><div class="play">—</div></div>
+      <div class="thumb"><div class="meta">No</div><div class="play">—</div></div>
+      <div class="thumb"><div class="meta">Data</div><div class="play">—</div></div>
+    `;
+    return;
+  }
+  for(const it of items){
+    const div = document.createElement('div');
+    div.className = 'thumb';
+    div.innerHTML = `
+      <div class="meta">${it.platform}</div>
+      <div>${it.platform === 'Instagram' ? '📸' : it.platform === 'Facebook' ? '📘' : '💬'}</div>
+      <div class="play">${it.format}</div>
+      <button title="Copy link" class="copy" style="position:absolute;left:6px;bottom:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#fff;padding:4px 8px;border-radius:999px;cursor:pointer">Copy</button>
+      <div style="position:absolute;right:6px;top:6px;font-size:10px;color:#cfe4ff;opacity:.8">${timeAgo(it.ts)}</div>
+    `;
+    div.querySelector('.copy').addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(it.url); showToast('Link copied'); }catch{ showToast('Copy failed'); }
+    });
+    GRID.appendChild(div);
+  }
+}
+renderRecents();
+
+document.getElementById('clearRecents').addEventListener('click', ()=>{
+  setRecents([]); renderRecents(); showToast('Recents cleared');
+});
+document.getElementById('copyLast').addEventListener('click', async ()=>{
+  const arr = getRecents();
+  if(!arr.length) return showToast('No items yet');
+  try{ await navigator.clipboard.writeText(arr[0].url); showToast('Last link copied'); }catch{ showToast('Copy failed'); }
+});
+
+/* ======================
+   Demo: Preload some recents if empty (first run)
+====================== */
+(function seedDemo(){
+  const arr = getRecents();
+  if(arr.length) return;
+  setRecents([
+    {platform:'Instagram', format:'MP4', url:'https://instagram.com/p/xyz1', ts: Date.now()- 120000},
+    {platform:'Facebook',  format:'MP4', url:'https://facebook.com/watch?v=abc2', ts: Date.now()- 360000},
+    {platform:'WhatsApp',  format:'JPG', url:'file:///status/img3.jpg', ts: Date.now()- 540000}
+  ]);
+  renderRecents();
+})();
+
+/* ======================
+   Nice UX: autofocus on tap into input box
+====================== */
+document.querySelector('.card').addEventListener('click', (e)=>{
+  const inEl = document.getElementById('link');
+  if(e.target === inEl) return;
+  // focus input if clicked in card empty area
+  if(getSelection().toString()===''){ inEl.focus(); }
 });
 </script>
 </body>
