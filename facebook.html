@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Facebook Downloader — Instant Story Saver</title>
+<title>Instant Story Saver — World-Class</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -30,21 +30,22 @@ body{
   display:flex;align-items:center;justify-content:center; padding:18px; min-height:100vh;
 }
 
-/* DEVICE FRAME (same theme + responsive fixes) */
+/* DEVICE FRAME */
 .device{
-  width:392px; max-width:96vw;
-  height:100vh; min-height:640px;
-  display:flex; flex-direction:column;
-  overflow:auto; -webkit-overflow-scrolling:touch;
-  padding-bottom:76px; /* keep content above bottom nav */
+  width:96vw; 
+  max-width:392px; height:92vh;
+  min-height: 600px; 
   border-radius:28px; position:relative; overflow:hidden;
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
   border:1px solid rgba(255,255,255,0.03);
   box-shadow: 0 24px 70px rgba(2,6,23,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
 }
-@supports (height: 100dvh){ .device{height:100dvh} }
-/* spacer so iOS bottom UI se content cut na ho */
-.device::after{content:"";display:block;height:calc(64px + env(safe-area-inset-bottom,0px) + 8px)}
+.device-inner{
+  width:100%;
+  height:100%;
+  overflow-y:auto;
+  padding-bottom:80px;
+}
 
 /* TOP BAR */
 .topbar{
@@ -67,15 +68,21 @@ body{
 .menu-btn:active{transform:scale(.96)}
 
 /* HERO */
-.hero{padding:20px 20px 12px; text-align:center}
+.hero{
+  padding:20px 20px 12px; text-align:center;
+}
 .hero .badge{
   display:inline-flex; align-items:center; gap:8px;
   padding:6px 12px; border-radius:999px; font-weight:700; font-size:12px;
-  background:linear-gradient(90deg,#3b5998,#1f3b82); /* fb-ish */
-  box-shadow:0 10px 26px rgba(31,59,130,0.25);
+  background:linear-gradient(90deg,var(--accent3),var(--accent4));
+  box-shadow:0 10px 26px rgba(81,91,212,0.18);
 }
-.hero h1{font-size:20px;margin:10px 0 6px;font-weight:800;letter-spacing:.2px}
-.hero p{font-size:13px;color:var(--muted)}
+.hero h1{font-size: calc(16px + 1.5vw);
+         margin:10px 0 6px;
+         font-weight:800;
+         letter-spacing:.2px}
+.hero p{font-size: calc(12px + 0.8vw);
+        color:var(--muted)}
 
 /* CARD */
 .card{
@@ -84,36 +91,72 @@ body{
   border:1px solid var(--stroke); border-radius:16px; padding:14px;
   box-shadow:0 14px 34px rgba(2,6,23,0.5);
 }
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row{display:flex;gap:10px;align-items:center}
 .input{
-  flex:1 1 220px;padding:12px 14px;border-radius:12px;border:1px solid var(--stroke);
+  flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--stroke);
   background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
   color:inherit;font-size:14px;outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);
   transition:box-shadow .15s, transform .12s, border-color .12s;
 }
-.input:focus{box-shadow:0 10px 34px rgba(81,91,212,0.1);transform:translateY(-2px);border-color:rgba(81,91,212,0.6)}
+.input:focus{box-shadow:0 10px 34px rgba(81,91,212,0.1);transform:translateY(-2px);border-color:rgba(129,52,175,0.6)}
 .btn{
   padding:12px 14px;border-radius:12px;border:none;color:#fff;font-weight:800;letter-spacing:.2px;
-  background:linear-gradient(90deg,#3b5998,#4267B2); cursor:pointer; display:inline-flex; align-items:center; gap:10px;
-  box-shadow:0 10px 26px rgba(31,59,130,0.22), 0 2px 6px rgba(0,0,0,0.45);
+  background:linear-gradient(90deg,#ff8a65,#f06292); cursor:pointer; display:inline-flex; align-items:center; gap:10px;
+  box-shadow:0 10px 26px rgba(208,64,118,0.18), 0 2px 6px rgba(0,0,0,0.45);
   transition:transform .16s ease, box-shadow .16s;
 }
 .btn:active{transform:scale(.98)}
 .btn .loader{width:16px;height:16px;border:2px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin .9s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* QUICK ACTIONS (same layout; wraps on small screens) */
-.actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+/* QUICK ACTIONS */
+.actions{display:flex;
+         gap:10px;
+         margin-top:12px;
+         flex-wrap:wrap;
+        }
 .action{
-  position:relative; flex:1 1 clamp(120px, 48%, 220px);
-  padding:12px;border-radius:14px;border:1px solid var(--stroke);
-  text-align:left; cursor:pointer;
+  flex:1 1 calc(33.33% - 10px);
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--stroke);
+  display:flex; 
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
   background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  display:flex; align-items:center; gap:10px; transition:transform .14s, box-shadow .14s, border-color .14s;
-  min-width:120px;
+  transition:transform .14s, box-shadow .14s, border-color .14s;
+  min-width:100px;
+  box-sizing:border-box;
 }
-.action:active{transform:translateY(1px)}
-.icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,0.06)}
+.action:active{transform:translateY(1px);
+              }
+
+.icon{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,0.06)
+  flex-shrink:0;
+}
+.action-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap:2px;
+}
+ .action-title{
+   font-weight: 700;
+   font-size: 14px;
+   text-align: left;
+ }
+  .action-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: left;
+  }
 
 /* PREMIUM STRIP */
 .premium{
@@ -125,11 +168,17 @@ body{
 
 /* RECENTS */
 .section-title{width:90%; margin:12px auto 6px; font-weight:800; font-size:13px; color:var(--muted)}
-.grid{width:90%; margin:8px auto 20px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
-.thumb{aspect-ratio:1/1; border-radius:12px; overflow:hidden; position:relative; border:1px solid var(--stroke);
-  background:linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))}
-.thumb .play{position:absolute; right:6px; bottom:6px; font-size:11px; padding:6px 8px; border-radius:999px;
-  background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.06)}
+.grid{
+  width:90%; margin:8px auto 20px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
+}
+.thumb{
+  aspect-ratio:1/1; border-radius:12px; overflow:hidden; position:relative; border:1px solid var(--stroke);
+  background:linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+}
+.thumb .play{
+  position:absolute; right:6px; bottom:6px; font-size:11px; padding:6px 8px; border-radius:999px;
+  background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.06)
+}
 
 /* TOAST */
 .toast{
@@ -145,7 +194,6 @@ body{
   background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
   backdrop-filter: blur(6px);
   border-top:1px solid rgba(255,255,255,0.02);
-  padding-bottom:env(safe-area-inset-bottom,0px);
 }
 .tab{display:flex; flex-direction:column; align-items:center; gap:4px; font-size:11px; color:var(--muted)}
 .tab-btn{border:none;background:transparent;color:#fff;cursor:pointer;padding:6px 10px;border-radius:10px}
@@ -171,35 +219,36 @@ body{
   transition:background .18s, transform .12s; border:1px solid transparent;
 }
 .navlink:hover{background:rgba(255,255,255,0.04)}
-.navlink.active{background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.08)}
+.navlink svg{opacity:.95}
 
 /* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important; transition:none !important}
 }
-
+@media (max-width: 420px) {
+  .action {
+    flex: 1 1 100%;
+  }
+}
 /* MOBILE HEIGHT */
 @media (max-width:420px){
-  .device{height:auto; min-height:100vh}
-}
-@media (max-width:340px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .actions{gap:8px}
-  .action{flex:1 1 100%}
+  .device{
+    height: calc(var(--vh, 1vh) * 92);
+  }
 }
 </style>
 </head>
 <body>
 
-<div class="device" role="application" aria-label="Facebook Downloader — Instant Story Saver">
-
+<div class="device" role="application" aria-label="Instant Story Saver">
+<div class="device-inner">
   <!-- Top Bar -->
   <div class="topbar">
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
       <div>
         <div class="title">Instant Story Saver</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">Facebook · Instagram · WhatsApp</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Instagram · Facebook · WhatsApp</div>
       </div>
     </div>
     <button class="menu-btn" id="openMenu" aria-label="Open menu">☰</button>
@@ -207,58 +256,57 @@ body{
 
   <!-- Hero -->
   <div class="hero">
-    <div class="badge">📘 Facebook — HD/SD · No Login</div>
-    <h1>Download Facebook videos instantly</h1>
-    <p>Public videos & reels · High quality · Safe & clean</p>
+    <div class="badge">🚀 Ultra-Fast · Safe · Clean</div>
+    <h1>Save stories in one tap</h1>
+    <p>No ads in Premium · High-quality downloads · Login integrations</p>
   </div>
 
   <!-- Link Card -->
-  <div class="card" aria-label="Paste Facebook link card">
+  <div class="card" aria-label="Paste link card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <div style="font-weight:800;letter-spacing:.2px">Paste Facebook video link</div>
+      <div style="font-weight:800;letter-spacing:.2px">Paste Instagram link</div>
       <div style="font-size:12px;color:var(--muted)">Demo mode</div>
     </div>
     <div class="row">
-      <input id="link" class="input" placeholder="https://www.facebook.com/.../videos/..." aria-label="Facebook link input">
+      <input id="link" class="input" placeholder="https://www.instagram.com/stories/..." aria-label="Story link input">
       <button id="paste" class="btn" title="Paste"><span>📋 Paste</span></button>
     </div>
     <div class="row" style="margin-top:10px">
       <button id="download" class="btn" title="Download">
-        <span id="dlText">⬇️ Download</span>
+        <span id="dlText">▶️ Download</span>
       </button>
       <div style="flex:1"></div>
       <button class="btn" onclick="location.href='subscription.html'">⭐ Go Premium</button>
     </div>
-
-    <!-- Quick Actions (same) -->
     <div class="actions">
-      <button class="action" onclick="location.href='index.html'">
-        <div class="icon">📸</div>
-        <div>
-          <div style="font-weight:700">Instagram</div>
-          <div style="font-size:12px;color:var(--muted)">Stories & reels</div>
-        </div>
-      </button>
-      <button class="action" onclick="location.href='facebook.html'">
-        <div class="icon">📘</div>
-        <div>
-          <div style="font-weight:700">Facebook</div>
-          <div style="font-size:12px;color:var(--muted)">Public videos</div>
-        </div>
-      </button>
-      <button class="action" onclick="location.href='whatsapp.html'">
-        <div class="icon">💬</div>
-        <div>
-          <div style="font-weight:700">WhatsApp</div>
-          <div style="font-size:12px;color:var(--muted)">Native (Android)</div>
-        </div>
-      </button>
+  <button class="action" onclick="location.href='index.html'">
+    <div class="icon">📸</div>
+    <div class="action-text">
+      <div class="action-title">Instagram</div>
+      <div class="action-subtitle">Stories & reels</div>
     </div>
+  </button>
+  <button class="action" onclick="location.href='facebook.html'">
+    <div class="icon">📘</div>
+    <div class="action-text">
+      <div class="action-title">Facebook</div>
+      <div class="action-subtitle">Public stories</div>
+    </div>
+  </button>
+  <button class="action" onclick="location.href='whatsapp.html'">
+    <div class="icon">💬</div>
+    <div class="action-text">
+      <div class="action-title">WhatsApp</div>
+      <div class="action-subtitle">Native (Android)</div>
+    </div>
+  </button>
+</div>
+
   </div>
 
   <!-- Premium Strip -->
   <div class="premium">
-    <div>Unlock <strong>Instagram & Facebook login</strong> + remove ads</div>
+    <div>Unlock <strong>Facebook & Instagram login</strong> + remove ads</div>
     <button class="cta" onclick="location.href='subscription.html'">Upgrade</button>
   </div>
 
@@ -266,11 +314,11 @@ body{
   <div class="section-title">Recent downloads (demo)</div>
   <div class="grid" aria-hidden="false">
     <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">MP4</div></div>
+    <div class="thumb"><div class="play">JPG</div></div>
     <div class="thumb"><div class="play">MP4</div></div>
     <div class="thumb"><div class="play">JPG</div></div>
     <div class="thumb"><div class="play">MP4</div></div>
+    <div class="thumb"><div class="play">JPG</div></div>
   </div>
 
   <!-- Toast -->
@@ -278,7 +326,7 @@ body{
 
   <!-- Bottom Nav -->
   <div class="bottom" role="navigation" aria-label="Bottom navigation">
-    <div class="tab">
+    <div class="tab active">
       <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
       <div>Home</div>
     </div>
@@ -297,7 +345,7 @@ body{
     <div class="back" id="backdrop" tabindex="-1"></div>
     <nav class="panel" role="navigation" aria-label="Main menu">
       <a class="navlink" href="index.html">🏠 Home — Instagram</a>
-      <a class="navlink active" href="facebook.html">📘 Facebook Downloader</a>
+      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
       <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
       <a class="navlink" href="subscription.html">⭐ Subscription</a>
       <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
@@ -307,7 +355,7 @@ body{
       <a class="navlink" href="success.html"><strong>💬 Feedback</strong></a>
     </nav>
   </div>
-
+</div>
 </div>
 
 <script>
@@ -337,10 +385,16 @@ drawer.addEventListener('touchstart', e=>{
 drawer.addEventListener('touchend', e=>{
   if(!dragging) return;
   const endX = (e.changedTouches?.[0]?.clientX)||startX;
-  if(startX - endX > 50) closeDrawer();
+  const diffX = startX - endX;
+  if(diffX > 70) closeDrawer();
   dragging=false;
 });
-
+let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  window.addEventListener('resize', ()=>{
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  });
 /* Toast helper */
 const toast = document.getElementById('toast');
 function showToast(msg, ms=2000){
@@ -358,9 +412,16 @@ const linkInput   = document.getElementById('link');
 pasteBtn.addEventListener('click', async ()=>{
   try{
     const t = await navigator.clipboard.readText();
-    if(t && t.length>5){ linkInput.value = t; showToast('Pasted from clipboard'); }
-    else showToast('Clipboard empty');
-  }catch(e){ showToast('Clipboard access blocked'); }
+    if(t && t.length>5){
+      linkInput.value = t;
+      showToast('Pasted from clipboard'); 
+    } else { 
+      linkInput.focus();
+      showToast('Manually paste the link');
+    }
+  }catch(e){ 
+    showToast('Clipboard access blocked');
+}
 });
 
 downloadBtn.addEventListener('click', ()=>{
@@ -376,9 +437,9 @@ downloadBtn.addEventListener('click', ()=>{
   setTimeout(()=>{
     downloadBtn.disabled = false;
     downloadBtn.innerHTML = prev;
-    showToast('Downloaded (simulated) — backend connect later');
+    showToast('Downloaded (simulated) — connect backend later');
     linkInput.value='';
-  }, 1200);
+  }, 1400);
 });
 </script>
 </body>
