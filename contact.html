@@ -5,107 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Contact Us — Instant Story Saver</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"> <!-- yadi alag CSS file me rakhi ho -->
-</head>
-<body>
 
-<div class="device" role="application" aria-label="Instant Story Saver">
-<div class="device-inner">
-
-  <!-- Top Bar -->
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo"></div>
-      <div>
-        <div class="title">Instant Story Saver</div>
-        <div style="font-size:11px;color:var(--muted)">Instagram · Facebook · WhatsApp</div>
-      </div>
-    </div>
-    <button class="menu-btn" id="openMenu">☰</button>
-  </div>
-
-  <!-- Hero -->
-  <div class="hero">
-    <div class="badge">📩 Get in Touch</div>
-    <h1>Contact Us</h1>
-    <p>We’d love to hear from you. Send us your queries or feedback!</p>
-  </div>
-
-  <!-- Contact Card -->
-  <div class="card">
-    <form id="contactForm">
-      <input type="text" class="input" placeholder="Your Name" required style="margin-bottom:10px"/>
-      <input type="email" class="input" placeholder="Your Email" required style="margin-bottom:10px"/>
-      <textarea class="input" placeholder="Your Message" rows="4" required style="margin-bottom:10px;resize:none"></textarea>
-      <button type="submit" class="btn">📨 Send Message</button>
-    </form>
-  </div>
-
-  <!-- Info -->
-  <div class="premium">
-    <div>📧 Email us at <strong>support@instantstorysaver.com</strong></div>
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
-
-  <!-- Bottom Nav -->
-  <div class="bottom">
-    <div class="tab">
-      <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
-      <div>Home</div>
-    </div>
-    <div class="tab">
-      <button class="tab-btn" onclick="location.href='subscription.html'">⭐</button>
-      <div>Premium</div>
-    </div>
-    <div class="tab active">
-      <button class="tab-btn">📨</button>
-      <div>Contact</div>
-    </div>
-  </div>
-
-  <!-- Drawer -->
-  <div class="drawer" id="drawer">
-    <div class="back" id="backdrop"></div>
-    <nav class="panel">
-      <a class="navlink" href="index.html">🏠 Home</a>
-      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
-      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
-      <a class="navlink" href="subscription.html">⭐ Subscription</a>
-      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
-      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
-      <a class="navlink" href="contact.html">📨 Contact Us</a>
-      <a class="navlink" href="about.html">ℹ️ About</a>
-    </nav>
-  </div>
-
-</div>
-</div>
-
-<script>
-/* Drawer controls */
-const drawer   = document.getElementById('drawer');
-const openMenu = document.getElementById('openMenu');
-const backdrop = document.getElementById('backdrop');
-
-function openDrawer(){ drawer.classList.add('open'); }
-function closeDrawer(){ drawer.classList.remove('open'); }
-openMenu.addEventListener('click', openDrawer);
-backdrop.addEventListener('click', closeDrawer);
-
-/* Toast + form submit */
-const toast = document.getElementById('toast');
-function showToast(msg, ms=2000){
-  toast.textContent = msg;
-  toast.style.opacity='1';
-  setTimeout(()=>{ toast.style.opacity='0'; }, ms);
+<style>
+:root {
+  --bg: #f7f9fc;
+  --card: #fff;
+  --accent: #0066ff;
+  --accent-dark: #0044cc;
+  --muted: #6c757d;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
-document.getElementById('contactForm').addEventListener('submit', e=>{
-  e.preventDefault();
-  showToast("✅ Message sent successfully!");
-  e.target.reset();
-});
-</script>
-</body>
-</html>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif;}
+body{background:var(--bg);color:#111;}
+.device{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;}
+.device-inner{flex:1;display:flex;flex-direction:column;}
+
+/* Topbar */
+.topbar{display:flex;align-items:center
