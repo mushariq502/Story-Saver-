@@ -1,212 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - Instant Story Saver</title>
-  <style>
-    body {
-      margin:0;
-      font-family: Arial, sans-serif;
-      background:#0d0d0d;
-      color:#fff;
-    }
-
-    /* Navbar */
-    .navbar {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 16px;
-      background:#111;
-      border-bottom:1px solid #333;
-      position:sticky;
-      top:0;
-      z-index:100;
-    }
-    .navbar .logo {
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .navbar .logo img {
-      height:34px;
-    }
-    .navbar .app-name {
-      font-weight:bold;
-      font-size:18px;
-    }
-    .menu-toggle {
-      font-size:22px;
-      cursor:pointer;
-    }
-
-    /* Sidebar (Drawer) */
-    .drawer {
-      position:fixed;
-      top:0;
-      left:-260px;
-      width:260px;
-      height:100%;
-      background:#1a1a1a;
-      padding:20px;
-      transition:0.3s;
-      z-index:1000;
-    }
-    .drawer.active { left:0; }
-    .drawer-header {
-      text-align:center;
-      margin-bottom:20px;
-    }
-    .drawer-header img {
-      height:50px;
-      margin-bottom:10px;
-    }
-    .drawer-header h2 {
-      font-size:18px;
-      margin:0;
-    }
-    .drawer ul {
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
-    .drawer ul li {
-      margin:15px 0;
-    }
-    .drawer ul li a {
-      text-decoration:none;
-      color:#fff;
-      font-size:16px;
-      display:block;
-    }
-
-    /* Contact Page Content */
-    .container {
-      max-width:800px;
-      margin:40px auto;
-      padding:20px;
-    }
-    h1 {
-      text-align:center;
-      margin-bottom:20px;
-    }
-    .contact-info {
-      background:#1a1a1a;
-      padding:20px;
-      border-radius:12px;
-      margin-bottom:20px;
-    }
-    .contact-info p {
-      margin:8px 0;
-      font-size:15px;
-    }
-    .contact-form {
-      background:#1a1a1a;
-      padding:20px;
-      border-radius:12px;
-    }
-    .contact-form label {
-      display:block;
-      margin-bottom:6px;
-      font-weight:bold;
-    }
-    .contact-form input, .contact-form textarea {
-      width:100%;
-      padding:10px;
-      margin-bottom:12px;
-      border-radius:8px;
-      border:1px solid #333;
-      background:#0d0d0d;
-      color:#fff;
-    }
-    .contact-form button {
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:8px;
-      background:#007bff;
-      color:#fff;
-      font-size:16px;
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .contact-form button:hover {
-      background:#0056b3;
-    }
-
-    /* Overlay for drawer */
-    .overlay {
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background:rgba(0,0,0,0.5);
-      display:none;
-      z-index:500;
-    }
-    .overlay.active { display:block; }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact Us — Instant Story Saver</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"> <!-- yadi alag CSS file me rakhi ho -->
 </head>
 <body>
 
-  <!-- Navbar -->
-  <div class="navbar">
-    <div class="logo">
-      <img src="logo.png" alt="Logo">
-      <span class="app-name">Instant Story Saver</span>
+<div class="device" role="application" aria-label="Instant Story Saver">
+<div class="device-inner">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div class="title">Instant Story Saver</div>
+        <div style="font-size:11px;color:var(--muted)">Instagram · Facebook · WhatsApp</div>
+      </div>
     </div>
-    <div class="menu-toggle" onclick="toggleDrawer()">☰</div>
+    <button class="menu-btn" id="openMenu">☰</button>
   </div>
 
-  <!-- Drawer Sidebar -->
-  <div class="drawer" id="drawer">
-    <div class="drawer-header">
-      <img src="logo.png" alt="Logo">
-      <h2>Instant Story Saver</h2>
-    </div>
-    <ul>
-      <li><a href="index.html">🏠 Home</a></li>
-      <li><a href="facebook.html">📘 Facebook Downloader</a></li>
-      <li><a href="subscription.html">⭐ Subscription</a></li>
-      <li><a href="contacts.html">📩 Contact Us</a></li>
-    </ul>
-  </div>
-  <div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
-
-  <!-- Page Content -->
-  <div class="container">
+  <!-- Hero -->
+  <div class="hero">
+    <div class="badge">📩 Get in Touch</div>
     <h1>Contact Us</h1>
+    <p>We’d love to hear from you. Send us your queries or feedback!</p>
+  </div>
 
-    <div class="contact-info">
-      <p>📧 Email: support@instantstorysaver.com</p>
-      <p>🌐 Website: www.instantstorysaver.com</p>
-      <p>📱 Instagram: @instantstorysaver</p>
+  <!-- Contact Card -->
+  <div class="card">
+    <form id="contactForm">
+      <input type="text" class="input" placeholder="Your Name" required style="margin-bottom:10px"/>
+      <input type="email" class="input" placeholder="Your Email" required style="margin-bottom:10px"/>
+      <textarea class="input" placeholder="Your Message" rows="4" required style="margin-bottom:10px;resize:none"></textarea>
+      <button type="submit" class="btn">📨 Send Message</button>
+    </form>
+  </div>
+
+  <!-- Info -->
+  <div class="premium">
+    <div>📧 Email us at <strong>support@instantstorysaver.com</strong></div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom">
+    <div class="tab">
+      <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
+      <div>Home</div>
     </div>
-
-    <div class="contact-form">
-      <form>
-        <label for="name">Your Name</label>
-        <input type="text" id="name" placeholder="Enter your name" required>
-
-        <label for="email">Your Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
-
-        <label for="message">Message</label>
-        <textarea id="message" rows="5" placeholder="Type your message..." required></textarea>
-
-        <button type="submit">Send Message</button>
-      </form>
+    <div class="tab">
+      <button class="tab-btn" onclick="location.href='subscription.html'">⭐</button>
+      <div>Premium</div>
+    </div>
+    <div class="tab active">
+      <button class="tab-btn">📨</button>
+      <div>Contact</div>
     </div>
   </div>
 
-  <script>
-    function toggleDrawer(){
-      document.getElementById("drawer").classList.toggle("active");
-      document.getElementById("overlay").classList.toggle("active");
-    }
-  </script>
+  <!-- Drawer -->
+  <div class="drawer" id="drawer">
+    <div class="back" id="backdrop"></div>
+    <nav class="panel">
+      <a class="navlink" href="index.html">🏠 Home</a>
+      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
+      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
+      <a class="navlink" href="subscription.html">⭐ Subscription</a>
+      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
+      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
+      <a class="navlink" href="contact.html">📨 Contact Us</a>
+      <a class="navlink" href="about.html">ℹ️ About</a>
+    </nav>
+  </div>
 
+</div>
+</div>
+
+<script>
+/* Drawer controls */
+const drawer   = document.getElementById('drawer');
+const openMenu = document.getElementById('openMenu');
+const backdrop = document.getElementById('backdrop');
+
+function openDrawer(){ drawer.classList.add('open'); }
+function closeDrawer(){ drawer.classList.remove('open'); }
+openMenu.addEventListener('click', openDrawer);
+backdrop.addEventListener('click', closeDrawer);
+
+/* Toast + form submit */
+const toast = document.getElementById('toast');
+function showToast(msg, ms=2000){
+  toast.textContent = msg;
+  toast.style.opacity='1';
+  setTimeout(()=>{ toast.style.opacity='0'; }, ms);
+}
+document.getElementById('contactForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  showToast("✅ Message sent successfully!");
+  e.target.reset();
+});
+</script>
 </body>
 </html>
