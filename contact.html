@@ -22,4 +22,143 @@ body{background:var(--bg);color:#111;}
 .device-inner{flex:1;display:flex;flex-direction:column;}
 
 /* Topbar */
-.topbar{display:flex;align-items:center
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card);box-shadow:var(--shadow);}
+.brand{display:flex;align-items:center;gap:8px;}
+.logo{width:34px;height:34px;background:var(--accent);border-radius:50%;}
+.title{font-weight:600;font-size:16px;}
+.menu-btn{background:none;border:none;font-size:22px;cursor:pointer;}
+
+/* Hero */
+.hero{text-align:center;padding:28px 16px;}
+.hero h1{font-size:24px;margin:8px 0;}
+.hero p{color:var(--muted);font-size:14px;}
+.badge{display:inline-block;background:var(--accent);color:#fff;font-size:12px;padding:4px 10px;border-radius:20px;}
+
+/* Card */
+.card{background:var(--card);margin:16px;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
+.input{width:100%;padding:12px;border:1px solid #ddd;border-radius:var(--radius);font-size:14px;}
+.btn{width:100%;padding:12px;background:var(--accent);border:none;color:#fff;border-radius:var(--radius);font-weight:600;cursor:pointer;transition:.2s;}
+.btn:hover{background:var(--accent-dark);}
+
+/* Info */
+.premium{text-align:center;font-size:13px;color:var(--muted);padding:12px;}
+
+/* Bottom Nav */
+.bottom{display:flex;justify-content:space-around;align-items:center;background:var(--card);box-shadow:var(--shadow);padding:6px 0;position:sticky;bottom:0;}
+.tab{text-align:center;font-size:11px;color:var(--muted);}
+.tab-btn{background:none;border:none;font-size:20px;cursor:pointer;}
+.tab.active{color:var(--accent);}
+
+/* Drawer */
+.drawer{position:fixed;inset:0;display:none;}
+.drawer.open{display:block;}
+.back{position:absolute;inset:0;background:rgba(0,0,0,.4);}
+.panel{position:absolute;left:0;top:0;bottom:0;width:240px;background:var(--card);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;}
+.navlink{padding:12px 0;text-decoration:none;color:#111;border-bottom:1px solid #eee;font-size:14px;}
+.navlink:hover{color:var(--accent);}
+
+/* Toast */
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:.3s;font-size:14px;}
+</style>
+</head>
+<body>
+
+<div class="device" role="application" aria-label="Instant Story Saver">
+<div class="device-inner">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div class="title">Instant Story Saver</div>
+        <div style="font-size:11px;color:var(--muted)">Instagram · Facebook · WhatsApp</div>
+      </div>
+    </div>
+    <button class="menu-btn" id="openMenu">☰</button>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="badge">📩 Get in Touch</div>
+    <h1>Contact Us</h1>
+    <p>We’d love to hear from you. Send us your queries or feedback!</p>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="card">
+    <form id="contactForm">
+      <input type="text" class="input" placeholder="Your Name" required style="margin-bottom:10px"/>
+      <input type="email" class="input" placeholder="Your Email" required style="margin-bottom:10px"/>
+      <textarea class="input" placeholder="Your Message" rows="4" required style="margin-bottom:10px;resize:none"></textarea>
+      <button type="submit" class="btn">📨 Send Message</button>
+    </form>
+  </div>
+
+  <!-- Info -->
+  <div class="premium">
+    📧 Email us at <strong>support@instantstorysaver.com</strong>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom">
+    <div class="tab">
+      <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
+      <div>Home</div>
+    </div>
+    <div class="tab">
+      <button class="tab-btn" onclick="location.href='subscription.html'">⭐</button>
+      <div>Premium</div>
+    </div>
+    <div class="tab active">
+      <button class="tab-btn">📨</button>
+      <div>Contact</div>
+    </div>
+  </div>
+
+  <!-- Drawer -->
+  <div class="drawer" id="drawer">
+    <div class="back" id="backdrop"></div>
+    <nav class="panel">
+      <a class="navlink" href="index.html">🏠 Home</a>
+      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
+      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
+      <a class="navlink" href="subscription.html">⭐ Subscription</a>
+      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
+      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
+      <a class="navlink" href="contact.html">📨 Contact Us</a>
+      <a class="navlink" href="about.html">ℹ️ About</a>
+    </nav>
+  </div>
+
+</div>
+</div>
+
+<script>
+/* Drawer controls */
+const drawer   = document.getElementById('drawer');
+const openMenu = document.getElementById('openMenu');
+const backdrop = document.getElementById('backdrop');
+function openDrawer(){ drawer.classList.add('open'); }
+function closeDrawer(){ drawer.classList.remove('open'); }
+openMenu.addEventListener('click', openDrawer);
+backdrop.addEventListener('click', closeDrawer);
+
+/* Toast + form submit */
+const toast = document.getElementById('toast');
+function showToast(msg, ms=2000){
+  toast.textContent = msg;
+  toast.style.opacity='1';
+  setTimeout(()=>{ toast.style.opacity='0'; }, ms);
+}
+document.getElementById('contactForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  showToast("✅ Message sent successfully!");
+  e.target.reset();
+});
+</script>
+</body>
+</html>
