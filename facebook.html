@@ -32,15 +32,15 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:10px;
+  padding:6px; /* thoda kam padding taaki device bada feel ho */
   min-height:100vh;
 }
 
 /* DEVICE */
 .device{
   width:96vw;
-  max-width:392px;
-  height:95vh; /* height thoda bda kiya */
+  max-width:400px; /* thoda bada max-width */
+  height:98vh;  /* height almost full */
   border-radius:28px;
   background: rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.05);
@@ -48,16 +48,12 @@ body{
   overflow:hidden;
   position:relative;
 }
-.device-inner{
-  height:100%;
-  overflow-y:auto;
-  padding-bottom:90px; /* bottom nav ke liye thoda extra */
-}
+.device-inner{height:100%;overflow-y:auto;padding-bottom:80px}
 
 /* TOP BAR */
 .topbar{
-  height:68px; /* bada kiya */
-  padding:14px 18px;
+  height:64px; /* thoda bada */
+  padding:14px 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -66,17 +62,16 @@ body{
   border-bottom:1px solid var(--stroke);
 }
 .logo{
-  width:42px; height:42px; border-radius:12px;
+  width:46px; height:46px; /* thoda bada logo */
+  border-radius:12px;
   background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
   box-shadow:0 6px 20px rgba(0,0,0,0.3);
 }
-.title{
-  font-weight:700; font-size:16px; /* thoda bada */
-  line-height:1.2;
-}
+.title{font-weight:700; font-size:16px; line-height:1.2;}
+.menu-btn{border:none;background:transparent;color:inherit;font-size:22px;cursor:pointer}
 
 /* HERO */
-.hero{text-align:center;padding:24px} /* thoda bada padding */
+.hero{text-align:center;padding:24px 12px}
 .hero .badge{
   display:inline-block;
   padding:6px 14px;
@@ -87,8 +82,8 @@ body{
   color:#fff;
 }
 .hero h1{
-  margin:14px 0 8px;
-  font-size:24px; /* bada kiya */
+  margin:12px 0 6px;
+  font-size:26px;
   font-weight:800;
   background:linear-gradient(90deg,var(--accent3),var(--accent4));
   -webkit-background-clip:text;
@@ -103,10 +98,10 @@ body{
   background: rgba(255,255,255,0.06);
   border:1px solid var(--stroke);
   border-radius:16px;
-  padding:16px; /* thoda bada */
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  padding:16px;
+  box-shadow:0 12px 34px rgba(0,0,0,0.4);
 }
-.row{display:flex;gap:12px;align-items:center}
+.row{display:flex;gap:10px;align-items:center}
 .input{
   flex:1;padding:14px;border-radius:12px;
   border:1px solid var(--stroke);
@@ -115,7 +110,7 @@ body{
 }
 .input:focus{outline:none;border-color:var(--accent3)}
 .btn{
-  padding:14px 18px;
+  padding:12px 16px;
   border-radius:12px;
   border:none;
   font-weight:700;
@@ -129,11 +124,11 @@ body{
 .btn:active{transform:scale(0.96)}
 
 /* ACTIONS */
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .action{
-  flex:1 1 calc(33% - 12px);
+  flex:1 1 calc(33% - 10px);
   background:rgba(255,255,255,0.05);
-  padding:14px;
+  padding:12px;
   border-radius:14px;
   border:1px solid var(--stroke);
   cursor:pointer;
@@ -141,11 +136,11 @@ body{
   transition:0.2s;
 }
 .action:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.3)}
-.icon{font-size:20px}
+.icon{font-size:18px}
 
 /* PREMIUM STRIP */
 .premium{
-  width:92%;margin:18px auto;
+  width:92%;margin:16px auto;
   padding:14px;
   border-radius:14px;
   border:1px solid var(--stroke);
@@ -154,14 +149,14 @@ body{
   display:flex;justify-content:space-between;align-items:center;
 }
 .cta{
-  padding:12px 16px;border-radius:12px;
+  padding:10px 16px;border-radius:12px;
   background:linear-gradient(90deg,var(--accent3),var(--accent4));
   color:#fff;font-weight:700;border:none;cursor:pointer;
 }
 
 /* RECENTS */
-.section-title{width:92%;margin:14px auto 8px;font-weight:700;font-size:14px;color:var(--muted)}
-.grid{width:92%;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.section-title{width:92%;margin:14px auto 6px;font-weight:700;font-size:13px;color:var(--muted)}
+.grid{width:92%;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .thumb{
   aspect-ratio:1/1;border-radius:12px;
   background:rgba(255,255,255,0.05);
@@ -187,52 +182,73 @@ body{
 
 /* DRAWER */
 .drawer{
-  position:fixed;inset:0;
-  pointer-events:none;z-index:999;
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:999;
   display:flex;
 }
 .drawer .back{
-  position:absolute;inset:0;
-  background:rgba(0,0,0,0.55);
+  position:absolute;
+  inset:0;
+  background:rgba(2,6,23,0.55);
   opacity:0;
   transition:opacity .3s;
 }
 .drawer .panel{
-  position:absolute;left:0;top:0;bottom:0;width:280px;
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:300px; /* thoda bada drawer */
   transform:translateX(-100%);
   transition:transform .36s cubic-bezier(.2,.9,.3,1);
-  background:linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02));
-  padding-top:68px; /* topbar height same as device */
-  overflow-y:auto;
-  border-right:1px solid rgba(255,255,255,0.03);
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+  backdrop-filter: blur(10px);
+  border-right:1px solid rgba(255,255,255,0.04);
+  box-shadow: 10px 0 34px rgba(2,6,23,0.6);
+  padding:22px 18px; /* thoda padding bada */
+  z-index:1000;
 }
-.drawer.open .back{pointer-events:auto;opacity:1}
-.drawer.open .panel{transform:none}
+.drawer.open{
+  pointer-events:auto;
+}
+.drawer.open .back{
+  opacity:1;
+}
+.drawer.open .panel{
+  transform:translateX(0);
+}
 .navlink{
-  display:block;padding:14px 16px;margin-bottom:6px;border-radius:8px;
-  color:#fff;text-decoration:none;font-weight:500;
-  transition:background .18s;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px; /* thoda bada padding */
+  border-radius:10px;
+  color:#fff;
+  text-decoration:none;
+  transition:background .18s, transform .12s;
+  border:1px solid transparent;
 }
-.navlink:hover{background:rgba(255,255,255,0.06)}
+.navlink:hover{background:rgba(255,255,255,0.04)}
+.navlink svg{opacity:.95}
 
-/* Toast */
+/* TOAST */
 .toast{
-  position:absolute;top:14px;left:50%;transform:translateX(-50%);
-  background:rgba(0,0,0,0.5);padding:8px 14px;border-radius:12px;
-  color:#fff;font-weight:500;font-size:13px;opacity:0;transition:.3s;
+  position:fixed;
+  bottom:90px; /* thoda upar */
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,0.6);
+  color:#fff;
+  padding:8px 14px;
+  border-radius:12px;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
 }
 
-/* Loader inside button */
-.loader{
-  border:2px solid rgba(255,255,255,0.2);
-  border-top:2px solid #fff;
-  border-radius:50%;
-  width:14px;height:14px;
-  display:inline-block;
-  margin-right:6px;
-  animation:spin .8s linear infinite;
-}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
