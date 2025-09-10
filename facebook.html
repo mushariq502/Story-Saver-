@@ -3,16 +3,24 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Instant Story Saver — FB-DOWNLOADER</title>
+<title>Instant Story Saver — World-Class</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-      --bg1:#aeccfd; --bg2:#0c1a2a;
-      --panel: rgba(255,255,255,0.03);
-      --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
-      --muted: rgba(230,238,248,0.72);
-      --success: #25D366;
-    }
+  --bg1:#0a0f1f;
+  --bg2:#061024;
+  --glass: rgba(255,255,255,0.04);
+  --stroke: rgba(255,255,255,0.06);
+  --muted: rgba(230,238,248,0.78);
+  --txt:#e9f1ff;
+  --accent1:#f58529; 
+  --accent2:#dd2a7b; 
+  --accent3:#8134af; 
+  --accent4:#515bd4;
+  --ok:#25D366; 
+  --fb:#4267B2;
+  --warn:#ffb74d;
+}
 
 /* RESET */
 *{box-sizing:border-box;
@@ -21,11 +29,12 @@
 html,body{height:100%}
 body{
   font-family:'Poppins',system-ui,Arial;
-  color: #fff;
-  background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
-              linear-gradient(180deg,var(--bg1),var(--bg2));
-  border: 1px solid var(--stroke);
-  -webkit-font-smoothing:antialiased; 
+  color:var(--txt);
+  background:
+    radial-gradient(1400px 800px at 10% 5%, rgba(129,52,175,0.18), transparent 30%),
+    radial-gradient(1100px 600px at 110% 120%, rgba(81,91,212,0.16), transparent 40%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   display:flex;
   align-items:center;
@@ -37,44 +46,43 @@ body{
 /* DEVICE FRAME */
 .device{
   width:96vw; 
-  max-width:380px; 
-  height:calc(var(--vh, 1vh) * 92; 
+  max-width:392px;
+  height:92vh;
+  min-height: 600px; 
   border-radius:28px;
   position:relative;
   overflow:hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 24px 70px rgba(2,6,23,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
 }
 .device-inner{
   width:100%;
   height:100%;
   overflow-y:auto;
-  -webkit-overflow-scrolling: touch;
   padding-bottom:80px;
 }
 
 /* TOP BAR */
 .topbar{
-  height:56px;
-  padding:10px 14px;
+  height:60px; 
+  padding:12px 16px; 
   display:flex;
   align-items:center; 
   justify-content:space-between;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
   border-bottom:1px solid rgba(255,255,255,0.02);
 }
 .brand{display:flex;
        align-items:center;
-       gap:10px}
+       gap:12px}
 .logo{
-  width:36px;
-  height:36px;
-  border-radius:10px;
-  background: linear-gradient(135deg,var(--accent1),var(--accent3));
-  display: flex;
-  align-items: center;
-  justify-content:center;
-  box-shadow:0 8px 20px rgba(129,52,175,0.18);
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background: linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
+  box-shadow:0 8px 24px rgba(129,52,175,0.24);
 }
 .title{font-weight:700;
        letter-spacing:.2px}
@@ -86,6 +94,7 @@ body{
   padding:8px;
   border-radius:10px;
   cursor:pointer;
+  transition:transform .18s ease;
 }
 .menu-btn:active{transform:scale(.96)}
 
@@ -93,24 +102,21 @@ body{
 .hero{
   padding:20px 20px 12px;
   text-align:center;
-  animation:fadeInDown .6s ease;
 }
 .hero .badge{
-  display:inline-flex;
-  align-items:center; 
+  display:inline-flex; 
+  align-items:center;
   gap:8px;
   padding:6px 12px;
   border-radius:999px;
-  font-weight:700;
+  font-weight:700; 
   font-size:12px;
-  background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
-  color: var(--muted);
+  background:linear-gradient(90deg,var(--accent3),var(--accent4));
   box-shadow:0 10px 26px rgba(81,91,212,0.18);
 }
 .hero h1{font-size: calc(16px + 1.5vw);
          margin:10px 0 6px;
          font-weight:800;
-         background: linear-gradient(90deg,var(--accent1),var(--accent3));
          letter-spacing:.2px}
 .hero p{font-size: calc(12px + 0.8vw);
         color:var(--muted)}
@@ -119,24 +125,18 @@ body{
 .card{
   margin:14px auto;
   width:90%;
-  background:linear-gradient(180deg, rgba(255,255,0.02), rgba(255,255,255,0.1));
-  border:1px solid rgba(255,255,255,0.03);
-  border-radius:16px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border:1px solid var(--stroke);
+  border-radius:16px; 
   padding:14px;
-  box-shadow:0 10px 30px rgba(2,6,23,0.5);
-  transition:transform .22s ease, box-shadow .22s ease;
-  display: flex;
-  flex-direction: column;
-  gap:10 px;
+  box-shadow:0 14px 34px rgba(2,6,23,0.5);
 }
-.row{
-  display:flex;
-  gap:10px;
-  align-items:center}
+.row{display:flex;
+     gap:10px;
+     align-items:center}
 .input{
   flex:1;
   padding:12px 14px;
-  color:#1a6dfb:
   border-radius:12px;
   border:1px solid var(--stroke);
   background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
@@ -153,13 +153,13 @@ body{
   padding:12px 14px;
   border-radius:12px;
   border:none;
-  color:#ffffff;
+  color:#fff;
   font-weight:800;
   letter-spacing:.2px;
-  background:#1a6dfb; 
-  cursor:pointer; 
-  display:inline-flex; 
-  align-items:center; 
+  background:linear-gradient(90deg,#ff8a65,#f06292);
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
   gap:10px;
   box-shadow:0 10px 26px rgba(208,64,118,0.18), 0 2px 6px rgba(0,0,0,0.45);
   transition:transform .16s ease, box-shadow .16s;
@@ -189,7 +189,7 @@ body{
   align-items:center;
   gap:10px;
   cursor:pointer;
-  background: #1a6dfb;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   transition:transform .14s, box-shadow .14s, border-color .14s;
   min-width:100px;
   box-sizing:border-box;
@@ -208,7 +208,6 @@ body{
 }
 .action-text{
   display: flex;
-  color: #fff;
   flex-direction: column;
   justify-content: center;
   gap:2px;
@@ -226,36 +225,33 @@ body{
 
 /* PREMIUM STRIP */
 .premium{
-  margin:14px auto;
-  width:90%;
-  padding:12px;
+  margin:14px auto; 
+  width:90%; 
+  padding:12px; 
   border-radius:14px;
   border:1px solid var(--stroke);
-  background: #fff;
-  color: #1a6dfb;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   display:flex;
-  align-items:center;
-  justify-content:space-between; 
+  align-items:center; 
+  justify-content:space-between;
   gap:10px;
 }
 .cta{padding:10px 12px;
      border-radius:12px;
      border:1px solid rgba(255,255,255,0.08);
-     background: #1a6dfb; 
-     color:#fff; 
+     background:linear-gradient(90deg,var(--accent3),var(--accent4));
+     color:#fff;
      font-weight:800;
      cursor:pointer}
 
 /* RECENTS */
 .section-title{width:90%;
-               margin:12px auto 6px;
-               font-weight:800; 
-               color: #1a6dfb;
-               font-size:13px;
-               backgroud: #1a6dfb;}
+               margin:12px auto 6px; 
+               font-weight:800;
+               font-size:13px; 
+               color:var(--muted)}
 .grid{
   width:90%;
-  background: #aeccfd;
   margin:8px auto 20px;
   display:grid;
   grid-template-columns:repeat(3,1fr); 
@@ -264,60 +260,59 @@ body{
 .thumb{
   aspect-ratio:1/1;
   border-radius:12px;
-  overflow:hidden;
+  overflow:hidden; 
   position:relative;
   border:1px solid var(--stroke);
-  background: #1a6dfb;
+  background:linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
 }
 .thumb .play{
   position:absolute;
-  right:6px;
-  bottom:6px;
-  font-size:11px;
-  color: #1a6dfb;
+  right:6px; 
+  bottom:6px; 
+  font-size:11px; 
   padding:6px 8px;
   border-radius:999px;
-  background: #fff;
+  background:rgba(0,0,0,0.45); 
   border:1px solid rgba(255,255,255,0.06)
 }
 
 /* TOAST */
 .toast{
-  position:absolute;
-  left:50%;
-  bottom:82px;
+  position:absolute; 
+  left:50%; 
+  bottom:82px; 
   transform:translateX(-50%); 
-  background:#0b1220;
-  color:#fff;
-  padding:10px 14px;
+  background:#0b1220; 
+  color:#fff; 
+  padding:10px 14px; 
   border-radius:10px; 
   border:1px solid rgba(255,255,255,0.06);
   box-shadow:0 10px 24px rgba(0,0,0,0.45);
   opacity:0; 
-  pointer-events:none; 
+  pointer-events:none;
   transition:opacity .2s, transform .2s;
 }
 
 /* BOTTOM NAV */
 .bottom{
-  position:absolute;
+  position:absolute; 
   left:0; 
-  right:0; 
-  bottom:0; 
+  right:0;
+  bottom:0;
   height:64px; 
-  display:flex; 
+  display:flex;
   align-items:center;
   justify-content:space-around;
-  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
-  backdrop-filter: blur(5px);
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+  backdrop-filter: blur(6px);
   border-top:1px solid rgba(255,255,255,0.02);
 }
-.tab{display:flex;
+.tab{display:flex; 
      flex-direction:column;
-     align-items:center; 
-     gap:4px;
+     align-items:center;
+     gap:4px; 
      font-size:11px;
-     color: #fff;}
+     color:var(--muted)}
 .tab-btn{border:none;
          background:transparent;
          color:#fff;
@@ -327,26 +322,25 @@ body{
 .tab.active .tab-btn{background:rgba(255,255,255,0.06)}
 
 /* DRAWER */
-.drawer{position:fixed;
-        inset:0;
+.drawer{position:fixed; 
+        inset:0; 
         pointer-events:none;
-        z-index:999; 
+        z-index:999;
         display:flex}
-.drawer .back{position:absolute; 
+.drawer .back{position:absolute;
               inset:0;
               background:rgba(2,6,23,0.55);
               opacity:0; 
               transition:opacity .3s}
 .drawer .panel{
-  position:absolute;
-  left:0;
-  top:0;
+  position:absolute; 
+  left:0; 
+  top:0; 
   bottom:0;
   width:280px;
   transform:translateX(-100%);
   transition:transform .36s cubic-bezier(.2,.9,.3,1);
-  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
-  backdrop-filter: blur(10px);
+  background:linear-gradient(180deg,#071032,#0b1530);
   border-right:1px solid rgba(255,255,255,0.04);
   box-shadow: 10px 0 34px rgba(2,6,23,0.6);
   padding:18px;
@@ -356,12 +350,12 @@ body{
 .drawer.open .back{opacity:1}
 .drawer.open .panel{transform:translateX(0)}
 .navlink{
-  display:flex; 
-  align-items:center;
-  gap:10px; 
+  display:flex;
+  align-items:center; 
+  gap:10px;
   padding:10px 12px;
-  border-radius:10px; 
-  color:#fff;
+  border-radius:10px;
+  color:#fff; 
   text-decoration:none;
   transition:background .18s, transform .12s;
   border:1px solid transparent;
@@ -371,7 +365,7 @@ body{
 
 /* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce){
-  *{animation:none !important; 
+  *{animation:none !important;
     transition:none !important}
 }
 @media (max-width: 420px) {
@@ -397,7 +391,7 @@ body{
       <div class="logo" aria-hidden="true"></div>
       <div>
         <div class="title">Instant Story Saver</div>
-        <div style="font-size:11px;color:#fff;background:#1a6dfb;margin-top:2px">Instagram · Facebook · WhatsApp</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Instagram · Facebook · WhatsApp</div>
       </div>
     </div>
     <button class="menu-btn" id="openMenu" aria-label="Open menu">☰</button>
@@ -406,18 +400,18 @@ body{
   <!-- Hero -->
   <div class="hero">
     <div class="badge">🚀 Ultra-Fast · Safe · Clean</div>
-    <h1>Save Facebook Videos In One Click</h1>
+    <h1>Save stories in one tap</h1>
     <p>No ads in Premium · High-quality downloads · Login integrations</p>
   </div>
 
   <!-- Link Card -->
   <div class="card" aria-label="Paste link card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <div style="font-weight:800;color:#1a6dfb;background:#fff;letter-spacing:.2px">Paste Facebook link</div>
+      <div style="font-weight:800;letter-spacing:.2px">Paste Instagram link</div>
       <div style="font-size:12px;color:var(--muted)">Demo mode</div>
     </div>
     <div class="row">
-      <input id="link" class="input" placeholder="https://www.facebook.com/stories/..." aria-label="Story link input">
+      <input id="link" class="input" placeholder="https://www.instagram.com/stories/..." aria-label="Story link input">
       <button id="paste" class="btn" title="Paste"><span>📋 Paste</span></button>
     </div>
     <div class="row" style="margin-top:10px">
