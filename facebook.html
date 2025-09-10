@@ -86,7 +86,6 @@ body{
   padding:8px;
   border-radius:10px;
   cursor:pointer;
-  transition:transform .18s ease;
 }
 .menu-btn:active{transform:scale(.96)}
 
@@ -94,8 +93,7 @@ body{
 .hero{
   padding:20px 20px 12px;
   text-align:center;
-  color: #1a6dfb;
-  background: #fff;
+  animation:fadeInDown .6s ease;
 }
 .hero .badge{
   display:inline-flex;
@@ -105,13 +103,14 @@ body{
   border-radius:999px;
   font-weight:700;
   font-size:12px;
-  background: #1a6dfb;
-  color: #fff;
+  background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
+  color: var(--muted);
   box-shadow:0 10px 26px rgba(81,91,212,0.18);
 }
 .hero h1{font-size: calc(16px + 1.5vw);
          margin:10px 0 6px;
          font-weight:800;
+         background: linear-gradient(90deg,var(--accent1),var(--accent3));
          letter-spacing:.2px}
 .hero p{font-size: calc(12px + 0.8vw);
         color:var(--muted)}
@@ -120,12 +119,15 @@ body{
 .card{
   margin:14px auto;
   width:90%;
-  background: #fff;
-  color: #1a6dfb;
-  border:1px solid var(--stroke);
+  background:linear-gradient(180deg, rgba(255,255,0.02), rgba(255,255,255,0.1));
+  border:1px solid rgba(255,255,255,0.03);
   border-radius:16px;
   padding:14px;
-  box-shadow:0 14px 34px rgba(2,6,23,0.5);
+  box-shadow:0 10px 30px rgba(2,6,23,0.5);
+  transition:transform .22s ease, box-shadow .22s ease;
+  display: flex;
+  flex-direction: column;
+  gap:10 px;
 }
 .row{
   display:flex;
