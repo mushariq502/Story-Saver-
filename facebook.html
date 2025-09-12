@@ -151,7 +151,7 @@ body{
 
 .action-text{
   color:#fff;
-  display: flexl;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 2px;
@@ -266,6 +266,21 @@ body{
   opacity:0;
   pointer-events:none;
   transition:0.3s;
+}
+  .loader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 </style>
@@ -399,6 +414,9 @@ const backdrop = document.getElementById('backdrop');
 function openDrawer(){
   drawer.classList.add('open');
   drawer.setAttribute('aria-hidden','false');
+  // Set focus to first link for accessibility
+  const firstLink = drawer.querySelector('.navlink');
+  if (firstLink) firstLink.focus();
 }
 function closeDrawer(){
   drawer.classList.remove('open');
@@ -408,32 +426,78 @@ openMenu.addEventListener('click', openDrawer);
 backdrop.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
 
-/* Swipe to close (mobile) */
-let startX=0, dragging=false;
+/* Improved Swipe to close (mobile) */
+let startX=0, startY=0, dragging=false;
+const swipeThreshold = 70; // Minimum swipe distance to close
+const verticalThreshold = 30; // Maximum vertical movement allowed
+
 drawer.addEventListener('touchstart', e=>{
   if(!drawer.classList.contains('open')) return;
-  startX = e.touches[0].clientX; dragging=true;
+  
+  // Only allow swipe from left edge (first 50px)
+  if(e.touches[0].clientX > 50) return;
+  
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  dragging=true;
 }, {passive:true});
+
+drawer.addEventListener('touchmove', e=>{
+  if(!dragging) return;
+  
+  const currentX = e.touches[0].clientX;
+  const currentY = e.touches[0].clientY;
+  
+  // Prevent vertical scrolling while swiping horizontally
+  const diffX = Math.abs(currentX - startX);
+  const diffY = Math.abs(currentY - startY);
+  
+  // If vertical movement is more than horizontal, cancel swipe
+  if(diffY > verticalThreshold && diffY > diffX) {
+    dragging = false;
+    return;
+  }
+  
+  // Prevent page scroll when swiping drawer
+  if(diffX > 10) {
+    e.preventDefault();
+  }
+}, {passive: false});
+
 drawer.addEventListener('touchend', e=>{
   if(!dragging) return;
+  
   const endX = (e.changedTouches?.[0]?.clientX)||startX;
+  const endY = (e.changedTouches?.[0]?.clientY)||startY;
   const diffX = startX - endX;
-  if(diffX > 70) closeDrawer();
+  const diffY = Math.abs(startY - endY);
+  
+  // Only close if horizontal swipe is significant and vertical swipe is minimal
+  if(diffX > swipeThreshold && diffY < verticalThreshold) {
+    closeDrawer();
+  }
+  
   dragging=false;
 });
+
+// Handle window resize for mobile viewport height
 let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', ()=>{
+  let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
-  window.addEventListener('resize', ()=>{
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  });
+});
+
 /* Toast helper */
 const toast = document.getElementById('toast');
 function showToast(msg, ms=2000){
   toast.textContent = msg;
   toast.style.opacity='1';
   toast.style.transform='translateX(-50%) translateY(-4px)';
-  setTimeout(()=>{ toast.style.opacity='0'; toast.style.transform='translateX(-50%)'; }, ms);
+  setTimeout(()=>{ 
+    toast.style.opacity='0'; 
+    toast.style.transform='translateX(-50%)'; 
+  }, ms);
 }
 
 /* Clipboard + Download demo */
@@ -443,6 +507,10 @@ const linkInput   = document.getElementById('link');
 
 pasteBtn.addEventListener('click', async ()=>{
   try{
+    // Check if clipboard API is available
+    if (!navigator.clipboard) {
+      throw new Error('Clipboard API not supported');
+    }
     const t = await navigator.clipboard.readText();
     if(t && t.length>5){
       linkInput.value = t;
@@ -452,14 +520,33 @@ pasteBtn.addEventListener('click', async ()=>{
       showToast('Manually paste the link');
     }
   }catch(e){ 
-    showToast('Clipboard access blocked');
-}
+    console.error('Clipboard error:', e);
+    linkInput.focus();
+    showToast('Clipboard access blocked. Paste manually.');
+  }
 });
 
 downloadBtn.addEventListener('click', ()=>{
   const url = (linkInput.value||'').trim();
-  if(!url){ showToast('Please enter a link'); return; }
-  if(url.length < 10){ showToast('Link looks invalid'); return; }
+  
+  // Basic validation
+  if(!url){ 
+    showToast('Please enter a link'); 
+    return; 
+  }
+  
+  // URL validation
+  try {
+    new URL(url);
+  } catch (e) {
+    showToast('Please enter a valid URL');
+    return;
+  }
+  
+  if(url.length < 10){ 
+    showToast('Link looks invalid'); 
+    return; 
+  }
 
   // button loader
   const prev = downloadBtn.innerHTML;
