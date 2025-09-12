@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<head>
+  <!-- Firebase scripts HEAD mein add karo -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+  
+  <script>
+    // Firebase configuration HEAD mein hi initialize karo
+    const firebaseConfig = {
+      apiKey: "AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZ123456789",
+      authDomain: "instant-story-saver.firebaseapp.com",
+      projectId: "instant-story-saver",
+      storageBucket: "instant-story-saver.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abcdefghijklmnopqrstuvw"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Instant Story Saver — World-Class</title>
@@ -406,6 +428,13 @@ body{
 </div>
 
 <script>
+  // Initialize services - YE CODE BODY KE END MEIN RAHEGA
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+  const storage = firebase.storage();
+  
+  // ... aapka existing JavaScript code ...
+  
 /* Drawer controls */
 const drawer   = document.getElementById('drawer');
 const openMenu = document.getElementById('openMenu');
