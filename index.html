@@ -649,15 +649,23 @@ downloadBtn.addEventListener('click', ()=>{
 });
  // Show popup only first time
 document.addEventListener("DOMContentLoaded", () => {
-  if (!localStorage.getItem("privacyAccepted")) {
-    document.getElementById("privacyPopup").style.display = "flex";
+  const popup = document.getElementById("privacyPopup");
+  const agreeBtn = document.getElementById("agreePolicy");
+
+  if (!popup || !agreeBtn) return; // agar elements missing hain to exit
+
+  // Check karo ki user ne accept kiya hai ya nahi
+  if (localStorage.getItem("privacyAccepted") !== "true") {
+    popup.style.display = "flex";
   }
+
+  // Agree button click hone par
+  agreeBtn.addEventListener("click", () => {
+    localStorage.setItem("privacyAccepted", "true");
+    popup.style.display = "none";
+  });
 });
 
-document.getElementById("agreePolicy").addEventListener("click", () => {
-  localStorage.setItem("privacyAccepted", "true");
-  document.getElementById("privacyPopup").style.display = "none";
-});
 
 </script>
 </body>
