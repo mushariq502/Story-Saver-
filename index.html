@@ -299,77 +299,47 @@ body{
     animation: rotation 1s linear infinite;
     margin-right: 8px;
 }
-  /* PRIVACY POLICY MODAL */
-.modal-overlay {
+/* Modal Styles */
+.modal {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.7);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 999;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  align-items: center;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
 }
-.modal-overlay.active {
-  visibility: visible;
-  opacity: 1;
-}
-
-.modal-box {
-  width: 92%;
-  max-width: 420px;
-  max-height: 80vh;
+.modal-content {
   background: rgba(255,255,255,0.06);
   border: 1px solid var(--stroke);
   border-radius: 16px;
-  backdrop-filter: blur(12px);
-  padding: 18px;
+  padding: 20px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
   color: var(--txt);
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-
-.modal-box h2 {
-  font-size: 18px;
-  text-align: center;
-  font-weight: 700;
+.modal-content h2 {
   margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 700;
 }
-
-.modal-content {
-  flex: 1;
-  overflow-y: auto;
+.modal-content p {
   font-size: 13px;
-  text-align: center;
-  line-height: 1.6;
   color: var(--muted);
   margin-bottom: 16px;
 }
-
 .modal-actions {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 10px;
 }
-
-.modal-btn {
-  padding: 10px 16px;
-  border-radius: 12px;
-  border: none;
+.modal .btn.secondary {
+  background: rgba(255,255,255,0.1);
+  color: var(--muted);
   font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.modal-btn.primary {
-  background: linear-gradient(90deg, var(--accent3), var(--accent4));
-  color: #fff;
-}
-.modal-btn.secondary {
-  background: rgba(255,255,255,0.08);
-  color: var(--txt);
 }
 
 @keyframes rotation {
@@ -464,23 +434,23 @@ body{
 
   <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<!-- Privacy Policy Modal -->
-<div class="modal-overlay" id="policyModal">
-  <div class="modal-box">
+  <!-- Privacy Policy Popup -->
+<div id="privacyPopup" class="modal">
+  <div class="modal-content">
     <h2>Privacy Policy</h2>
-    <div class="modal-content">
-      <p>We respect your privacy. This app saves stories only when you paste a link or log in with permission. 
-      No private data is stored without your consent.</p>
-      <p>By continuing, you agree to our Privacy Policy and Terms of Service.</p>
-      <p>Read the full policy anytime from the menu.</p>
-    </div>
+    <p>
+      We respect your privacy. Instant Story Saver does not collect personal data.
+      Some permissions are required only for saving and displaying stories.
+      By continuing, you agree to our Privacy Policy.
+    </p>
     <div class="modal-actions">
-      <button class="modal-btn secondary" id="exitApp">Exit</button>
-      <button class="modal-btn primary" id="agreePolicy">Agree & Continue</button>
+      <button class="btn" id="agreePolicy">Agree & Continue</button>
+      <button class="btn secondary" onclick="location.href='privacy.html'">Read Full Privacy Policy</button>
     </div>
   </div>
 </div>
 
+  
   <!-- Bottom Nav -->
   <div class="bottom" role="navigation" aria-label="Bottom navigation">
     <div class="tab active">
@@ -677,26 +647,16 @@ downloadBtn.addEventListener('click', ()=>{
     linkInput.value='';
   }, 1400);
 });
-  /* Privacy Policy Modal */
-const modal = document.getElementById('policyModal');
-const agreeBtn = document.getElementById('agreePolicy');
-const exitBtn  = document.getElementById('exitApp');
-
-// check if user already agreed
-if(!localStorage.getItem('policyAccepted')){
-  modal.classList.add('active');
-}
-
-// Agree button
-agreeBtn.addEventListener('click', ()=>{
-  localStorage.setItem('policyAccepted','yes');
-  modal.classList.remove('active');
+ // Show popup only first time
+document.addEventListener("DOMContentLoaded", () => {
+  if (!localStorage.getItem("privacyAccepted")) {
+    document.getElementById("privacyPopup").style.display = "flex";
+  }
 });
 
-// Exit button
-exitBtn.addEventListener('click', ()=>{
-  alert("You must accept the Privacy Policy to use this app.");
-  // native app me yahan exitApp() hota hai
+document.getElementById("agreePolicy").addEventListener("click", () => {
+  localStorage.setItem("privacyAccepted", "true");
+  document.getElementById("privacyPopup").style.display = "none";
 });
 
 </script>
