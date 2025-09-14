@@ -647,19 +647,20 @@ downloadBtn.addEventListener('click', ()=>{
     linkInput.value='';
   }, 1400);
 });
- // Show popup only first time
-document.addEventListener("DOMContentLoaded", () => {
+ document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("privacyPopup");
   const agreeBtn = document.getElementById("agreePolicy");
 
-  if (!popup || !agreeBtn) return; // agar elements missing hain to exit
+  if (!popup || !agreeBtn) return;
 
-  // Check karo ki user ne accept kiya hai ya nahi
-  if (localStorage.getItem("privacyAccepted") !== "true") {
+  // Agar pehle hi accept kar liya hai to popup mat dikhao
+  if (localStorage.getItem("privacyAccepted") === "true") {
+    popup.style.display = "none";
+  } else {
     popup.style.display = "flex";
   }
 
-  // Agree button click hone par
+  // Agree button par click hone par
   agreeBtn.addEventListener("click", () => {
     localStorage.setItem("privacyAccepted", "true");
     popup.style.display = "none";
