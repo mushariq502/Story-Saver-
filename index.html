@@ -299,48 +299,58 @@ body{
     animation: rotation 1s linear infinite;
     margin-right: 8px;
 }
-/* Modal Styles */
-.modal {
+/* Policy Popup */
+.policy-popup {
+  display: none;
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
-  z-index: 1000;
-}
-.modal-content {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--stroke);
-  border-radius: 16px;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 3px solid #007bff;
   padding: 20px;
-  width: 90%;
-  max-width: 360px;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+  z-index: 9999;
+  font-family: "Poppins", sans-serif;
+  animation: slideUp 0.3s ease-out;
+}
+
+.policy-content {
   text-align: center;
-  color: var(--txt);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-.modal-content h2 {
-  margin-bottom: 10px;
+
+.policy-content h2 {
+  margin: 0 0 10px;
   font-size: 18px;
-  font-weight: 700;
+  color: #1e2a47;
 }
-.modal-content p {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 16px;
+
+.policy-text {
+  max-height: 120px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 15px;
 }
-.modal-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+
+.policy-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
 }
-.modal .btn.secondary {
-  background: rgba(255,255,255,0.1);
-  color: var(--muted);
-  font-weight: 600;
+
+.policy-btn:hover {
+  background: #0056b3;
 }
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 
 @keyframes rotation {
     0% { transform: rotate(0deg); }
@@ -434,23 +444,51 @@ body{
 
   <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <!-- Privacy Policy Popup -->
-<div id="privacyPopup" class="modal">
-  <div class="modal-content">
-    <h2>Privacy Policy</h2>
-    <p>
-      We respect your privacy. Instant Story Saver does not collect personal data.
-      Some permissions are required only for saving and displaying stories.
-      By continuing, you agree to our Privacy Policy.
-    </p>
-    <div class="modal-actions">
-      <button class="btn" id="agreePolicy">Agree & Continue</button>
-      <button class="btn secondary" onclick="location.href='privacy.html'">Read Full Privacy Policy</button>
+  <!-- Policy Popup -->
+<div id="policyPopup" class="policy-popup">
+  <div class="policy-content">
+    <h2>Privacy Policy & Terms & Conditions</h2>
+    <div class="policy-text">
+      <h3>1. Privacy Policy</h3>
+      <p>
+        We value your privacy. This app does not collect, store, or share any personal
+        information without your consent. Some features may require storage access or
+        internet connectivity, but no personal data is shared with third parties
+        without your explicit permission.
+      </p>
+      <p>
+        We may use third-party services (like Google, Facebook, or Instagram APIs)
+        to provide functionality. These services have their own privacy policies.
+        Please review them before using those features.
+      </p>
+      <p>
+        Any information you provide voluntarily (such as feedback or contact details)
+        will only be used to improve the app experience.
+      </p>
+      <p><strong>Last Updated:</strong> September 2025</p>
+
+      <h3>2. Terms & Conditions</h3>
+      <p>
+        By using this application, you agree to comply with the following terms:
+      </p>
+      <ul>
+        <li>You must not use the app for unlawful activities or to violate the rights of others.</li>
+        <li>The app is provided “as is” without warranties of any kind. We are not responsible for any loss or damage caused by using the app.</li>
+        <li>Premium features (if any) require payment. Refunds are subject to store policies.</li>
+        <li>We reserve the right to update these terms at any time. If changes are made, you may be required to re-accept them.</li>
+        <li>Users are responsible for maintaining the confidentiality of their login credentials (if applicable).</li>
+        <li>Misuse, reverse-engineering, or tampering with the app is strictly prohibited.</li>
+      </ul>
+
+      <h3>3. Contact Us</h3>
+      <p>
+        If you have any questions about this Privacy Policy or Terms, please
+        contact us at: <a href="mailto:support@example.com">support@example.com</a>
+      </p>
     </div>
+    <button id="agreePolicy" class="policy-btn">Agree & Continue</button>
   </div>
 </div>
-
-  
   <!-- Bottom Nav -->
   <div class="bottom" role="navigation" aria-label="Bottom navigation">
     <div class="tab active">
@@ -648,25 +686,18 @@ downloadBtn.addEventListener('click', ()=>{
   }, 1400);
 });
  document.addEventListener("DOMContentLoaded", () => {
-  const popup = document.getElementById("privacyPopup");
-  const agreeBtn = document.getElementById("agreePolicy");
+  const currentPolicyVersion = "1.0";  // Agar update karo to is number ko badal dena
+  const acceptedVersion = localStorage.getItem("policyVersionAccepted");
 
-  if (!popup || !agreeBtn) return;
-
-  // Agar pehle hi accept kar liya hai to popup mat dikhao
-  if (localStorage.getItem("privacyAccepted") === "true") {
-    popup.style.display = "none";
-  } else {
-    popup.style.display = "flex";
+  if (acceptedVersion !== currentPolicyVersion) {
+    document.getElementById("policyPopup").style.display = "block";
   }
 
-  // Agree button par click hone par
-  agreeBtn.addEventListener("click", () => {
-    localStorage.setItem("privacyAccepted", "true");
-    popup.style.display = "none";
+  document.getElementById("agreePolicy").addEventListener("click", () => {
+    localStorage.setItem("policyVersionAccepted", currentPolicyVersion);
+    document.getElementById("policyPopup").style.display = "none";
   });
 });
-
 
 </script>
 </body>
