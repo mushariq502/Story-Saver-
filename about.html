@@ -1,112 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Instant Story Saver — About</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
+    :root{
+      --bg1:#aeccfd; --bg2:#0c1a2a;
+      --panel: rgba(255,255,255,0.03);
+      --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+      --muted: rgba(230,238,248,0.72);
     }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f3f6fb;
-      display: flex;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Poppins',system-ui,Arial;
+      background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:#e6eef8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      min-height:100vh;
     }
-    .sidebar {
-      width: 220px;
-      background: linear-gradient(to bottom, #833ab4, #fd1d1d, #fcb045);
-      color: white;
-      height: 100vh;
-      padding: 30px 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      overflow-y: auto;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.2);
-      animation: slideIn 0.5s ease;
+
+    .device{
+      width:96vw; max-width:380px;
+      height: calc(var(--vh, 1vh) * 92);
+      border-radius:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      position:relative;
+      overflow-y:hidden;
     }
-    @keyframes slideIn {
-      from { transform: translateX(-100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+    .device-inner{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:70px}
+
+    .status{
+      height:56px;padding:10px 14px;
+      display:flex;align-items:center;justify-content:space-between;
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(255,255,255,0.02);
     }
-    .sidebar h2 {
-      font-size: 22px;
-      margin-bottom: 30px;
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo-sm{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent3));
+      display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(129,52,175,0.18)}
+    .title{font-weight:700;font-size:15px}
+    .menu-btn{font-size:20px;background:transparent;border:none;color:inherit;cursor:pointer;padding:8px;border-radius:10px}
+
+    .hero{text-align:center;padding:20px}
+    .hero h1{font-size:20px;font-weight:700;margin-bottom:6px;
+      background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero p{color:var(--muted);font-size:13px;margin-top:6px}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;padding:16px;margin:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.5);
+      font-size:13px;color:var(--muted);line-height:1.6;
     }
-    .sidebar a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin: 12px 0;
-      padding: 10px;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-    .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .main {
-      margin-left: 220px;
-      width: calc(100% - 220px);
-      padding: 60px 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      animation: fadeIn 1s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .content {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    @media (max-width: 700px) {
-      .sidebar {
-        display: none;
-      }
-      .main {
-        margin-left: 0;
-        width: 100%;
-        padding: 40px 20px;
-      }
+    .card h2{font-size:16px;font-weight:700;margin-bottom:8px;color:#fff}
+    .card ul{margin:8px 0 0 16px;list-style:disc}
+
+    .footer{
+      position:absolute;left:0;right:0;bottom:0;
+      padding:12px 18px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12));
+      backdrop-filter: blur(10px);display:flex;gap:10px;justify-content:center}
+    .ghost{
+      padding:10px 12px;border-radius:12px;
+      background:transparent;border:1px solid rgba(255,255,255,0.04);
+      color:var(--muted);cursor:pointer
     }
   </style>
 </head>
 <body>
+  <div class="device">
+    <div class="device-inner">
 
-  <div class="sidebar">
-    <h2>📱 Instant Saver</h2>
-    <a href="index.html">📸 Instagram</a>
-    <a href="facebook.html">📘 Facebook</a>
-    <a href="whatsapp.html">🟢 WhatsApp</a>
-    <a href="subscription.html">💳 Subscription</a>
-    <a href="privacy.html">🔒 Privacy</a>
-    <a href="terms.html">📄 Terms</a>
-    <a href="contact.html">📬 Contact</a>
-    <a href="about.html">ℹ️ About</a>
-    <a href="success.html"><strong>✅ Feedback</strong></a>
-  </div>
+      <div class="status">
+        <div class="brand">
+          <div class="logo-sm"></div>
+          <div>
+            <div class="title">Instant Story Saver</div>
+            <div style="font-size:11px;color:rgba(230,238,248,0.75)">About Us</div>
+          </div>
+        </div>
+        <button class="menu-btn" onclick="location.href='index.html'">←</button>
+      </div>
 
-  <div class="main">
-    <div class="content">
-      <h1>About App</h1>
+      <div class="hero">
+        <h1>About Instant Story Saver</h1>
+        <p>Built to make saving stories fast, safe, and effortless.</p>
+      </div>
+
+      <div class="card">
+        <h2>Who We Are</h2>
+        <p>Instant Story Saver is created with a simple mission — to help users download and manage social media stories with ease. We believe in clean design, reliable performance, and privacy-first development.</p>
+      </div>
+
+      <div class="card">
+        <h2>Our Vision</h2>
+        <p>We aim to become the most trusted platform for saving and organizing stories across Instagram, Facebook, and WhatsApp — empowering users while respecting platform guidelines.</p>
+      </div>
+
+      <div class="card">
+        <h2>Core Values</h2>
+        <ul>
+          <li>Privacy-first approach</li>
+          <li>Fast and smooth experience</li>
+          <li>Transparent premium plans</li>
+          <li>Constant updates & support</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Contact</h2>
+        <p>Need help or have feedback? Reach us anytime through the <a href="contact.html" style="color:#fff;text-decoration:underline">Support page</a>.  
+        We’d love to hear from you!</p>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <button class="ghost" onclick="location.href='index.html'">Home</button>
+      <button class="ghost" onclick="location.href='contact.html'">Support</button>
     </div>
   </div>
-
 </body>
 </html>
