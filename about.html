@@ -7,12 +7,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg1:#aeccfd; --bg2:#0c1a2a;
+      --bg1:#aeccfd;
+      --bg2:#0c1a2a;
       --panel: rgba(255,255,255,0.03);
-      --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+      --accent1:#f58529;
+      --accent2:#dd2a7b;
+      --accent3:#8134af;
+      --accent4:#515bd4;
       --muted: rgba(230,238,248,0.72);
     }
-    *{box-sizing:border-box;margin:0;padding:0}
+    *{box-sizing:border-box;
+      margin:0;
+      padding:0}
     body{
       font-family:'Poppins',system-ui,Arial;
       background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
@@ -26,7 +32,8 @@
     }
 
     .device{
-      width:96vw; max-width:380px;
+      width:96vw;
+      max-width:380px;
       height: calc(var(--vh, 1vh) * 92);
       border-radius:28px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
@@ -35,45 +42,110 @@
       position:relative;
       overflow-y:hidden;
     }
-    .device-inner{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:70px}
+    .device-inner{
+      height:100%;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      padding-bottom:70px;
+    }
 
     .status{
-      height:56px;padding:10px 14px;
-      display:flex;align-items:center;justify-content:space-between;
+      height:56px;
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       backdrop-filter: blur(6px);
       border-bottom:1px solid rgba(255,255,255,0.02);
     }
-    .brand{display:flex;gap:10px;align-items:center}
-    .logo-sm{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent3));
-      display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(129,52,175,0.18)}
-    .title{font-weight:700;font-size:15px}
-    .menu-btn{font-size:20px;background:transparent;border:none;color:inherit;cursor:pointer;padding:8px;border-radius:10px}
+    .brand{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .logo-sm{
+      width:36px;
+      height:36px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent3));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(129,52,175,0.18);
+    }
+    .title{
+      font-weight:700;
+      font-size:15px;
+    }
+    .menu-btn{
+      font-size:20px;
+      background:transparent;
+      border:none;
+      color:inherit;
+      cursor:pointer;
+      padding:8px;
+      border-radius:10px;
+    }
 
-    .hero{text-align:center;padding:20px}
-    .hero h1{font-size:20px;font-weight:700;margin-bottom:6px;
+    .hero{
+      text-align:center;
+      padding:20px;
+    }
+    .hero h1{
+      font-size:20px;
+      font-weight:700;
+      margin-bottom:6px;
       background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .hero p{color:var(--muted);font-size:13px;margin-top:6px}
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .hero p{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:6px;
+    }
 
     .card{
       background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px;padding:16px;margin:12px;
+      border-radius:14px;
+      padding:16px;
+      margin:12px;
       border:1px solid rgba(255,255,255,0.03);
       box-shadow: 0 10px 30px rgba(2,6,23,0.5);
-      font-size:13px;color:var(--muted);line-height:1.6;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.6;
     }
-    .card h2{font-size:16px;font-weight:700;margin-bottom:8px;color:linear-gradient(90deg,var(--accent3),var(--accent4));
-            }
-    .card ul{margin:8px 0 0 16px;list-style:disc}
+    .card h2{
+      font-size:16px;
+      font-weight:700;
+      margin-bottom:8px;
+      color:linear-gradient(90deg,var(--accent3),var(--accent4));
+    }
+    .card ul{
+      margin:8px 0 0 16px;
+      list-style:disc;
+    }
 
     .footer{
-      position:absolute;left:0;right:0;bottom:0;
-      padding:12px 18px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12));
-      backdrop-filter: blur(10px);display:flex;gap:10px;justify-content:center}
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      padding:12px 18px;
+      background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12));
+      backdrop-filter: blur(10px);
+      display:flex;
+      gap:10px;
+      justify-content:center;
+    }
     .ghost{
-      padding:10px 12px;border-radius:12px;
-      background:transparent;border:1px solid rgba(255,255,255,0.04);
-      color:var(--muted);cursor:pointer
+      padding:10px 12px;
+      border-radius:12px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.04);
+      color:var(--muted);
+      cursor:pointer;
     }
   </style>
 </head>
