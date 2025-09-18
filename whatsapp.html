@@ -1,112 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WhatsApp Downloader</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f3f6fb;
-      display: flex;
-    }
-    .sidebar {
-      width: 220px;
-      background: linear-gradient(to bottom, #833ab4, #fd1d1d, #fcb045);
-      color: white;
-      height: 100vh;
-      padding: 30px 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      overflow-y: auto;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.2);
-      animation: slideIn 0.5s ease;
-    }
-    @keyframes slideIn {
-      from { transform: translateX(-100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    .sidebar h2 {
-      font-size: 22px;
-      margin-bottom: 30px;
-    }
-    .sidebar a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin: 12px 0;
-      padding: 10px;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-    .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .main {
-      margin-left: 220px;
-      width: calc(100% - 220px);
-      padding: 60px 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      animation: fadeIn 1s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .content {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    @media (max-width: 700px) {
-      .sidebar {
-        display: none;
-      }
-      .main {
-        margin-left: 0;
-        width: 100%;
-        padding: 40px 20px;
-      }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Instant Story Saver — WhatsApp</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#aeccfd; --bg2:#0c1a2a;
+    --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+    --muted: rgba(230,238,248,0.72);
+    --txt:#e6eef8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Poppins',system-ui,Arial;
+    background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
+                linear-gradient(180deg,var(--bg1),var(--bg2));
+    color:var(--txt);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    min-height:100vh;
+  }
+
+  /* Device frame (match subscription theme) */
+  .device{ width:96vw; max-width:380px; height: calc(var(--vh, 1vh) * 92); border-radius:28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03); box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    position:relative; overflow:hidden; display:flex; flex-direction:column;
+  }
+  .device-inner{ width:100%; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:80px; }
+
+  /* header */
+  .status{ height:56px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; backdrop-filter: blur(6px); border-bottom:1px solid rgba(255,255,255,0.02); }
+  .brand{ display:flex; gap:10px; align-items:center }
+  .logo-sm{ width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--accent1),var(--accent3)); box-shadow:0 8px 20px rgba(129,52,175,0.18) }
+  .title{ font-weight:700; font-size:15px }
+  .menu-btn{ font-size:20px; background:transparent; border:none; color:inherit; cursor:pointer; padding:8px; border-radius:10px }
+
+  /* hero */
+  .hero{ padding:16px 18px; text-align:left }
+  .hero h1{ font-size:18px; font-weight:700; margin-bottom:6px; background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent }
+  .hero p{ color:var(--muted); font-size:13px; margin-top:4px }
+
+  /* controls card */
+  .controls{ padding:12px 16px; display:flex; gap:10px; align-items:center }
+  .file-btn{
+    padding:10px 12px; border-radius:12px; border:none; cursor:pointer;
+    background:linear-gradient(90deg,var(--accent3),var(--accent4)); color:#fff; font-weight:700;
+    box-shadow:0 10px 26px rgba(81,91,212,0.12);
+  }
+  .secondary{
+    padding:10px 12px; border-radius:12px; background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--muted);
+    cursor:pointer;
+  }
+  .small{ font-size:12px; color:var(--muted) }
+
+  /* gallery */
+  .gallery{ padding:12px 14px; display:flex; flex-direction:column; gap:12px }
+  .contact-block{ background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01)); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); }
+  .contact-header{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px }
+  .contact-name{ font-weight:700; font-size:14px }
+  .contact-meta{ font-size:12px; color:var(--muted) }
+
+  .thumbs{ display:flex; gap:8px; flex-wrap:wrap }
+  .thumb{ width:96px; height:96px; border-radius:10px; background:rgba(255,255,255,0.03); overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid rgba(255,255,255,0.02) }
+  .thumb img, .thumb video{ width:100%; height:100%; object-fit:cover; display:block }
+  .thumb .type{ position:absolute; bottom:6px; right:6px; font-size:11px; padding:4px 6px; border-radius:999px; background:rgba(0,0,0,0.45); color:#fff }
+
+  /* preview modal */
+  .preview{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,0.8); z-index:2000 }
+  .preview.open{ display:flex }
+  .preview .box{ width:92%; max-width:420px; border-radius:12px; overflow:hidden; background:#071428; padding:12px; }
+  .preview .media{ width:100%; max-height:70vh; display:flex; align-items:center; justify-content:center; }
+  .preview img, .preview video{ width:100%; height:auto; max-height:70vh; display:block }
+  .preview .meta{ margin-top:8px; color:var(--muted); font-size:13px; display:flex; justify-content:space-between; align-items:center }
+
+  /* toast */
+  .toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:22px; padding:8px 14px; background:rgba(0,0,0,0.7); color:#fff; border-radius:8px; font-size:13px; opacity:0; transition:opacity .24s }
+
+  .footer{ position:absolute; left:0; right:0; bottom:0; padding:12px 18px; background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12)); backdrop-filter: blur(10px); display:flex; gap:10px; justify-content:center }
+  .ghost{ padding:10px 12px; border-radius:12px; background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--muted); cursor:pointer }
+
+  @media (max-width:420px){ .thumb{ width:84px; height:84px } .preview .box{ max-width:94% } }
+</style>
 </head>
 <body>
 
-  <div class="sidebar">
-    <h2>📱 Instant Saver</h2>
-    <a href="index.html">📸 Instagram</a>
-    <a href="facebook.html">📘 Facebook</a>
-    <a href="whatsapp.html">🟢 WhatsApp</a>
-    <a href="subscription.html">💳 Subscription</a>
-    <a href="privacy.html">🔒 Privacy</a>
-    <a href="terms.html">📄 Terms</a>
-    <a href="contact.html">📬 Contact</a>
-    <a href="about.html">ℹ️ About</a>
-    <a href="success.html"><strong>✅ Feedback</strong></a>
-  </div>
+  <div class="device" role="application" aria-label="Instant Story Saver — WhatsApp">
+    <div class="device-inner">
 
-  <div class="main">
-    <div class="content">
-      <h1>WhatsApp Downloader</h1>
+      <div class="status">
+        <div class="brand">
+          <div class="logo-sm" aria-hidden="true"></div>
+          <div>
+            <div class="title">Instant Story Saver</div>
+            <div style="font-size:11px;color:var(--muted)">WhatsApp — Local Stories</div>
+          </div>
+        </div>
+        <button class="menu-btn" id="menuOpen" aria-label="Open menu">☰</button>
+      </div>
+
+      <div class="hero">
+        <h1>WhatsApp Stories — Local Viewer</h1>
+        <p>Pick your WhatsApp statuses folder and view stories grouped by contact. This works offline — we only read files you select.</p>
+      </div>
+
+      <div class="controls">
+        <!-- directory picker fallback: input with webkitdirectory (Chrome/Edge) -->
+        <label class="file-btn" id="selectDirBtn" title="Select WhatsApp statuses folder">
+          Select Statuses Folder
+          <input id="dirPicker" type="file" webkitdirectory directory multiple style="display:none">
+        </label>
+
+        <button class="secondary" id="helpBtn">How to find folder</button>
+      </div>
+
+      <div class="gallery" id="gallery">
+        <!-- dynamic contact blocks injected here -->
+      </div>
+
+      <div class="footer">
+        <button class="ghost" onclick="location.href='index.html'">Back</button>
+        <button class="ghost" onclick="location.href='subscription.html'">Subscription</button>
+      </div>
+
     </div>
   </div>
 
+  <!-- Preview modal -->
+  <div class="preview" id="preview" role="dialog" aria-modal="true">
+    <div class="box" id="previewBox">
+      <div class="media" id="previewMedia"></div>
+      <div class="meta">
+        <div id="previewInfo"></div>
+        <div>
+          <button class="ghost" id="downloadBtn">Download</button>
+          <button class="ghost" id="closePreview">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Toast</div>
+
+  <!-- Drawer (same as other pages) -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="back" id="backdrop" tabindex="-1"></div>
+    <nav class="panel" role="navigation" aria-label="Main menu">
+      <a class="navlink" href="index.html">🏠 Home — Instagram</a>
+      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
+      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
+      <a class="navlink" href="subscription.html">⭐ Subscription</a>
+      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
+      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
+      <a class="navlink" href="contact.html">📨 Feedback & Support</a>
+      <a class="navlink" href="about.html">ℹ️ About</a>
+    </nav>
+  </div>
+
+<script>
+/* ---------- viewport fix ---------- */
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', ()=>{ document.documentElement.style.setProperty('--vh', `${window.innerHeight*0.01}px`); });
+
+/* ---------- UI refs ---------- */
+const dirPicker = document.getElementById('dirPicker');
+const selectDirBtn = document.getElementById('selectDirBtn');
+const gallery = document.getElementById('gallery');
+const toast = document.getElementById('toast');
+const preview = document.getElementById('preview');
+const previewMedia = document.getElementById('previewMedia');
+const previewInfo = document.getElementById('previewInfo');
+const downloadBtn = document.getElementById('downloadBtn');
+const closePreview = document.getElementById('closePreview');
+
+/* ---------- Drawer controls (reuse) ---------- */
+const drawer = document.getElementById('drawer');
+const menuOpen = document.getElementById('menuOpen');
+const drawerBack = document.getElementById('backdrop');
+function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
+function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+menuOpen.addEventListener('click', openDrawer);
+drawerBack.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
+
+/* ---------- Helper utils ---------- */
+function showToast(text, ms=2000){
+  toast.textContent = text;
+  toast.style.opacity = '1';
+  setTimeout(()=>{ toast.style.opacity = '0'; }, ms);
+}
+
+/* Determine a "contact key" for grouping:
+   1) If user selected files with webkitRelativePath, try to use parent folder name
+   2) Else, fall back to filename prefix (before first underscore/dash/space)
+   3) Else, group by date cluster (hour)
+*/
+function contactKeyForFile(file){
+  // webkitRelativePath example: "WhatsApp/Media/.Statuses/IMG-202309...jpg" or "Statuses/ContactName/IMG..."
+  const path = file.webkitRelativePath || '';
+  if(path){
+    const parts = path.split('/');
+    // try find a plausible contact folder deeper than .Statuses
+    // find index of ".Statuses" or "Statuses" then take next segment as contact if exists
+    const idx = parts.findIndex(p => p.toLowerCase().includes('statuses'));
+    if(idx >= 0 && parts.length > idx + 2){
+      // if there is an extra segment like "Contact Name/filename"
+      const maybe = parts[idx+1];
+      if(maybe && !maybe.toLowerCase().includes('.')){
+        return maybe;
+      }
+    }
+    // fallback: take parent folder (one level above filename)
+    if(parts.length >= 2){
+      return parts[parts.length - 2];
+    }
+  }
+
+  // fallback: filename heuristics
+  const name = file.name || '';
+  const guess = name.split(/[_\-\s]/)[0];
+  if(guess && guess.length > 2) return guess;
+
+  // final fallback — group by date hour
+  const dt = file.lastModified ? new Date(file.lastModified) : new Date();
+  return 'Unknown • ' + dt.toISOString().slice(0,13).replace('T',' ');
+}
+
+/* Group files by contact key */
+function groupFilesByContact(fileList){
+  const map = new Map();
+  for(const f of fileList){
+    // only images/videos
+    if(!f.type.startsWith('image/') && !f.type.startsWith('video/')) continue;
+    const key = contactKeyForFile(f);
+    if(!map.has(key)) map.set(key, []);
+    map.get(key).push(f);
+  }
+
+  // sort groups by newest file date descending
+  const groups = Array.from(map.entries()).map(([k, arr])=>{
+    arr.sort((a,b)=> (b.lastModified || 0) - (a.lastModified || 0));
+    return { contact: k, files: arr };
+  }).sort((a,b)=> (b.files[0].lastModified || 0) - (a.files[0].lastModified || 0));
+
+  return groups;
+}
+
+/* Render groups to UI */
+function renderGroups(groups){
+  gallery.innerHTML = '';
+  if(groups.length === 0){
+    gallery.innerHTML = '<div style="padding:12px;color:var(--muted);text-align:center">No image/video files found. Select the WhatsApp statuses folder (folder must contain images/videos).</div>';
+    return;
+  }
+
+  for(const g of groups){
+    const block = document.createElement('div');
+    block.className = 'contact-block';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'contact-header';
+    const name = document.createElement('div');
+    name.className = 'contact-name';
+    name.textContent = g.contact;
+    const meta = document.createElement('div');
+    meta.className = 'contact-meta';
+    meta.textContent = `${g.files.length} item${g.files.length>1?'s':''} • ${formatDate(g.files[0].lastModified)}`;
+    hdr.appendChild(name); hdr.appendChild(meta);
+    block.appendChild(hdr);
+
+    const thumbs = document.createElement('div');
+    thumbs.className = 'thumbs';
+
+    for(const f of g.files){
+      const t = document.createElement('div');
+      t.className = 'thumb';
+      t.tabIndex = 0;
+      // create objectURL
+      const url = URL.createObjectURL(f);
+      if(f.type.startsWith('image/')){
+        const img = document.createElement('img'); img.src = url; img.alt = f.name;
+        t.appendChild(img);
+        const type = document.createElement('div'); type.className='type'; type.textContent='JPG'; t.appendChild(type);
+      } else {
+        const vid = document.createElement('video'); vid.src = url; vid.preload='metadata'; vid.muted=true; vid.playsInline=true;
+        t.appendChild(vid);
+        const type = document.createElement('div'); type.className='type'; type.textContent='MP4'; t.appendChild(type);
+      }
+      // click opens preview
+      t.addEventListener('click', ()=> openPreview(f));
+      thumbs.appendChild(t);
+    }
+
+    block.appendChild(thumbs);
+    gallery.appendChild(block);
+  }
+}
+
+/* format date */
+function formatDate(ms){
+  if(!ms) return '';
+  const d = new Date(ms);
+  return d.toLocaleString();
+}
+
+/* Preview functionality */
+let currentPreviewFile = null;
+function openPreview(file){
+  currentPreviewFile = file;
+  previewMedia.innerHTML = '';
+  const url = URL.createObjectURL(file);
+  if(file.type.startsWith('image/')){
+    const img = document.createElement('img'); img.src = url; previewMedia.appendChild(img);
+  } else {
+    const vid = document.createElement('video'); vid.src = url; vid.controls = true; vid.autoplay = true; previewMedia.appendChild(vid);
+  }
+  previewInfo.textContent = `${file.name} • ${formatDate(file.lastModified)}`;
+  preview.classList.add('open');
+}
+closePreview.addEventListener('click', ()=>{ preview.classList.remove('open'); if(currentPreviewFile) URL.revokeObjectURL(currentPreviewFile); currentPreviewFile=null; });
+
+downloadBtn.addEventListener('click', ()=>{
+  if(!currentPreviewFile) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(currentPreviewFile);
+  a.download = currentPreviewFile.name;
+  document.body.appendChild(a); a.click(); a.remove();
+  showToast('Download started');
+});
+
+/* Directory picker handling */
+dirPicker.addEventListener('change', (ev)=>{
+  const files = Array.from(ev.target.files || []);
+  if(files.length === 0){ showToast('No files selected'); return; }
+  showToast('Processing files…', 1000);
+  // group & render
+  const groups = groupFilesByContact(files);
+  renderGroups(groups);
+});
+
+// help button: show instructions
+document.getElementById('helpBtn').addEventListener('click', ()=>{
+  showToast('On Android choose the WhatsApp/Media/.Statuses folder. If not visible, open file manager and grant access.', 4000);
+});
+
+/* Accessibility: allow clicking the label to open file dialog */
+selectDirBtn.addEventListener('click', ()=>{ dirPicker.click(); });
+
+/* On load: show quick hint */
+window.addEventListener('load', ()=> setTimeout(()=> showToast('Tip: Select the WhatsApp statuses folder to view stories.'), 600));
+</script>
 </body>
 </html>
