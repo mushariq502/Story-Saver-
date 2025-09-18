@@ -11,6 +11,8 @@
   --panel: rgba(255,255,255,0.03);
   --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
   --muted: rgba(230,238,248,0.72);
+  --success:#25D366;
+  --error:#FF4C4C;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -42,7 +44,7 @@ body{
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 80px;
+  padding-bottom: 100px;
 }
 
 .status{
@@ -125,14 +127,20 @@ body{
   gap:12px;
 }
 .contact-form input, .contact-form textarea{
-  padding:10px;
+  padding:12px;
   border-radius:12px;
   border:1px solid rgba(255,255,255,0.1);
   background:rgba(255,255,255,0.05);
   color:#fff;
   font-size:14px;
+  transition: all .2s ease;
 }
-.contact-form textarea{resize:none;height:90px}
+.contact-form input:focus, .contact-form textarea:focus{
+  border-color:var(--accent3);
+  box-shadow:0 0 12px rgba(129,52,175,0.4);
+  outline:none;
+}
+.contact-form textarea{resize:none;height:100px}
 .contact-form button{
   padding:12px;
   border-radius:12px;
@@ -141,9 +149,21 @@ body{
   color:#fff;
   font-weight:700;
   cursor:pointer;
-  transition: transform .14s;
+  transition: transform .14s, box-shadow .14s;
 }
 .contact-form button:active{transform:scale(.98)}
+
+.tooltip{
+  font-size:12px;
+  margin-top:-6px;
+  margin-bottom:4px;
+  color:#fff;
+  text-align:center;
+  opacity:0;
+  transition:opacity .2s;
+}
+.tooltip.success{color:var(--success);}
+.tooltip.error{color:var(--error);}
 
 .note{
   font-size:12px;
@@ -151,6 +171,21 @@ body{
   text-align:center;
   margin-top:6px;
   padding:0 6px
+}
+
+.info-section{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:14px;
+}
+.info-section h3{
+  font-size:14px;
+  font-weight:700;
+}
+.info-section p{
+  font-size:13px;
+  color:var(--muted);
 }
 
 .footer{
@@ -245,20 +280,39 @@ body{
     </div>
 
     <div class="hero">
-      <h1>Get in Touch</h1>
-      <p>We are here to help! Send us your queries, feedback, or suggestions. Your experience matters to us.</p>
+      <h1>We’re Here For You</h1>
+      <p>Your feedback helps us make Instant Story Saver faster, smoother, and more reliable. Reach out anytime!</p>
     </div>
 
     <div class="wrap">
+
       <div class="card">
         <form class="contact-form" id="contactForm">
           <input type="text" placeholder="Your Name" required id="name">
+          <div class="tooltip" id="nameTooltip"></div>
           <input type="email" placeholder="Your Email" required id="email">
-          <textarea placeholder="Your Message" required id="message"></textarea>
+          <div class="tooltip" id="emailTooltip"></div>
+          <textarea placeholder="Your Message / Feedback" required id="message"></textarea>
+          <div class="tooltip" id="messageTooltip"></div>
           <button type="submit">Send Message</button>
         </form>
-        <div class="note">We aim to respond within 24 hours. Your feedback helps us improve the app experience.</div>
+        <div class="note">We respond to all messages within 24 hours. Your suggestions directly influence app improvements.</div>
       </div>
+
+      <div class="card info-section">
+        <h3>Official Support Email</h3>
+        <p>support@instantstorysaver.com</p>
+
+        <h3>Phone Support (Mon–Fri)</h3>
+        <p>+91 98765 43210 — 10:00 AM to 7:00 PM IST</p>
+
+        <h3>Follow Us on Social Media</h3>
+        <p>Instagram: @InstantStorySaver<br>Facebook: fb.com/InstantStorySaver<br>Twitter: @InstaStorySaver</p>
+
+        <h3>Feedback & Suggestions</h3>
+        <p>Every idea, bug report, or suggestion is reviewed personally by our team. We strive for a perfect user experience!</p>
+      </div>
+
     </div>
 
     <div class="footer">
@@ -287,33 +341,48 @@ body{
 <script>
 let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
-window.addEventListener('resize', ()=>{
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-});
+window.addEventListener('resize', ()=>{ document.documentElement.style.setProperty('--vh', `${window.innerHeight*0.01}px`); });
 
 const drawer = document.getElementById('drawer');
 const menuOpen = document.getElementById('menuOpen');
 const drawerBack = document.getElementById('backdrop');
-
-function openDrawer(){ 
-  drawer.classList.add('open');
-  drawer.setAttribute('aria-hidden','false'); 
-}
-function closeDrawer(){
-  drawer.classList.remove('open');
-  drawer.setAttribute('aria-hidden','true'); 
-}
+function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
+function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
 menuOpen.addEventListener('click', openDrawer);
 drawerBack.addEventListener('click', closeDrawer);
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
 
-// Contact form submission demo
-document.getElementById('contactForm').addEventListener('submit', function(e){
+/* Contact form validation + tooltips */
+const contactForm = document.getElementById('contactForm');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const messageInput = document.getElementById('message');
+const nameTooltip = document.getElementById('nameTooltip');
+const emailTooltip = document.getElementById('emailTooltip');
+const messageTooltip = document.getElementById('messageTooltip');
+
+contactForm.addEventListener('submit', function(e){
   e.preventDefault();
-  alert('Thank you, your message has been sent successfully! (Demo)');
-  this.reset();
+  let valid=true;
+
+  if(nameInput.value.trim().length<2){ valid=false; showTooltip(nameTooltip,'Enter valid name'); } else hideTooltip(nameTooltip);
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)){ valid=false; showTooltip(emailTooltip,'Enter valid email'); } else hideTooltip(emailTooltip);
+  if(messageInput.value.trim().length<5){ valid=false; showTooltip(messageTooltip,'Message too short'); } else hideTooltip(messageTooltip);
+
+  if(valid){
+    showTooltip(messageTooltip,'Message sent successfully!', 'success');
+    contactForm.reset();
+  }
 });
+
+function showTooltip(el,msg,type='error'){
+  el.textContent=msg;
+  el.className='tooltip '+type;
+  el.style.opacity=1;
+  setTimeout(()=>{ el.style.opacity=0; },2000);
+}
+function hideTooltip(el){ el.style.opacity=0; }
+
 </script>
 </body>
 </html>
