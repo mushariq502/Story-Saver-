@@ -1,196 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About - Instant Story Saver</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Instant Story Saver — About</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg1: #1e2a47;
-      --bg2: #162036;
-      --text: #ffffff;
-      --accent: #4da3ff;
+    :root{
+      --bg1:#aeccfd; --bg2:#0c1a2a;
+      --panel: rgba(255,255,255,0.03);
+      --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+      --muted: rgba(230,238,248,0.72);
+      --txt:#e6eef8;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,Arial;
+      background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--txt);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      min-height:100vh;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    /* Device frame (match subscription theme) */
+    .device{
+      width:96vw;
+      max-width:380px; 
+      height: calc(var(--vh, 1vh) * 92);
+      border-radius:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      position:relative;
+      overflow-y: hidden;
+      display:flex;
+      flex-direction:column;
     }
 
-    body {
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Header */
-    header {
-      background: var(--bg2);
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .logo { color: var(--accent); font-size: 1.2rem; }
-    .menu-btn {
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    /* Drawer */
-    .drawer {
-      position: fixed;
-      top: 0; left: -260px;
-      width: 240px;
+    .device-inner {
+      width: 100%;
       height: 100%;
-      background: var(--bg2);
-      box-shadow: 4px 0 10px rgba(0,0,0,0.4);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      transition: left 0.3s ease;
-      z-index: 1000;
-    }
-    .drawer.active { left: 0; }
-    .drawer a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 8px 12px;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-    .drawer a:hover {
-      background: rgba(255,255,255,0.1);
-    }
-    .drawer .close-btn {
-      align-self: flex-end;
-      font-size: 1.3rem;
-      cursor: pointer;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 80px;
     }
 
-    /* Main content */
-    main {
-      flex: 1;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-      line-height: 1.7;
-      font-size: 1rem;
+    /* status/header */
+    .status{
+      height:56px; 
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(255,255,255,0.02);
     }
-    main h1, main h2 {
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-    main h1 { font-size: 1.9rem; margin-top: 10px; }
-    main h2 { font-size: 1.4rem; margin-top: 20px; }
-    main p { margin-bottom: 15px; }
-    ul { margin: 15px 0 20px 20px; }
-    ul li { margin-bottom: 8px; }
+    .brand{display:flex;gap:10px;align-items:center}
+    .brand .logo-sm{
+      width:36px;height:36px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent3));
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 20px rgba(129,52,175,0.18)}
+    .brand .title{font-weight:700;font-size:15px}
+    .menu-btn{font-size:20px;background:transparent;border:none;color:inherit;cursor:pointer;padding:8px;border-radius:10px}
 
-    .closing {
-      font-weight: 600;
-      color: #aad4ff;
-      text-align: center;
-      margin-top: 25px;
+    /* hero */
+    .hero{
+      padding:18px 20px 10px;
+      text-align:left;
+      animation:fadeInDown .5s ease;
+    }
+    .hero h1{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:6px;
+      background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .hero p{color:var(--muted);font-size:13px;margin-top:4px}
+
+    /* content card */
+    .card{
+      margin:12px 14px;
+      padding:14px;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.45);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
     }
 
-    footer {
-      background: var(--bg2);
-      text-align: center;
-      padding: 12px;
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
+    .section-title{
+      color:#fff;font-weight:700;margin-bottom:8px;font-size:14px;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    .feature-list{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+    .feature{
+      display:flex;gap:10px;align-items:flex-start;
+    }
+    .feature .dot{
+      min-width:8px;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--accent3),var(--accent4));
+      margin-top:6px;
+    }
+    .muted{color:var(--muted)}
+
+    .cta-row{display:flex;gap:10px;margin-top:12px}
+    .btn{
+      flex:1;padding:10px;border-radius:12px;border:none;font-weight:700;cursor:pointer;
+      color:#fff;background:linear-gradient(90deg,var(--accent3),var(--accent4));
+      box-shadow:0 10px 26px rgba(81,91,212,0.12);
+    }
+    .ghost{
+      flex:1;padding:10px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);
+    }
+
+    .footer{
+      position:absolute;left:0;right:0;bottom:0;padding:12px 18px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12));backdrop-filter: blur(10px);display:flex;gap:10px;justify-content:center}
+    .ghost-sm{padding:8px 10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+
+    /* Drawer (reuse same drawer styles you had) */
+    .drawer{position:fixed;inset:0;pointer-events:none;z-index:999;display:flex}
+    .drawer .back{position:absolute;inset:0;background:rgba(2,6,23,0.55);opacity:0;transition:opacity .3s}
+    .drawer .panel{
+      position:absolute;left:0;top:0;bottom:0;width:280px;transform:translateX(-100%);
+      transition:transform .36s cubic-bezier(.2,.9,.3,1);
+      background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+      backdrop-filter: blur(10px);
+      border-right:1px solid rgba(255,255,255,0.04);
+      box-shadow: 10px 0 34px rgba(2,6,23,0.6);
+      padding:18px;z-index:1000;
+    }
+    .drawer.open{pointer-events:auto}
+    .drawer.open .back{opacity:1}
+    .drawer.open .panel{transform:translateX(0)}
+    .navlink{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:#fff;text-decoration:none;transition:background .18s}
+    .navlink:hover{background:rgba(255,255,255,0.04)}
+
+    /* small responsiveness */
+    @media (max-width:420px){
+      .hero h1{font-size:17px}
     }
   </style>
 </head>
 <body>
+  <div class="device" role="application" aria-label="Instant Story Saver - About">
+    <div class="device-inner">
+      <div class="status">
+        <div class="brand">
+          <div class="logo-sm" aria-hidden="true"></div>
+          <div>
+            <div class="title">Instant Story Saver</div>
+            <div style="font-size:11px;color:rgba(230,238,248,0.75)">About</div>
+          </div>
+        </div>
+        <button class="menu-btn" id="menuOpen" aria-label="Open menu">☰</button>
+      </div>
 
-  <!-- Drawer -->
-  <div class="drawer" id="drawer">
-    <div class="close-btn" onclick="toggleDrawer()">✖</div>
-    <a href="index.html">🏠 Home</a>
-    <a href="about.html">ℹ️ About</a>
-    <a href="privacy.html">🔒 Privacy Policy</a>
-    <a href="terms.html">📜 Terms & Conditions</a>
-    <a href="subscription.html">💳 Subscription</a>
-    <a href="contact.html">📩 Contact</a>
+      <div class="hero">
+        <h1>About Instant Story Saver</h1>
+        <p>Simple. Fast. Private. We help you save the moments that matter — in one tap.</p>
+      </div>
+
+      <!-- About Card -->
+      <div class="card" role="region" aria-label="About content">
+        <div class="section-title">
+          <div>What is Instant Story Saver</div>
+          <div style="font-size:12px;color:var(--muted)">Version 1.0</div>
+        </div>
+        <p class="muted">
+          Instant Story Saver is a lightweight, privacy-first app that allows users to save stories and status updates from Instagram, Facebook, and WhatsApp. It was built to be reliable, fast, and easy to use — giving you control over your personal collection of moments.
+        </p>
+
+        <div class="section-title" style="margin-top:12px"><div>Key Features</div></div>
+        <div class="feature-list">
+          <div class="feature"><div class="dot"></div><div><strong>One-tap downloads</strong><div class="muted">Save images and videos directly to your device in high quality.</div></div></div>
+          <div class="feature"><div class="dot"></div><div><strong>Multi-platform</strong><div class="muted">Support for Instagram, Facebook, and WhatsApp stories (public or with permission).</div></div></div>
+          <div class="feature"><div class="dot"></div><div><strong>Privacy-first design</strong><div class="muted">No personal data is collected without consent; everything stays on your device unless you choose otherwise.</div></div></div>
+          <div class="feature"><div class="dot"></div><div><strong>Premium experience</strong><div class="muted">Go ad-free, enable advanced integrations and priority support with subscription.</div></div></div>
+          <div class="feature"><div class="dot"></div><div><strong>Organize & revisit</strong><div class="muted">Built-in gallery and recent downloads make it easy to revisit saved moments.</div></div></div>
+        </div>
+
+        <div class="section-title" style="margin-top:14px"><div>Why we built this</div></div>
+        <p class="muted">
+          In many apps, stories disappear after a short time — often before we get a chance to save what matters. We built Instant Story Saver to give users a reliable, respectful way to preserve those moments. Our focus is on speed, clarity, and giving control back to you.
+        </p>
+
+        <div class="section-title" style="margin-top:12px"><div>Security & Privacy</div></div>
+        <p class="muted">
+          Your trust is important. By design:
+        </p>
+        <ul class="muted" style="margin-left:14px;">
+          <li>No collection of personal content without explicit consent.</li>
+          <li>Optional logins (OAuth) handled by the platform — we do not store your credentials.</li>
+          <li>Saved media stays on your device; you control sharing and deletion.</li>
+        </ul>
+
+        <div class="section-title" style="margin-top:12px"><div>How to use — quick guide</div></div>
+        <p class="muted">
+          1. Paste a story link or use the in-app paste button.<br>
+          2. Tap Download — the file saves to your device immediately.<br>
+          3. For account-only features (Instagram/Facebook), enable Login after subscribing to Premium.
+        </p>
+
+        <div class="section-title" style="margin-top:12px"><div>Support & Feedback</div></div>
+        <p class="muted">
+          We read every message. If you find a bug, need help, or have a feature suggestion, please reach out via the Contact screen. Your feedback shapes future updates.
+        </p>
+
+        <div class="section-title" style="margin-top:12px"><div>Commitment & Vision</div></div>
+        <p class="muted">
+          Our vision is to be the trusted companion for personal media preservation — an app that works reliably, respects privacy, and grows with user needs. We commit to regular updates, transparent policies, and responsive support.
+        </p>
+
+        <div class="section-title" style="margin-top:12px"><div>Join us</div></div>
+        <p class="muted">
+          If you enjoy the app, consider upgrading to Premium to support development — or share feedback so we can make it better for everyone. Thank you for trusting Instant Story Saver.
+        </p>
+
+        <div style="margin-top:12px;display:flex;gap:10px">
+          <button class="btn" onclick="location.href='subscription.html'">Go Premium</button>
+          <button class="ghost" onclick="location.href='contact.html'">Contact Support</button>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button class="ghost-sm" onclick="location.href='index.html'">Back</button>
+        <button class="ghost-sm" onclick="location.href='privacy.html'">Privacy</button>
+        <button class="ghost-sm" onclick="location.href='terms.html'">Terms</button>
+      </div>
+
+    </div>
   </div>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">📲 Instant Story Saver</div>
-    <button class="menu-btn" onclick="toggleDrawer()">☰</button>
-  </header>
-
-  <!-- About Content -->
-  <main>
-    <h1>About Instant Story Saver</h1>
-    <p>
-      Welcome to <strong>Instant Story Saver</strong> – a mobile app created with passion to help users easily save, organize, and relive their favorite stories from WhatsApp, Instagram, and Facebook. Our goal is to provide a smooth, fast, and reliable experience for every user.
-    </p>
-
-    <h2>Our Journey</h2>
-    <p>
-      This app is more than just software; it’s a personal journey. From school days where I struggled with focus and exams, to times of illness and challenges in work and relationships, every experience taught me resilience and patience. These lessons inspired me to create a tool that is simple, practical, and user-friendly.
-    </p>
-
-    <h2>Our Mission</h2>
-    <p>
-      Our mission is to empower you to save what matters. Whether it’s a beautiful moment shared by a friend, a funny story, or a memorable highlight, Instant Story Saver makes it easy to preserve your digital memories while respecting your privacy.
-    </p>
-
-    <h2>Core Principles</h2>
-    <ul>
-      <li><strong>Privacy First:</strong> We do not store your personal data. Everything stays on your device unless you choose otherwise.</li>
-      <li><strong>Transparency:</strong> You always know what the app can access and why.</li>
-      <li><strong>Simplicity:</strong> No clutter, no unnecessary features. Just a clean, intuitive experience.</li>
-      <li><strong>Reliability:</strong> Designed to work smoothly on all supported devices, with minimal crashes or delays.</li>
-    </ul>
-
-    <h2>Personal Touch</h2>
-    <p>
-      This app is built by me, not a big corporation. Every feature, every update, and every design choice is made with users like you in mind. I want you to feel that using Instant Story Saver is like using a tool made by a friend who truly cares about your experience.
-    </p>
-
-    <h2>Looking Ahead</h2>
-    <p>
-      We continuously listen to user feedback to improve the app. New features, better speed, and even more ways to manage and save your stories are on the roadmap. Your suggestions are welcome, and we aim to make this app even more helpful for you.
-    </p>
-
-    <h2>Thank You</h2>
-    <p>
-      Thank you for downloading and trusting Instant Story Saver. Your support means everything, and it motivates me to keep improving. Remember, every story saved here is a memory preserved, and that is what makes life special.
-    </p>
-
-    <p class="closing">
-      With gratitude and dedication, <br>
-      <strong>Mohd Mushariq</strong> <br>
-      Creator of Instant Story Saver
-    </p>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Instant Story Saver | Built with ❤️ by Mohd Mushariq</p>
-  </footer>
+  <!-- Drawer -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="back" id="backdrop" tabindex="-1"></div>
+    <nav class="panel" role="navigation" aria-label="Main menu">
+      <a class="navlink" href="index.html">🏠 Home — Instagram</a>
+      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
+      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
+      <a class="navlink" href="subscription.html">⭐ Subscription</a>
+      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
+      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
+      <a class="navlink" href="contact.html">📨 Contact Us</a>
+      <a class="navlink" href="about.html">ℹ️ About</a>
+      <a class="navlink" href="success.html"><strong>💬 Feedback</strong></a>
+    </nav>
+  </div>
 
   <script>
-    function toggleDrawer() {
-      document.getElementById('drawer').classList.toggle('active');
-    }
-  </script>
+    // viewport fix for mobile
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    window.addEventListener('resize', ()=>{
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
 
+    // Drawer controls
+    const drawer = document.getElementById('drawer');
+    const menuOpen = document.getElementById('menuOpen');
+    const drawerBack = document.getElementById('backdrop');
+
+    function openDrawer(){ 
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden','false'); 
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden','true'); 
+    }
+
+    menuOpen.addEventListener('click', openDrawer);
+    drawerBack.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
+  </script>
 </body>
 </html>
