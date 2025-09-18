@@ -1,129 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Contact Us — Instant Story Saver</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Instant Story Saver — Contact</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg1:#0a0f1f; --bg2:#061024;
-  --glass: rgba(255,255,255,0.04);
-  --stroke: rgba(255,255,255,0.06);
-  --muted: rgba(230,238,248,0.78);
-  --txt:#e9f1ff;
+  --bg1:#aeccfd; --bg2:#0c1a2a;
+  --panel: rgba(255,255,255,0.03);
   --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
-  --ok:#25D366; --fb:#4267B2; --warn:#ffb74d;
+  --muted: rgba(230,238,248,0.72);
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif;}
-body{background:var(--bg);color:#111;}
-.device{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;}
-.device-inner{flex:1;display:flex;flex-direction:column;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Poppins',system-ui,Arial;
+  background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
+              linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:#e6eef8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  min-height:100vh;
+}
 
-/* Topbar */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card);box-shadow:var(--shadow);}
-.brand{display:flex;align-items:center;gap:8px;}
-.logo{width:34px;height:34px;background:var(--accent);border-radius:50%;}
-.title{font-weight:600;font-size:16px;}
-.menu-btn{background:none;border:none;font-size:22px;cursor:pointer;}
+.device{
+  width:96vw;
+  max-width:380px; 
+  height: calc(var(--vh, 1vh) * 92);
+  border-radius:28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  position:relative;
+  overflow-y: hidden;
+}
+.device-inner {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 80px;
+}
 
-/* Hero */
-.hero{text-align:center;padding:28px 16px;}
-.hero h1{font-size:24px;margin:8px 0;}
-.hero p{color:var(--muted);font-size:14px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;font-size:12px;padding:4px 10px;border-radius:20px;}
+.status{
+  height:56px; 
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(255,255,255,0.02);
+}
+.brand{
+  display:flex;
+  gap:10px;
+  align-items:center
+}
+.brand .logo-sm{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--accent1),var(--accent3));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 20px rgba(129,52,175,0.18)
+}
+.brand .title{
+  font-weight:700;
+  font-size:15px
+}
+.menu-btn{
+  font-size:20px;
+  background:transparent;
+  border:none;
+  color:inherit;
+  cursor:pointer;
+  padding:8px;
+  border-radius:10px
+}
 
-/* Card */
-.card{background:var(--card);margin:16px;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
-.input{width:100%;padding:12px;border:1px solid #ddd;border-radius:var(--radius);font-size:14px;}
-.btn{width:100%;padding:12px;background:var(--accent);border:none;color:#fff;border-radius:var(--radius);font-weight:600;cursor:pointer;transition:.2s;}
-.btn:hover{background:var(--accent-dark);}
+.hero{
+  padding:20px;
+  text-align:center;
+  animation:fadeInDown .6s ease;
+}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.hero h1{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:6px;
+  background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent
+}
+.hero p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:6px
+}
 
-/* Info */
-.premium{text-align:center;font-size:13px;color:var(--muted);padding:12px;}
+.wrap{
+  padding:12px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:center
+}
 
-/* Bottom Nav */
-.bottom{display:flex;justify-content:space-around;align-items:center;background:var(--card);box-shadow:var(--shadow);padding:6px 0;position:sticky;bottom:0;}
-.tab{text-align:center;font-size:11px;color:var(--muted);}
-.tab-btn{background:none;border:none;font-size:20px;cursor:pointer;}
-.tab.active{color:var(--accent);}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.5); 
+}
+
+.contact-form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.contact-form input, .contact-form textarea{
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  font-size:14px;
+}
+.contact-form textarea{resize:none;height:90px}
+.contact-form button{
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:linear-gradient(90deg,var(--accent3),var(--accent4));
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  transition: transform .14s;
+}
+.contact-form button:active{transform:scale(.98)}
+
+.note{
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+  margin-top:6px;
+  padding:0 6px
+}
+
+.footer{
+  position:absolute;
+  left:0; 
+  right:0;
+  bottom:0;
+  padding:12px 18px;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12));
+  backdrop-filter: blur(10px);
+  display:flex;
+  gap:10px;
+  justify-content:center
+}
+.ghost{
+  padding:10px 12px;
+  border-radius:12px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.04);
+  color:var(--muted)
+}
 
 /* Drawer */
-.drawer{position:fixed;inset:0;display:none;}
-.drawer.open{display:block;}
-.back{position:absolute;inset:0;background:rgba(0,0,0,.4);}
-.panel{position:absolute;left:0;top:0;bottom:0;width:240px;background:var(--card);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;}
-.navlink{padding:12px 0;text-decoration:none;color:#111;border-bottom:1px solid #eee;font-size:14px;}
-.navlink:hover{color:var(--accent);}
-
-/* Toast */
-.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:.3s;font-size:14px;}
+.drawer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:999;
+  display:flex
+}
+.drawer .back{
+  position:absolute;
+  inset:0;
+  background:rgba(2,6,23,0.55);
+  opacity:0;
+  transition:opacity .3s
+}
+.drawer .panel{
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:280px;
+  transform:translateX(-100%);
+  transition:transform .36s cubic-bezier(.2,.9,.3,1);
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+  backdrop-filter: blur(10px);
+  border-right:1px solid rgba(255,255,255,0.04);
+  box-shadow: 10px 0 34px rgba(2,6,23,0.6);
+  padding:18px;
+  z-index:1000;
+}
+.drawer.open{
+  pointer-events:auto
+}
+.drawer.open .back{
+  opacity:1
+}
+.drawer.open .panel{
+  transform:translateX(0)
+}
+.navlink{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:10px;
+  color:#fff;
+  text-decoration:none;
+  transition:background .18s, transform .12s;
+  border:1px solid transparent;
+}
+.navlink:hover{
+  background:rgba(255,255,255,0.04)
+}
 </style>
 </head>
 <body>
 
-<div class="device" role="application" aria-label="Instant Story Saver">
-<div class="device-inner">
+<div class="device">
 
-  <!-- Top Bar -->
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo"></div>
-      <div>
-        <div class="title">Instant Story Saver</div>
-        <div style="font-size:11px;color:var(--muted)">Instagram · Facebook · WhatsApp</div>
+  <div class="device-inner">
+    <div class="status">
+      <div class="brand">
+        <div class="logo-sm" aria-hidden="true"></div>
+        <div>
+          <div class="title">Instant Story Saver</div>
+          <div style="font-size:11px;color:rgba(230,238,248,0.75)">Contact Us</div>
+        </div>
+      </div>
+      <button class="menu-btn" id="menuOpen" aria-label="Open menu">☰</button>
+    </div>
+
+    <div class="hero">
+      <h1>Get in Touch</h1>
+      <p>We are here to help! Send us your queries, feedback, or suggestions. Your experience matters to us.</p>
+    </div>
+
+    <div class="wrap">
+      <div class="card">
+        <form class="contact-form" id="contactForm">
+          <input type="text" placeholder="Your Name" required id="name">
+          <input type="email" placeholder="Your Email" required id="email">
+          <textarea placeholder="Your Message" required id="message"></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+        <div class="note">We aim to respond within 24 hours. Your feedback helps us improve the app experience.</div>
       </div>
     </div>
-    <button class="menu-btn" id="openMenu">☰</button>
-  </div>
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="badge">📩 Get in Touch</div>
-    <h1>Contact Us</h1>
-    <p>We’d love to hear from you. Send us your queries or feedback!</p>
-  </div>
-
-  <!-- Contact Form -->
-  <div class="card">
-    <form id="contactForm">
-      <input type="text" class="input" placeholder="Your Name" required style="margin-bottom:10px"/>
-      <input type="email" class="input" placeholder="Your Email" required style="margin-bottom:10px"/>
-      <textarea class="input" placeholder="Your Message" rows="4" required style="margin-bottom:10px;resize:none"></textarea>
-      <button type="submit" class="btn">📨 Send Message</button>
-    </form>
-  </div>
-
-  <!-- Info -->
-  <div class="premium">
-    📧 Email us at <strong>support@instantstorysaver.com</strong>
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
-
-  <!-- Bottom Nav -->
-  <div class="bottom">
-    <div class="tab">
-      <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
-      <div>Home</div>
-    </div>
-    <div class="tab">
-      <button class="tab-btn" onclick="location.href='subscription.html'">⭐</button>
-      <div>Premium</div>
-    </div>
-    <div class="tab active">
-      <button class="tab-btn">📨</button>
-      <div>Contact</div>
+    <div class="footer">
+      <button class="ghost" onclick="location.href='index.html'">Back</button>
+      <button class="ghost" onclick="location.href='subscription.html'">Premium Plans</button>
     </div>
   </div>
 
-  <!-- Drawer -->
-  <div class="drawer" id="drawer">
-    <div class="back" id="backdrop"></div>
-    <nav class="panel">
-      <a class="navlink" href="index.html">🏠 Home</a>
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="back" id="backdrop" tabindex="-1"></div>
+    <nav class="panel" role="navigation" aria-label="Main menu">
+      <a class="navlink" href="index.html">🏠 Home — Instagram</a>
       <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
       <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
       <a class="navlink" href="subscription.html">⭐ Subscription</a>
@@ -131,33 +278,41 @@ body{background:var(--bg);color:#111;}
       <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
       <a class="navlink" href="contact.html">📨 Contact Us</a>
       <a class="navlink" href="about.html">ℹ️ About</a>
+      <a class="navlink" href="success.html"><strong>💬 Feedback</strong></a>
     </nav>
   </div>
 
 </div>
-</div>
 
 <script>
-/* Drawer controls */
-const drawer   = document.getElementById('drawer');
-const openMenu = document.getElementById('openMenu');
-const backdrop = document.getElementById('backdrop');
-function openDrawer(){ drawer.classList.add('open'); }
-function closeDrawer(){ drawer.classList.remove('open'); }
-openMenu.addEventListener('click', openDrawer);
-backdrop.addEventListener('click', closeDrawer);
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', ()=>{
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
 
-/* Toast + form submit */
-const toast = document.getElementById('toast');
-function showToast(msg, ms=2000){
-  toast.textContent = msg;
-  toast.style.opacity='1';
-  setTimeout(()=>{ toast.style.opacity='0'; }, ms);
+const drawer = document.getElementById('drawer');
+const menuOpen = document.getElementById('menuOpen');
+const drawerBack = document.getElementById('backdrop');
+
+function openDrawer(){ 
+  drawer.classList.add('open');
+  drawer.setAttribute('aria-hidden','false'); 
 }
-document.getElementById('contactForm').addEventListener('submit', e=>{
+function closeDrawer(){
+  drawer.classList.remove('open');
+  drawer.setAttribute('aria-hidden','true'); 
+}
+menuOpen.addEventListener('click', openDrawer);
+drawerBack.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
+
+// Contact form submission demo
+document.getElementById('contactForm').addEventListener('submit', function(e){
   e.preventDefault();
-  showToast("✅ Message sent successfully!");
-  e.target.reset();
+  alert('Thank you, your message has been sent successfully! (Demo)');
+  this.reset();
 });
 </script>
 </body>
