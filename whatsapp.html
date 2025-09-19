@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Instant Story Saver — WhatsApp</title>
+<title>Instant Story Saver — WhatsApp (Fixed)</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -26,7 +26,6 @@
     min-height:100vh;
   }
 
-  /* Device frame (match subscription theme) */
   .device{ width:96vw; max-width:380px; height: calc(var(--vh, 1vh) * 92); border-radius:28px;
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     border:1px solid rgba(255,255,255,0.03); box-shadow: 0 20px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
@@ -34,19 +33,16 @@
   }
   .device-inner{ width:100%; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:80px; }
 
-  /* header */
   .status{ height:56px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; backdrop-filter: blur(6px); border-bottom:1px solid rgba(255,255,255,0.02); }
   .brand{ display:flex; gap:10px; align-items:center }
   .logo-sm{ width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--accent1),var(--accent3)); box-shadow:0 8px 20px rgba(129,52,175,0.18) }
   .title{ font-weight:700; font-size:15px }
   .menu-btn{ font-size:20px; background:transparent; border:none; color:inherit; cursor:pointer; padding:8px; border-radius:10px }
 
-  /* hero */
   .hero{ padding:16px 18px; text-align:left }
   .hero h1{ font-size:18px; font-weight:700; margin-bottom:6px; background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent }
   .hero p{ color:var(--muted); font-size:13px; margin-top:4px }
 
-  /* controls card */
   .controls{ padding:12px 16px; display:flex; gap:10px; align-items:center }
   .file-btn{
     padding:10px 12px; border-radius:12px; border:none; cursor:pointer;
@@ -59,7 +55,6 @@
   }
   .small{ font-size:12px; color:var(--muted) }
 
-  /* gallery */
   .gallery{ padding:12px 14px; display:flex; flex-direction:column; gap:12px }
   .contact-block{ background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01)); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); }
   .contact-header{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px }
@@ -71,7 +66,6 @@
   .thumb img, .thumb video{ width:100%; height:100%; object-fit:cover; display:block }
   .thumb .type{ position:absolute; bottom:6px; right:6px; font-size:11px; padding:4px 6px; border-radius:999px; background:rgba(0,0,0,0.45); color:#fff }
 
-  /* preview modal */
   .preview{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,0.8); z-index:2000 }
   .preview.open{ display:flex }
   .preview .box{ width:92%; max-width:420px; border-radius:12px; overflow:hidden; background:#071428; padding:12px; }
@@ -79,7 +73,6 @@
   .preview img, .preview video{ width:100%; height:auto; max-height:70vh; display:block }
   .preview .meta{ margin-top:8px; color:var(--muted); font-size:13px; display:flex; justify-content:space-between; align-items:center }
 
-  /* toast */
   .toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:22px; padding:8px 14px; background:rgba(0,0,0,0.7); color:#fff; border-radius:8px; font-size:13px; opacity:0; transition:opacity .24s }
 
   .footer{ position:absolute; left:0; right:0; bottom:0; padding:12px 18px; background:linear-gradient(180deg,transparent,rgba(0,0,0,0.12)); backdrop-filter: blur(10px); display:flex; gap:10px; justify-content:center }
@@ -110,7 +103,6 @@
       </div>
 
       <div class="controls">
-        <!-- directory picker fallback: input with webkitdirectory (Chrome/Edge) -->
         <label class="file-btn" id="selectDirBtn" title="Select WhatsApp statuses folder">
           Select Statuses Folder
           <input id="dirPicker" type="file" webkitdirectory directory multiple style="display:none">
@@ -120,7 +112,6 @@
       </div>
 
       <div class="gallery" id="gallery">
-        <!-- dynamic contact blocks injected here -->
       </div>
 
       <div class="footer">
@@ -131,7 +122,6 @@
     </div>
   </div>
 
-  <!-- Preview modal -->
   <div class="preview" id="preview" role="dialog" aria-modal="true">
     <div class="box" id="previewBox">
       <div class="media" id="previewMedia"></div>
@@ -147,7 +137,6 @@
 
   <div class="toast" id="toast">Toast</div>
 
-  <!-- Drawer (same as other pages) -->
   <div class="drawer" id="drawer" aria-hidden="true">
     <div class="back" id="backdrop" tabindex="-1"></div>
     <nav class="panel" role="navigation" aria-label="Main menu">
@@ -196,38 +185,27 @@ function showToast(text, ms=2000){
   setTimeout(()=>{ toast.style.opacity = '0'; }, ms);
 }
 
-/* Determine a "contact key" for grouping:
-   1) If user selected files with webkitRelativePath, try to use parent folder name
-   2) Else, fall back to filename prefix (before first underscore/dash/space)
-   3) Else, group by date cluster (hour)
-*/
+/* Determine a "contact key" for grouping */
 function contactKeyForFile(file){
-  // webkitRelativePath example: "WhatsApp/Media/.Statuses/IMG-202309...jpg" or "Statuses/ContactName/IMG..."
   const path = file.webkitRelativePath || '';
   if(path){
     const parts = path.split('/');
-    // try find a plausible contact folder deeper than .Statuses
-    // find index of ".Statuses" or "Statuses" then take next segment as contact if exists
     const idx = parts.findIndex(p => p.toLowerCase().includes('statuses'));
-    if(idx >= 0 && parts.length > idx + 2){
-      // if there is an extra segment like "Contact Name/filename"
+    if(idx >= 0 && parts.length > idx + 1){
       const maybe = parts[idx+1];
       if(maybe && !maybe.toLowerCase().includes('.')){
         return maybe;
       }
     }
-    // fallback: take parent folder (one level above filename)
     if(parts.length >= 2){
       return parts[parts.length - 2];
     }
   }
 
-  // fallback: filename heuristics
   const name = file.name || '';
   const guess = name.split(/[_\-\s]/)[0];
   if(guess && guess.length > 2) return guess;
 
-  // final fallback — group by date hour
   const dt = file.lastModified ? new Date(file.lastModified) : new Date();
   return 'Unknown • ' + dt.toISOString().slice(0,13).replace('T',' ');
 }
@@ -236,14 +214,12 @@ function contactKeyForFile(file){
 function groupFilesByContact(fileList){
   const map = new Map();
   for(const f of fileList){
-    // only images/videos
     if(!f.type.startsWith('image/') && !f.type.startsWith('video/')) continue;
     const key = contactKeyForFile(f);
     if(!map.has(key)) map.set(key, []);
     map.get(key).push(f);
   }
 
-  // sort groups by newest file date descending
   const groups = Array.from(map.entries()).map(([k, arr])=>{
     arr.sort((a,b)=> (b.lastModified || 0) - (a.lastModified || 0));
     return { contact: k, files: arr };
@@ -252,8 +228,17 @@ function groupFilesByContact(fileList){
   return groups;
 }
 
+/* Keep track of created objectURLs for thumbnails & preview so we can revoke them */
+let thumbUrls = [];
+let currentPreviewFile = null;
+let currentPreviewUrl = null;
+
 /* Render groups to UI */
 function renderGroups(groups){
+  // revoke old thumbnail URLs to avoid leaks
+  for(const u of thumbUrls) URL.revokeObjectURL(u);
+  thumbUrls = [];
+
   gallery.innerHTML = '';
   if(groups.length === 0){
     gallery.innerHTML = '<div style="padding:12px;color:var(--muted);text-align:center">No image/video files found. Select the WhatsApp statuses folder (folder must contain images/videos).</div>';
@@ -282,8 +267,9 @@ function renderGroups(groups){
       const t = document.createElement('div');
       t.className = 'thumb';
       t.tabIndex = 0;
-      // create objectURL
       const url = URL.createObjectURL(f);
+      thumbUrls.push(url);
+
       if(f.type.startsWith('image/')){
         const img = document.createElement('img'); img.src = url; img.alt = f.name;
         t.appendChild(img);
@@ -293,7 +279,6 @@ function renderGroups(groups){
         t.appendChild(vid);
         const type = document.createElement('div'); type.className='type'; type.textContent='MP4'; t.appendChild(type);
       }
-      // click opens preview
       t.addEventListener('click', ()=> openPreview(f));
       thumbs.appendChild(t);
     }
@@ -303,35 +288,45 @@ function renderGroups(groups){
   }
 }
 
-/* format date */
 function formatDate(ms){
   if(!ms) return '';
   const d = new Date(ms);
   return d.toLocaleString();
 }
 
-/* Preview functionality */
-let currentPreviewFile = null;
+/* Preview functionality (uses objectURL string and revokes correctly) */
 function openPreview(file){
+  // cleanup old preview url
+  if(currentPreviewUrl) URL.revokeObjectURL(currentPreviewUrl);
+
   currentPreviewFile = file;
+  currentPreviewUrl = URL.createObjectURL(file);
   previewMedia.innerHTML = '';
-  const url = URL.createObjectURL(file);
   if(file.type.startsWith('image/')){
-    const img = document.createElement('img'); img.src = url; previewMedia.appendChild(img);
+    const img = document.createElement('img'); img.src = currentPreviewUrl; previewMedia.appendChild(img);
   } else {
-    const vid = document.createElement('video'); vid.src = url; vid.controls = true; vid.autoplay = true; previewMedia.appendChild(vid);
+    const vid = document.createElement('video'); vid.src = currentPreviewUrl; vid.controls = true; vid.autoplay = true; previewMedia.appendChild(vid);
   }
   previewInfo.textContent = `${file.name} • ${formatDate(file.lastModified)}`;
   preview.classList.add('open');
 }
-closePreview.addEventListener('click', ()=>{ preview.classList.remove('open'); if(currentPreviewFile) URL.revokeObjectURL(currentPreviewFile); currentPreviewFile=null; });
 
+closePreview.addEventListener('click', ()=>{
+  preview.classList.remove('open');
+  if(currentPreviewUrl) URL.revokeObjectURL(currentPreviewUrl);
+  currentPreviewUrl = null;
+  currentPreviewFile = null;
+});
+
+/* download — create objectURL, trigger, revoke after short timeout */
 downloadBtn.addEventListener('click', ()=>{
   if(!currentPreviewFile) return;
+  const dlUrl = URL.createObjectURL(currentPreviewFile);
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(currentPreviewFile);
+  a.href = dlUrl;
   a.download = currentPreviewFile.name;
   document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=> URL.revokeObjectURL(dlUrl), 1500);
   showToast('Download started');
 });
 
@@ -340,21 +335,25 @@ dirPicker.addEventListener('change', (ev)=>{
   const files = Array.from(ev.target.files || []);
   if(files.length === 0){ showToast('No files selected'); return; }
   showToast('Processing files…', 1000);
-  // group & render
   const groups = groupFilesByContact(files);
   renderGroups(groups);
 });
 
-// help button: show instructions
+// help button
 document.getElementById('helpBtn').addEventListener('click', ()=>{
   showToast('On Android choose the WhatsApp/Media/.Statuses folder. If not visible, open file manager and grant access.', 4000);
 });
 
-/* Accessibility: allow clicking the label to open file dialog */
-selectDirBtn.addEventListener('click', ()=>{ dirPicker.click(); });
+/* NOTE: removed the redundant selectDirBtn click handler — clicking the label already opens the file dialog */
 
-/* On load: show quick hint */
+// quick hint on load
 window.addEventListener('load', ()=> setTimeout(()=> showToast('Tip: Select the WhatsApp statuses folder to view stories.'), 600));
+
+// revoke any remaining URLs on unload
+window.addEventListener('unload', ()=>{
+  if(currentPreviewUrl) URL.revokeObjectURL(currentPreviewUrl);
+  for(const u of thumbUrls) URL.revokeObjectURL(u);
+});
 </script>
 </body>
 </html>
