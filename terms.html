@@ -1,112 +1,211 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Terms & Conditions</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Instant Story Saver — Terms & Conditions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
+    :root{
+      --bg1:#aeccfd; --bg2:#0c1a2a;
+      --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+      --muted: rgba(230,238,248,0.72);
+      --txt:#e6eef8;
+      --card:#071428;
     }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f3f6fb;
-      display: flex;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,Arial;
+      background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--txt);
+      display:flex;align-items:center;justify-content:center;padding:18px;min-height:100vh;
     }
-    .sidebar {
-      width: 220px;
-      background: linear-gradient(to bottom, #833ab4, #fd1d1d, #fcb045);
-      color: white;
-      height: 100vh;
-      padding: 30px 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      overflow-y: auto;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.2);
-      animation: slideIn 0.5s ease;
-    }
-    @keyframes slideIn {
-      from { transform: translateX(-100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    .sidebar h2 {
-      font-size: 22px;
-      margin-bottom: 30px;
-    }
-    .sidebar a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin: 12px 0;
-      padding: 10px;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-    .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .main {
-      margin-left: 220px;
-      width: calc(100% - 220px);
-      padding: 60px 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      animation: fadeIn 1s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .content {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    @media (max-width: 700px) {
-      .sidebar {
-        display: none;
-      }
-      .main {
-        margin-left: 0;
-        width: 100%;
-        padding: 40px 20px;
-      }
-    }
+    .page{ width:100%; max-width:980px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); box-shadow:0 30px 80px rgba(2,6,23,0.6); overflow:hidden }
+    .topbar{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; backdrop-filter:blur(6px); border-bottom:1px solid rgba(255,255,255,0.02) }
+    .brand{ display:flex; gap:12px; align-items:center }
+    .logo{ width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,var(--accent1),var(--accent3)); box-shadow:0 8px 24px rgba(129,52,175,0.18) }
+    .title{ font-weight:700; font-size:16px }
+    .menu-btn{ font-size:20px; background:transparent; border:none; color:inherit; cursor:pointer; padding:8px; border-radius:10px }
+
+    .content-wrap{ display:flex; gap:24px; padding:20px }
+    .main{ flex:1; background:linear-gradient(180deg,var(--card), #041026); padding:22px; border-radius:12px; border:1px solid rgba(255,255,255,0.02) }
+    .main h1{ font-size:20px; margin-bottom:8px; background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent }
+    .main p.lead{ color:var(--muted); margin-bottom:16px }
+    .section{ margin-top:12px }
+    .section h2{ font-size:16px; margin-bottom:8px }
+    .section p, .section ul{ color:var(--muted); font-size:14px; line-height:1.5 }
+    .section ul{ margin-left:18px; margin-top:8px }
+    .small-note{ font-size:13px; color:rgba(230,238,248,0.6); margin-top:10px }
+
+    .sidebar{ width:260px }
+    .card{ background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01)); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.03) }
+    .card h3{ margin-bottom:8px }
+    .link-list{ display:flex; flex-direction:column; gap:8px }
+    .link-list a{ color:var(--txt); text-decoration:none; padding:8px 10px; border-radius:8px; background:transparent; transition:background .18s }
+    .link-list a:hover{ background: rgba(255,255,255,0.03) }
+
+    footer.page-foot{ padding:12px 18px; border-top:1px solid rgba(255,255,255,0.02); display:flex; justify-content:space-between; align-items:center }
+    .muted{ color:var(--muted) }
+
+    /* Drawer (mobile-friendly) */
+    .drawer { position:fixed; top:0; left:-300px; width:280px; height:100%; background:#071428; box-shadow:4px 0 24px rgba(0,0,0,0.6); transition:left .32s ease; z-index:4000; padding:18px }
+    .drawer.open{ left:0 }
+    .drawer .close{ margin-bottom:12px; text-align:right }
+    .drawer .nav a{ display:block; color:var(--txt); text-decoration:none; padding:10px; border-radius:8px; margin-bottom:6px }
+    .drawer .nav a:hover{ background:rgba(255,255,255,0.03) }
+    .overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity .32s; z-index:3500 }
+    .overlay.show{ opacity:1; pointer-events:auto }
+
+    @media (max-width:960px){ .content-wrap{ flex-direction:column } .sidebar{ width:100% } }
   </style>
 </head>
 <body>
+  <div class="page" role="document">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">Instant Story Saver</div>
+          <div class="muted" style="font-size:12px">Terms & Conditions</div>
+        </div>
+      </div>
+      <button class="menu-btn" id="menuToggle" aria-label="Open menu">☰</button>
+    </header>
 
-  <div class="sidebar">
-    <h2>📱 Instant Saver</h2>
-    <a href="index.html">📸 Instagram</a>
-    <a href="facebook.html">📘 Facebook</a>
-    <a href="whatsapp.html">🟢 WhatsApp</a>
-    <a href="subscription.html">💳 Subscription</a>
-    <a href="privacy.html">🔒 Privacy</a>
-    <a href="terms.html">📄 Terms</a>
-    <a href="contact.html">📬 Contact</a>
-    <a href="about.html">ℹ️ About</a>
-    <a href="success.html"><strong>✅ Feedback</strong></a>
-  </div>
+    <div class="content-wrap">
+      <main class="main" id="mainContent">
+        <h1>Terms & Conditions</h1>
+        <p class="lead">Effective date: <strong>21 September 2025</strong></p>
 
-  <div class="main">
-    <div class="content">
-      <h1>Terms & Conditions</h1>
+        <div class="section">
+          <h2>1. Introduction</h2>
+          <p>These Terms & Conditions ("Terms") govern your use of the Instant Story Saver application ("App", "we", "us"). By accessing or using the App you agree to be bound by these Terms. If you do not agree, do not use the App.</p>
+        </div>
+
+        <div class="section">
+          <h2>2. Service description</h2>
+          <p>The App provides features to view, organize and save media files that you select on your device (images and videos). Some features may be platform-specific (for example Android-only access to WhatsApp statuses). The App is not affiliated with WhatsApp, Instagram, or Facebook.</p>
+        </div>
+
+        <div class="section">
+          <h2>3. User responsibilities</h2>
+          <ul>
+            <li>You must use the App in accordance with all applicable laws and regulations.</li>
+            <li>You are responsible for obtaining any permissions required to access files or the photo library on your device.</li>
+            <li>You must not use the App to collect, distribute or store content that infringes third-party rights or violates privacy.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>4. Permissions and access</h2>
+          <p>The App may request permissions to access files, storage, or the device photo library. Granting permissions is required for certain features to work. You may revoke permissions at any time via your device settings, but revoking required permissions may limit or disable App functionality.</p>
+        </div>
+
+        <div class="section">
+          <h2>5. Subscriptions & payments</h2>
+          <p>If the App offers paid features or a subscription, purchase terms, billing, renewal and refund policies will be described at the point of sale. All payments are processed by third-party payment providers and are subject to their terms.</p>
+        </div>
+
+        <div class="section">
+          <h2>6. Intellectual property</h2>
+          <p>All content provided by the App (design, UI, code, logos) is owned by us or our licensors. You may not copy, distribute, modify or use our intellectual property without prior written permission.</p>
+        </div>
+
+        <div class="section">
+          <h2>7. Third-party services</h2>
+          <p>The App may integrate or link to third-party services. We are not responsible for the content, privacy or security practices of those third parties.</p>
+        </div>
+
+        <div class="section">
+          <h2>8. Disclaimer of warranties</h2>
+          <p>The App is provided "as is" and "as available". We disclaim all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+        </div>
+
+        <div class="section">
+          <h2>9. Limitation of liability</h2>
+          <p>To the maximum extent permitted by law, in no event will we be liable for any indirect, incidental, special or consequential damages arising from your use of the App.</p>
+        </div>
+
+        <div class="section">
+          <h2>10. Indemnification</h2>
+          <p>You agree to indemnify and hold us harmless from any claim arising from your violation of these Terms or your misuse of the App.</p>
+        </div>
+
+        <div class="section">
+          <h2>11. Termination</h2>
+          <p>We may suspend or terminate your access to the App at our discretion, with or without notice, if you violate these Terms.</p>
+        </div>
+
+        <div class="section">
+          <h2>12. Changes to these Terms</h2>
+          <p>We may update these Terms from time to time. We will post the updated Terms here with a new effective date. Your continued use of the App after changes constitutes acceptance of the revised Terms.</p>
+        </div>
+
+        <div class="section">
+          <h2>13. Governing law</h2>
+          <p>These Terms are governed by the laws of the jurisdiction where the App owner is based. If you wish, contact us to specify the governing jurisdiction for your release.</p>
+        </div>
+
+        <div class="section">
+          <h2>14. Contact</h2>
+          <p>If you have questions about these Terms, contact us at: <strong>support@yourappdomain.com</strong></p>
+
+          <p class="small-note">This Terms & Conditions page is provided for general informational purposes and does not constitute legal advice. Consider consulting a legal professional to tailor terms to your jurisdiction and business model.</p>
+        </div>
+
+      </main>
+
+      <aside class="sidebar">
+        <div class="card">
+          <h3>Quick links</h3>
+          <nav class="link-list">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Subscription Terms</a>
+            <a href="#">Refund Policy</a>
+            <a href="#">Contact Support</a>
+          </nav>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Need help?</h3>
+          <p class="muted">Email us at <strong>support@yourappdomain.com</strong> for questions about terms, privacy or publishing.</p>
+        </div>
+      </aside>
     </div>
+
+    <footer class="page-foot">
+      <div class="muted">© Instant Story Saver</div>
+      <div class="muted">Effective date: 21 Sep 2025</div>
+    </footer>
   </div>
 
+  <!-- Drawer & overlay for mobile -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="close"><button id="drawerClose">✕</button></div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="subscription.html">Subscription</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const drawerClose = document.getElementById('drawerClose');
+
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); overlay.classList.add('show'); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); overlay.classList.remove('show'); }
+
+    menuToggle.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
+  </script>
 </body>
 </html>
