@@ -23,7 +23,28 @@
       color: var(--text);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
     }
+    /* Top Bar */
+    header {
+      background: #0f172a;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      position: relative;
+    }
+    .menu-btn {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    /* Drawer */
     .drawer {
       width: 250px;
       background: #0f172a;
@@ -34,6 +55,7 @@
       height: 100%;
       transition: 0.3s ease;
       box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+      z-index: 1000;
     }
     .drawer.open {
       left: 0;
@@ -56,75 +78,111 @@
     .drawer ul li a:hover {
       color: var(--accent);
     }
-    .menu-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--text);
-      z-index: 1000;
-    }
-    .content {
-      margin: 40px auto;
+    /* Content */
+    main {
+      flex: 1;
       padding: 20px;
-      max-width: 800px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      animation: fadeIn 0.6s ease;
     }
     h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
+      font-size: 1.8rem;
       text-align: center;
+      margin-bottom: 20px;
     }
     h2 {
-      margin-top: 20px;
       font-size: 1.2rem;
       color: var(--accent);
+      margin-top: 15px;
     }
     p {
-      margin: 10px 0;
+      margin: 8px 0;
       line-height: 1.6;
+    }
+    /* Bottom Nav */
+    nav {
+      background: #0f172a;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+    }
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      color: var(--accent);
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
-  <div class="menu-btn" onclick="toggleDrawer()">☰</div>
+  <header>
+    <div class="menu-btn" onclick="toggleDrawer()">☰</div>
+    Terms & Conditions
+  </header>
+
   <div class="drawer" id="drawer">
     <h2>Menu</h2>
     <ul>
       <li><a href="index.html">Home</a></li>
+      <li><a href="subscription.html">Subscription</a></li>
       <li><a href="privacy.html">Privacy Policy</a></li>
       <li><a href="terms.html">Terms & Conditions</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 
-  <div class="content">
-    <h1>Terms & Conditions</h1>
+  <main>
+    <div class="card">
+      <h1>Terms & Conditions</h1>
+      <h2>1. Acceptance of Terms</h2>
+      <p>By downloading or using Instant Story Saver, you agree to comply with and be bound by these Terms & Conditions.</p>
 
-    <h2>1. Acceptance of Terms</h2>
-    <p>By downloading or using Instant Story Saver, you agree to comply with and be bound by these Terms & Conditions.</p>
+      <h2>2. Use of the App</h2>
+      <p>The app is provided solely for personal and non-commercial use. You agree not to misuse the app in any way that could harm us or others.</p>
 
-    <h2>2. Use of the App</h2>
-    <p>The app is provided solely for personal and non-commercial use. You agree not to misuse the app in any way that could harm us or others.</p>
+      <h2>3. Intellectual Property</h2>
+      <p>All rights, title, and interest in the app, including but not limited to design, graphics, and code, are owned by us. Unauthorized use is prohibited.</p>
 
-    <h2>3. Intellectual Property</h2>
-    <p>All rights, title, and interest in the app, including but not limited to design, graphics, and code, are owned by us. Unauthorized use is prohibited.</p>
+      <h2>4. User Responsibility</h2>
+      <p>You are solely responsible for the content you download or share through this app. Ensure that your actions comply with applicable laws and third-party policies.</p>
 
-    <h2>4. User Responsibility</h2>
-    <p>You are solely responsible for the content you download or share through this app. Ensure that your actions comply with applicable laws and third-party policies.</p>
+      <h2>5. Third-Party Services</h2>
+      <p>The app may interact with third-party services like WhatsApp, Instagram, and Facebook. We are not affiliated with or endorsed by these platforms.</p>
 
-    <h2>5. Third-Party Services</h2>
-    <p>The app may interact with third-party services like WhatsApp, Instagram, and Facebook. We are not affiliated with or endorsed by these platforms.</p>
+      <h2>6. Limitation of Liability</h2>
+      <p>We are not responsible for any damages, data loss, or consequences arising from the use of this app. The app is provided “as is” without warranties of any kind.</p>
 
-    <h2>6. Limitation of Liability</h2>
-    <p>We are not responsible for any damages, data loss, or consequences arising from the use of this app. The app is provided “as is” without warranties of any kind.</p>
+      <h2>7. Changes to Terms</h2>
+      <p>We may update these Terms & Conditions at any time. Continued use of the app constitutes acceptance of the revised terms.</p>
 
-    <h2>7. Changes to Terms</h2>
-    <p>We may update these Terms & Conditions at any time. Continued use of the app constitutes acceptance of the revised terms.</p>
+      <h2>8. Governing Law</h2>
+      <p>These Terms & Conditions are governed by the laws of India. Any disputes shall be subject to the jurisdiction of courts located in India.</p>
+    </div>
+  </main>
 
-    <h2>8. Governing Law</h2>
-    <p>These Terms & Conditions are governed by the laws of India. Any disputes shall be subject to the jurisdiction of courts located in India.</p>
-  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="subscription.html">Subscription</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 
   <script>
     function toggleDrawer() {
