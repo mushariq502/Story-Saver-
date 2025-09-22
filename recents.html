@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Recent Downloads — Instant Story Saver</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg1: #aeccfd;
+  --bg2: #173354;
+  --panel: rgba(255,255,255,0.03);
+  --glass: rgba(255,255,255,0.06);
+  --stroke: rgba(255,255,255,0.08);
+  --muted: rgba(230,238,248,0.72);
+  --txt: #e6eef8;
+  --accent1: #f58529; 
+  --accent2: #dd2a7b; 
+  --accent3: #8134af; 
+  --accent4: #515bd4;
+  --ok:#25D366; 
+  --fb:#4267B2;
+  --success: #25D366;
+}
+
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Poppins',system-ui,Arial;
+  color:var(--txt);
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+  min-height:100vh;
+}
+
+/* DEVICE */
+.device{
+  width:96vw;
+  max-width:392px;
+  height:calc(var(--vh, 1vh) * 100);
+  border-radius:28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  overflow:hidden;
+  position:relative;
+}
+.device-inner{height:100%;overflow-y:auto;padding-bottom:80px}
+
+/* Top Bar */
+.topbar{
+  height:56px;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(255,255,255,0.02);
+}
+.brand{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.logo{
+  width:46px; height:46px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+.title{font-weight:700; font-size:16px; line-height:1.2;}
+.menu-btn{border:none;background:transparent;color:inherit;font-size:22px;cursor:pointer}
+
+/* Page Header */
+.hero{text-align:center;padding:24px 12px}
+.hero h1{
+  margin:10px 0 6px;
+  font-size:22px;
+  letter-spacing:.2px;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero p{font-size:15px;color:var(--muted)}
+
+/* Download Rows */
+.download-row{
+  width:92%;
+  margin:10px auto;
+  padding:12px 14px;
+  border-radius:14px;
+  background: rgba(255,255,255,0.06);
+  border:1px solid var(--stroke);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:0.2s;
+}
+.download-row:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.3);}
+.download-name{font-weight:600;flex:1;color:#fff;}
+.download-btn{
+  padding:8px 14px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(90deg,var(--accent3),var(--accent4));
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.2s;
+}
+.download-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,0.3);}
+
+/* Toast */
+.toast{
+  position:fixed;
+  bottom:90px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,0.6);
+  color:#fff;
+  padding:8px 14px;
+  border-radius:12px;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+}
+
+/* Policy Popup */
+.policy-popup {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+  backdrop-filter: blur(10px);
+  border-top: 3px solid #fff;
+  padding: 20px;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+  z-index: 9999;
+  font-family: "Poppins", sans-serif;
+  animation: slideUp 0.3s ease-out;
+}
+.policy-content {text-align:center;}
+.policy-content h2 {margin:0 0 10px;font-size:18px;color:#fff;}
+.policy-text {max-height:120px;overflow-y:auto;font-size:14px;color:#fff;margin-bottom:15px;}
+.policy-btn {background: linear-gradient(90deg,var(--accent3),var(--accent4));color: #fff;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;font-size:14px;transition:0.3s;}
+.policy-btn:hover {background:#0056b3;}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity:0; }
+  to { transform: translateY(0); opacity:1; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="device">
+  <div class="device-inner">
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div class="title">Recent Downloads</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">Local Storage · Safe</div>
+        </div>
+      </div>
+      <button class="menu-btn" id="openMenu">☰</button>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <h1>Your Recent Downloads</h1>
+      <p>Data shown here is fetched from local storage only.</p>
+    </div>
+
+    <!-- Download List -->
+    <div id="downloadsContainer"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Policy Popup -->
+    <div id="policyPopup" class="policy-popup">
+      <div class="policy-content">
+        <h2>Privacy Policy</h2>
+        <div class="policy-text">
+          <p>This page only reads recent downloads from your device local storage. No data is sent to any server.</p>
+          <p>Last Updated: September 2025</p>
+        </div>
+        <button id="agreePolicy" class="policy-btn">Agree & Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', ()=>{ 
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
+// Toast helper
+const toast = document.getElementById('toast');
+function showToast(msg, ms=2000){
+  toast.textContent = msg;
+  toast.style.opacity='1';
+  toast.style.transform='translateX(-50%) translateY(-4px)';
+  setTimeout(()=>{ 
+    toast.style.opacity='0'; 
+    toast.style.transform='translateX(-50%)'; 
+  }, ms);
+}
+
+// Load downloads from localStorage
+const downloadsContainer = document.getElementById('downloadsContainer');
+const downloads = JSON.parse(localStorage.getItem('recentDownloads')) || [];
+
+if(downloads.length===0){
+  downloadsContainer.innerHTML='<p style="color:var(--muted);text-align:center;margin-top:20px;">No recent downloads found.</p>';
+}else{
+  downloads.forEach(item=>{
+    const row = document.createElement('div');
+    row.className='download-row';
+    row.innerHTML = `
+      <div class="download-name">${item.name}</div>
+      <button class="download-btn">Download</button>
+    `;
+    const btn = row.querySelector('.download-btn');
+    btn.addEventListener('click', ()=>{
+      if(item.url){
+        const a = document.createElement('a');
+        a.href = item.url;
+        a.download = item.name;
+        a.click();
+        showToast('Download started');
+      } else {
+        showToast('No URL found');
+      }
+    });
+    downloadsContainer.appendChild(row);
+  });
+}
+
+// Policy Popup
+document.addEventListener("DOMContentLoaded", () => {
+  const currentPolicyVersion = "1.0";
+  const acceptedVersion = localStorage.getItem("policyVersionAccepted");
+  if(acceptedVersion !== currentPolicyVersion){
+    document.getElementById("policyPopup").style.display="block";
+  }
+  document.getElementById("agreePolicy").addEventListener("click", ()=>{
+    localStorage.setItem("policyVersionAccepted", currentPolicyVersion);
+    document.getElementById("policyPopup").style.display="none";
+  });
+});
+</script>
+
+</body>
+</html>
