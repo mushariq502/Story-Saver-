@@ -3,190 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms & Conditions — Instant Story Saver</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>Terms & Conditions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg1: #1e2a47;
-      --bg2: #162033;
-      --accent: #4dabf7;
-      --text: #f1f5f9;
+      --primary: #2563eb;
+      --bg1: #f9fafb;
+      --bg2: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --radius: 16px;
     }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
+
     body {
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      background: var(--bg1);
       color: var(--text);
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      height: 100vh;
     }
-    /* Top Bar */
-    header {
-      background: #0f172a;
-      padding: 15px;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
+
+    /* Drawer */
+    #drawer {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 260px;
+      height: 100%;
+      background: var(--bg2);
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      transition: left 0.3s ease;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    #drawer.open {
+      left: 0;
+    }
+
+    #drawer h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    #drawer ul {
+      list-style: none;
+    }
+
+    #drawer ul li {
+      margin: 15px 0;
+    }
+
+    #drawer ul li a {
+      text-decoration: none;
       color: var(--text);
-      position: relative;
+      font-weight: 500;
     }
+
+    /* Topbar */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background: var(--bg2);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    header h1 {
+      font-size: 18px;
+      color: var(--primary);
+    }
+
     .menu-btn {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.5rem;
+      font-size: 22px;
       cursor: pointer;
       color: var(--text);
     }
-    /* Drawer */
-    .drawer {
-      width: 250px;
-      background: #0f172a;
-      padding: 20px;
-      position: fixed;
-      top: 0;
-      left: -250px;
-      height: 100%;
-      transition: 0.3s ease;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.3);
-      z-index: 1000;
-    }
-    .drawer.open {
-      left: 0;
-    }
-    .drawer h2 {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-    .drawer ul {
-      list-style: none;
-    }
-    .drawer ul li {
-      margin: 15px 0;
-    }
-    .drawer ul li a {
-      color: var(--text);
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .drawer ul li a:hover {
-      color: var(--accent);
-    }
+
     /* Content */
     main {
       flex: 1;
       padding: 20px;
-      max-width: 900px;
-      margin: auto;
+      overflow-y: auto;
     }
+
     .card {
-      background: rgba(15, 23, 42, 0.85);
-      border-radius: 12px;
+      background: var(--bg2);
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      animation: fadeIn 0.6s ease;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
-    h1 {
-      font-size: 1.8rem;
-      text-align: center;
-      margin-bottom: 20px;
+
+    .card h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: var(--primary);
     }
-    h2 {
-      font-size: 1.2rem;
-      color: var(--accent);
-      margin-top: 15px;
-    }
-    p {
-      margin: 8px 0;
+
+    .card p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 12px;
       line-height: 1.6;
     }
+
     /* Bottom Nav */
     nav {
-      background: #0f172a;
       display: flex;
       justify-content: space-around;
+      align-items: center;
       padding: 10px 0;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+      background: var(--bg2);
+      border-top: 1px solid #e5e7eb;
     }
+
     nav a {
-      color: var(--text);
       text-decoration: none;
-      font-size: 0.9rem;
-      transition: 0.3s;
+      font-size: 14px;
+      color: var(--muted);
     }
-    nav a:hover {
-      color: var(--accent);
-    }
-    /* Animations */
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
+
+    nav a.active {
+      color: var(--primary);
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="menu-btn" onclick="toggleDrawer()">☰</div>
-    Terms & Conditions
-  </header>
-
-  <div class="drawer" id="drawer">
+  <!-- Drawer -->
+  <div id="drawer">
     <h2>Menu</h2>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="subscription.html">Subscription</a></li>
-      <li><a href="privacy.html">Privacy Policy</a></li>
       <li><a href="terms.html">Terms & Conditions</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 
+  <!-- Header -->
+  <header>
+    <span class="menu-btn" onclick="toggleDrawer()">☰</span>
+    <h1>Terms & Conditions</h1>
+  </header>
+
+  <!-- Content -->
   <main>
     <div class="card">
-      <h1>Terms & Conditions</h1>
-      <h2>1. Acceptance of Terms</h2>
-      <p>By downloading or using Instant Story Saver, you agree to comply with and be bound by these Terms & Conditions.</p>
-
-      <h2>2. Use of the App</h2>
-      <p>The app is provided solely for personal and non-commercial use. You agree not to misuse the app in any way that could harm us or others.</p>
-
-      <h2>3. Intellectual Property</h2>
-      <p>All rights, title, and interest in the app, including but not limited to design, graphics, and code, are owned by us. Unauthorized use is prohibited.</p>
-
-      <h2>4. User Responsibility</h2>
-      <p>You are solely responsible for the content you download or share through this app. Ensure that your actions comply with applicable laws and third-party policies.</p>
-
-      <h2>5. Third-Party Services</h2>
-      <p>The app may interact with third-party services like WhatsApp, Instagram, and Facebook. We are not affiliated with or endorsed by these platforms.</p>
-
-      <h2>6. Limitation of Liability</h2>
-      <p>We are not responsible for any damages, data loss, or consequences arising from the use of this app. The app is provided “as is” without warranties of any kind.</p>
-
-      <h2>7. Changes to Terms</h2>
-      <p>We may update these Terms & Conditions at any time. Continued use of the app constitutes acceptance of the revised terms.</p>
-
-      <h2>8. Governing Law</h2>
-      <p>These Terms & Conditions are governed by the laws of India. Any disputes shall be subject to the jurisdiction of courts located in India.</p>
+      <h2>Terms & Conditions</h2>
+      <p>Welcome to our application. By using our services, you agree to follow the terms below.</p>
+      <p>1. You may use this app only for personal and non-commercial purposes.</p>
+      <p>2. Do not attempt to hack, misuse, or distribute harmful content via this app.</p>
+      <p>3. Premium features are available only to subscribed users.</p>
+      <p>4. We reserve the right to update these terms at any time.</p>
+      <p>For any questions, please contact us.</p>
     </div>
   </main>
 
+  <!-- Bottom Nav -->
   <nav>
     <a href="index.html">Home</a>
     <a href="subscription.html">Subscription</a>
+    <a href="terms.html" class="active">Terms</a>
     <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
-    <a href="contact.html">Contact</a>
   </nav>
 
   <script>
     function toggleDrawer() {
-      document.getElementById('drawer').classList.toggle('open');
+      document.getElementById("drawer").classList.toggle("open");
     }
   </script>
 </body>
