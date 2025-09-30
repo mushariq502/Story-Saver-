@@ -1,706 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<head>
-  <!-- Firebase scripts HEAD mein add karo -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-  
-  <script>
-    // Firebase configuration HEAD mein hi initialize karo
-    const firebaseConfig = {
-      apiKey: "AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZ123456789",
-      authDomain: "instant-story-saver.firebaseapp.com",
-      projectId: "instant-story-saver",
-      storageBucket: "instant-story-saver.appspot.com",
-      messagingSenderId: "123456789",
-      appId: "1:123456789:web:abcdefghijklmnopqrstuvw"
-    };
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-  </script>
-</head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Instant Story Saver — World-Class</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-  --bg1: #aeccfd;
-  --bg2: #173354;
-  --panel: rgba(255,255,255,0.03);
-  --glass: rgba(255,255,255,0.06);
-  --stroke: rgba(255,255,255,0.08);
-  --muted: rgba(230,238,248,0.72);
-  --txt: #e6eef8;
-  --accent1: #f58529; 
-  --accent2: #dd2a7b; 
-  --accent3: #8134af; 
-  --accent4: #515bd4;
-  --ok:#25D366; 
-  --fb:#4267B2;
-  --success: #25D366;
-  
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instant Story Saver — Stories / Posts / Reels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+    body{background:linear-gradient(135deg,#1976d2,#42a5f5);color:#333;min-height:100vh;overflow-x:hidden}
 
-/* RESET */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{
-  font-family:'Poppins',system-ui,Arial;
-  color:var(--txt);
-  background: linear-gradient(135deg, var(--bg1), var(--bg2));
-  -webkit-font-smoothing:antialiased;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px; /* thoda kam padding taaki device bada feel ho */
-  min-height:100vh;
-}
+    /* Header */
+    header{height:60px;background:#1976d2;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:fixed;top:0;left:0;right:0;z-index:1000}
+    header h1{font-size:18px;font-weight:600}
+    .menu-btn{font-size:24px;cursor:pointer}
 
-/* DEVICE */
-.device{
-  width:96vw;
-  max-width:392px; /* thoda bada max-width */
-  height:calc(var(--vh, 1vh) * 100);  /* height almost full */
-  border-radius:28px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border:1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 24px 70px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
-  overflow:hidden;
-  position:relative;
-}
-.device-inner{height:100%;overflow-y:auto;padding-bottom:80px}
+    /* Drawer */
+    .drawer{position:fixed;top:0;left:-260px;width:260px;height:100%;background:#fff;box-shadow:2px 0 10px rgba(0,0,0,0.15);transition:0.3s ease;z-index:1500;padding-top:60px}
+    .drawer.open{left:0}
+    .drawer ul{list-style:none}
+    .drawer ul li{border-bottom:1px solid #eee}
+    .drawer ul li a{display:block;padding:15px 20px;color:#333;text-decoration:none;font-weight:500;transition:0.2s}
+    .drawer ul li a:hover{background:#f0f0f0}
+    .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;z-index:1400}
+    .overlay.show{display:block}
 
-/* TOP BAR */
-.topbar{
-  height:56px; /* thoda bada */
-  padding:10px 14px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(6px);
-  border-bottom:1px solid rgba(255,255,255,0.02);
-}
-.brand{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-.logo{
-  width:46px; height:46px; /* thoda bada logo */
-  border-radius:12px;
-  background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
-  box-shadow:0 6px 20px rgba(0,0,0,0.3);
-}
-.title{font-weight:700; font-size:16px; line-height:1.2;}
-.menu-btn{border:none;background:transparent;color:inherit;font-size:22px;cursor:pointer}
+    /* Tabs */
+    .tabs{display:flex;justify-content:space-around;background:#fff;margin-top:60px;border-bottom:1px solid #ddd;position:sticky;top:60px;z-index:900}
+    .tabs button{flex:1;padding:15px;background:none;border:none;cursor:pointer;font-size:14px;font-weight:600;color:#555;transition:0.3s}
+    .tabs button.active{color:#1976d2;border-bottom:3px solid #1976d2}
 
-/* HERO */
-.hero{text-align:center;padding:24px 12px}
-.hero .badge{
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:999px;
-  font-weight:700;
-  font-size:13px;
-  background:linear-gradient(90deg,var(--accent4),var(--accent3));
-  color:#fff;
-}
-.hero h1{
-  margin:10px 0 6px;
-  font-size: 22px;
-  letter-spacing:.2px;
-  font-weight:700;
-  background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.hero p{font-size:15px;
-        margin-bottom:0px;
-        color:var(--muted)}
+    /* Sections */
+    .content-section{display:none;padding:20px}
+    .content-section.active{display:block}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .thumb{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:0.3s;cursor:pointer}
+    .thumb:hover{transform:scale(1.05)}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* CARD */
-.card{
-  margin:16px auto;
-  width:92%;
-  background: rgba(255,255,255,0.06);
-  border:1px solid var(--stroke);
-  border-radius:16px;
-  padding:16px;
-  box-shadow:0 12px 34px rgba(0,0,0,0.4);
-}
-.row{display:flex;gap:10px;align-items:center}
-.input{
-  flex:1;padding:14px;border-radius:12px;
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,0.05);
-  color:#fff;
-}
-.input:focus{outline:none;border-color:var(--accent3)}
-.btn{
-  padding:12px 16px;
-  border-radius:12px;
-  border:none;
-  font-weight:700;
-  cursor:pointer;
-  background: linear-gradient(90deg,var(--accent3),var(--accent4));
-  color:#fff;
-  box-shadow:0 6px 18px rgba(0,0,0,0.3);
-  transition:0.2s;
-}
-.btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,0.4)}
-.btn:active{transform:scale(0.96)}
-
-/* ACTIONS */
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.action{
-  flex:1 1 calc(33% - 10px);
-  background:rgba(255,255,255,0.05);
-  padding:12px;
-  border-radius:14px;
-  border:1px solid var(--stroke);
-  cursor:pointer;
-  text-align:left;
-  transition:0.2s;
-}
-.action:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.3)}
-.icon{font-size:18px}
-
-.action-text{
-  color:#fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-}
-
-/* PREMIUM STRIP */
-.premium{
-  width:92%;margin:16px auto;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid var(--stroke);
-  background:linear-gradient(90deg,var(--accent2),var(--accent4));
-  color:#fff;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.cta{
-  padding:10px 16px;border-radius:12px;
-  background:linear-gradient(90deg,var(--accent3),var(--accent4));
-  color:#fff;font-weight:700;border:none;cursor:pointer;
-}
-
-/* RECENTS */
-.section-title{width:92%;margin:14px auto 6px;font-weight:700;font-size:13px;color:var(--muted)}
-.grid{width:92%;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.thumb{
-  aspect-ratio:1/1;border-radius:12px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid var(--stroke);
-  position:relative;
-}
-.play{
-  position:absolute;bottom:6px;right:6px;
-  font-size:12px;padding:4px 6px;border-radius:999px;
-  background:rgba(0,0,0,0.5);color:#fff;
-}
-
-/* BOTTOM NAV */
-.bottom{
-  position:absolute;bottom:0;left:0;right:0;height:66px;
-  display:flex;justify-content:space-around;align-items:center;
-  background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);
-  border-top:1px solid var(--stroke);
-}
-.tab{display:flex;flex-direction:column;align-items:center;font-size:11px;color:var(--muted)}
-.tab-btn{border:none;background:transparent;color:#fff;cursor:pointer;font-size:17px}
-.tab.active .tab-btn{color:var(--accent2)}
-
-/* DRAWER */
-.drawer{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:999;
-  display:flex;
-}
-.drawer .back{
-  position:absolute;
-  inset:0;
-  background:rgba(2,6,23,0.55);
-  opacity:0;
-  transition:opacity .3s;
-}
-.drawer .panel{
-  position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:300px; /* thoda bada drawer */
-  transform:translateX(-100%);
-  transition:transform .36s cubic-bezier(.2,.9,.3,1);
-  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
-  backdrop-filter: blur(10px);
-  border-right:1px solid rgba(255,255,255,0.04);
-  box-shadow: 10px 0 34px rgba(2,6,23,0.6);
-  padding:22px 18px; /* thoda padding bada */
-  z-index:1000;
-}
-.drawer.open{
-  pointer-events:auto;
-}
-.drawer.open .back{
-  opacity:1;
-}
-.drawer.open .panel{
-  transform:translateX(0);
-}
-.navlink{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:12px 14px; /* thoda bada padding */
-  border-radius:10px;
-  color:#fff;
-  text-decoration:none;
-  transition:background .18s, transform .12s;
-  border:1px solid transparent;
-}
-.navlink:hover{background:rgba(255,255,255,0.04)}
-.navlink svg{opacity:.95}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  bottom:90px; /* thoda upar */
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(0,0,0,0.6);
-  color:#fff;
-  padding:8px 14px;
-  border-radius:12px;
-  font-size:12px;
-  opacity:0;
-  pointer-events:none;
-  transition:0.3s;
-}
-  .loader {
-    width: 16px;
-    height: 16px;
-    border: 2px solid #fff;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    animation: rotation 1s linear infinite;
-    margin-right: 8px;
-}
-/* Policy Popup */
-.policy-popup {
-  display: none;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
-  backdrop-filter: blur(10px);
-  border-top: 3px solid #fff;
-  padding: 20px;
-  box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
-  z-index: 9999;
-  font-family: "Poppins", sans-serif;
-  animation: slideUp 0.3s ease-out;
-}
-
-.policy-content {
-  text-align: center;
-}
-
-.policy-content h2 {
-  margin: 0 0 10px;
-  font-size: 18px;
-  color: #fff;
-}
-
-.policy-text {
-  max-height: 120px;
-  overflow-y: auto;
-  font-size: 14px;
-  color: #fff;
-  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
-  backdrop-filter; blur(10px);
-  margin-bottom: 15px;
-}
-
-.policy-btn {
-  background: linear-gradient(90deg,var(--accent3),var(--accent4));
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s;
-}
-
-.policy-btn:hover {
-  background: #0056b3;
-}
-
-@keyframes slideUp {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-
-@keyframes rotation {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-</style>
+    /* Bottom nav */
+    .bottom-nav{position:fixed;bottom:0;left:0;width:100%;height:60px;background:#fff;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -2px 6px rgba(0,0,0,0.1);z-index:1000}
+    .bottom-nav a{color:#555;text-decoration:none;font-size:14px;font-weight:500;text-align:center;flex:1}
+    .bottom-nav a.active{color:#1976d2}
+  </style>
 </head>
 <body>
-
-<div class="device" role="application" aria-label="Instant Story Saver">
-<div class="device-inner">
-  <!-- Top Bar -->
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <div>
-        <div class="title">Instant Story Saver</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">Instagram · Facebook · WhatsApp</div>
-      </div>
-    </div>
-    <button class="menu-btn" id="openMenu" aria-label="Open menu">☰</button>
-  </div>
-
-  <!-- Hero -->
-  <div class="hero">
-    <div class="badge">🚀 Ultra-Fast · Safe · Clean</div>
-    <h1>Save Stories In One Tap</h1>
-    <p>No Ads In Premium · High-Quality Downloads · Login Integrations</p>
-  </div>
-
-  <!-- Link Card -->
-  <div class="card" aria-label="Paste link card">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <div style="font-weight:800;letter-spacing:.2px">Paste Instagram link</div>
-      <div style="font-size:12px;color:var(--muted)">Demo Mode</div>
-    </div>
-    <div class="row">
-      <input id="link" class="input" placeholder="https://www.instagram.com/stories/..." aria-label="Story link input">
-      <button id="paste" class="btn" title="Paste"><span>📋 Paste</span></button>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <button id="download" class="btn" title="Download">
-        <span id="dlText">▶️ Download</span>
-      </button>
-      <div style="flex:1"></div>
-      <button class="btn" onclick="location.href='subscription.html'">⭐ Go Premium</button>
-    </div>
-    <div class="actions">
-  <button class="action" onclick="location.href='index.html'">
-    <div class="icon">📸</div>
-    <div class="action-text">
-      <div class="action-title">Instagram</div>
-      <div class="action-subtitle">Stories & reels</div>
-    </div>
-  </button>
-  <button class="action" onclick="location.href='facebook.html'">
-    <div class="icon">📘</div>
-    <div class="action-text">
-      <div class="action-title">Facebook</div>
-      <div class="action-subtitle">Public stories</div>
-    </div>
-  </button>
-  <button class="action" onclick="location.href='whatsapp.html'">
-    <div class="icon">💬</div>
-    <div class="action-text">
-      <div class="action-title">WhatsApp</div>
-      <div class="action-subtitle">Native (Android)</div>
-    </div>
-  </button>
-</div>
-
-  </div>
-
-  <!-- Premium Strip -->
-  <div class="premium">
-    <div>Unlock <strong>Facebook & Instagram login</strong> + remove ads</div>
-    <button class="cta" onclick="location.href='subscription.html'">Upgrade</button>
-  </div>
-
-  <!-- Recents -->
-  <div class="section-title">Recent downloads (demo)</div>
-  <div class="grid" aria-hidden="false">
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
-    <div class="thumb"><div class="play">MP4</div></div>
-    <div class="thumb"><div class="play">JPG</div></div>
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <!-- Policy Popup -->
-<div id="policyPopup" class="policy-popup">
-  <div class="policy-content">
-    <h2>Privacy Policy & Terms & Conditions</h2>
-    <div class="policy-text">
-      <h3>1. Privacy Policy</h3>
-      <p>
-        We value your privacy. This app does not collect, store, or share any personal
-        information without your consent. Some features may require storage access or
-        internet connectivity, but no personal data is shared with third parties
-        without your explicit permission.
-      </p>
-      <p>
-        We may use third-party services (like Google, Facebook, or Instagram APIs)
-        to provide functionality. These services have their own privacy policies.
-        Please review them before using those features.
-      </p>
-      <p>
-        Any information you provide voluntarily (such as feedback or contact details)
-        will only be used to improve the app experience.
-      </p>
-      <p><strong>Last Updated:</strong> September 2025</p>
-
-      <h3>2. Terms & Conditions</h3>
-      <p>
-        By using this application, you agree to comply with the following terms:
-      </p>
-      <ul>
-        <li>You must not use the app for unlawful activities or to violate the rights of others.</li>
-        <li>The app is provided “as is” without warranties of any kind. We are not responsible for any loss or damage caused by using the app.</li>
-        <li>Premium features (if any) require payment. Refunds are subject to store policies.</li>
-        <li>We reserve the right to update these terms at any time. If changes are made, you may be required to re-accept them.</li>
-        <li>Users are responsible for maintaining the confidentiality of their login credentials (if applicable).</li>
-        <li>Misuse, reverse-engineering, or tampering with the app is strictly prohibited.</li>
-      </ul>
-
-      <h3>3. Contact Us</h3>
-      <p>
-        If you have any questions about this Privacy Policy or Terms, please
-        contact us at: <a href="mailto:support@example.com">support@example.com</a>
-      </p>
-    </div>
-    <button id="agreePolicy" class="policy-btn">Agree & Continue</button>
-  </div>
-</div>
-  <!-- Bottom Nav -->
-  <div class="bottom" role="navigation" aria-label="Bottom navigation">
-    <div class="tab active">
-      <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
-      <div>Home</div>
-    </div>
-    <div class="tab">
-      <button class="tab-btn" onclick="location.href='recents.html'">🆕</button>
-      <div>Downloads</div>
-    </div>
-    <div class="tab">
-      <button class="tab-btn" onclick="location.href='contact.html'">📨</button>
-      <div>Contact</div>
-    </div>
-  </div>
+  <!-- Header -->
+  <header>
+    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <h1>Instant Story Saver</h1>
+    <div></div>
+  </header>
 
   <!-- Drawer -->
-  <div class="drawer" id="drawer" aria-hidden="true">
-    <div class="back" id="backdrop" tabindex="-1"></div>
-    <nav class="panel" role="navigation" aria-label="Main menu">
-      <a class="navlink" href="index.html">🏠 Home — Instagram</a>
-      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
-      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
-      <a class="navlink" href="subscription.html">⭐ Subscription</a>
-      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
-      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
-      <a class="navlink" href="contact.html">📨 Feedback & Support</a>
-      <a class="navlink" href="about.html">ℹ️ About</a>
-    </nav>
+  <div class="drawer" id="drawer">
+    <ul>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="#">📷 Stories</a></li>
+      <li><a href="#">📝 Posts</a></li>
+      <li><a href="#">🎬 Reels</a></li>
+      <li><a href="#">⭐ Subscription</a></li>
+      <li><a href="#">📄 Privacy Policy</a></li>
+      <li><a href="#">📞 Contact</a></li>
+    </ul>
   </div>
-</div>
-</div>
+  <div class="overlay" id="overlay"></div>
 
-<script>
-  // Initialize services - YE CODE BODY KE END MEIN RAHEGA
-  const db = firebase.firestore();
-  const auth = firebase.auth();
-  const storage = firebase.storage();
-  
-  // ... aapka existing JavaScript code ...
-  
-/* Drawer controls */
-const drawer   = document.getElementById('drawer');
-const openMenu = document.getElementById('openMenu');
-const backdrop = document.getElementById('backdrop');
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="active" data-target="stories">Stories</button>
+    <button data-target="posts">Posts</button>
+    <button data-target="reels">Reels</button>
+  </div>
 
-function openDrawer(){
-  drawer.classList.add('open');
-  drawer.setAttribute('aria-hidden','false');
-  // Set focus to first link for accessibility
-  const firstLink = drawer.querySelector('.navlink');
-  if (firstLink) firstLink.focus();
-}
-function closeDrawer(){
-  drawer.classList.remove('open');
-  drawer.setAttribute('aria-hidden','true');
-}
-openMenu.addEventListener('click', openDrawer);
-backdrop.addEventListener('click', closeDrawer);
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
+  <!-- Stories -->
+  <div class="content-section active" id="stories">
+    <div class="grid">
+      <div class="thumb"><img src="https://via.placeholder.com/150x250/42a5f5/ffffff?text=Story+1" alt="Story 1"></div>
+      <div class="thumb"><img src="https://via.placeholder.com/150x250/64b5f6/ffffff?text=Story+2" alt="Story 2"></div>
+      <div class="thumb"><img src="https://via.placeholder.com/150x250/90caf9/ffffff?text=Story+3" alt="Story 3"></div>
+    </div>
+  </div>
 
-/* Improved Swipe to close (mobile) */
-let startX=0, startY=0, dragging=false;
-const swipeThreshold = 70; // Minimum swipe distance to close
-const verticalThreshold = 30; // Maximum vertical movement allowed
+  <!-- Posts -->
+  <div class="content-section" id="posts">
+    <div class="grid">
+      <div class="thumb"><img src="https://via.placeholder.com/250x250/42a5f5/ffffff?text=Post+1" alt="Post 1"></div>
+      <div class="thumb"><img src="https://via.placeholder.com/250x250/64b5f6/ffffff?text=Post+2" alt="Post 2"></div>
+      <div class="thumb"><img src="https://via.placeholder.com/250x250/90caf9/ffffff?text=Post+3" alt="Post 3"></div>
+    </div>
+  </div>
 
-drawer.addEventListener('touchstart', e=>{
-  if(!drawer.classList.contains('open')) return;
-  
-  // Only allow swipe from left edge (first 50px)
-  if(e.touches[0].clientX > 50) return;
-  
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
-  dragging=true;
-}, {passive:true});
+  <!-- Reels -->
+  <div class="content-section" id="reels">
+    <div class="grid">
+      <div class="thumb"><img src="https://via.placeholder.com/150x250/42a5f5/ffffff?text=Reel+1" alt="Reel 1"></div>
+      <div class="thumb"><img src="https://via.placeholder.com/150x250/64b5f6/ffffff?text=Reel+2" alt="Reel 2"></div>
+      <div class="thumb"><img src="https://via.placeholder.com/150x250/90caf9/ffffff?text=Reel+3" alt="Reel 3"></div>
+    </div>
+  </div>
 
-drawer.addEventListener('touchmove', e=>{
-  if(!dragging) return;
-  
-  const currentX = e.touches[0].clientX;
-  const currentY = e.touches[0].clientY;
-  
-  // Prevent vertical scrolling while swiping horizontally
-  const diffX = Math.abs(currentX - startX);
-  const diffY = Math.abs(currentY - startY);
-  
-  // If vertical movement is more than horizontal, cancel swipe
-  if(diffY > verticalThreshold && diffY > diffX) {
-    dragging = false;
-    return;
-  }
-  
-  // Prevent page scroll when swiping drawer
-  if(diffX > 10) {
-    e.preventDefault();
-  }
-}, {passive: false});
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html">Home</a>
+    <a href="#" class="active">Stories</a>
+    <a href="#">Downloads</a>
+    <a href="#">Premium</a>
+  </div>
 
-drawer.addEventListener('touchend', e=>{
-  if(!dragging) return;
-  
-  const endX = (e.changedTouches?.[0]?.clientX)||startX;
-  const endY = (e.changedTouches?.[0]?.clientY)||startY;
-  const diffX = startX - endX;
-  const diffY = Math.abs(startY - endY);
-  
-  // Only close if horizontal swipe is significant and vertical swipe is minimal
-  if(diffX > swipeThreshold && diffY < verticalThreshold) {
-    closeDrawer();
-  }
-  
-  dragging=false;
-});
+  <script>
+    const menuBtn=document.getElementById('menuBtn');
+    const drawer=document.getElementById('drawer');
+    const overlay=document.getElementById('overlay');
 
-// Handle window resize for mobile viewport height
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-window.addEventListener('resize', ()=>{
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-});
+    menuBtn.addEventListener('click',()=>{drawer.classList.add('open');overlay.classList.add('show')});
+    overlay.addEventListener('click',()=>{drawer.classList.remove('open');overlay.classList.remove('show')});
 
-/* Toast helper */
-const toast = document.getElementById('toast');
-function showToast(msg, ms=2000){
-  toast.textContent = msg;
-  toast.style.opacity='1';
-  toast.style.transform='translateX(-50%) translateY(-4px)';
-  setTimeout(()=>{ 
-    toast.style.opacity='0'; 
-    toast.style.transform='translateX(-50%)'; 
-  }, ms);
-}
-
-/* Clipboard + Download demo */
-const pasteBtn    = document.getElementById('paste');
-const downloadBtn = document.getElementById('download');
-const linkInput   = document.getElementById('link');
-
-pasteBtn.addEventListener('click', async ()=>{
-  try{
-    // Check if clipboard API is available
-    if (!navigator.clipboard) {
-      throw new Error('Clipboard API not supported');
-    }
-    const t = await navigator.clipboard.readText();
-    if(t && t.length>5){
-      linkInput.value = t;
-      showToast('Pasted from clipboard'); 
-    } else { 
-      linkInput.focus();
-      showToast('Manually paste the link');
-    }
-  }catch(e){ 
-    console.error('Clipboard error:', e);
-    linkInput.focus();
-    showToast('Clipboard access blocked. Paste manually.');
-  }
-});
-
-downloadBtn.addEventListener('click', ()=>{
-  const url = (linkInput.value||'').trim();
-  
-  // Basic validation
-  if(!url){ 
-    showToast('Please enter a link'); 
-    return; 
-  }
-  
-  // URL validation
-  try {
-    new URL(url);
-  } catch (e) {
-    showToast('Please enter a valid URL');
-    return;
-  }
-  
-  if(url.length < 10){ 
-    showToast('Link looks invalid'); 
-    return; 
-  }
-
-  // button loader
-  const prev = downloadBtn.innerHTML;
-  downloadBtn.disabled = true;
-  downloadBtn.innerHTML = '<span class="loader"></span><span>Processing…</span>';
-
-  setTimeout(()=>{
-    downloadBtn.disabled = false;
-    downloadBtn.innerHTML = prev;
-    showToast('Downloaded (simulated) — connect backend later');
-    linkInput.value='';
-  }, 1400);
-});
- document.addEventListener("DOMContentLoaded", () => {
-  const currentPolicyVersion = "1.0";  // Agar update karo to is number ko badal dena
-  const acceptedVersion = localStorage.getItem("policyVersionAccepted");
-
-  if (acceptedVersion !== currentPolicyVersion) {
-    document.getElementById("policyPopup").style.display = "block";
-  }
-
-  document.getElementById("agreePolicy").addEventListener("click", () => {
-    localStorage.setItem("policyVersionAccepted", currentPolicyVersion);
-    document.getElementById("policyPopup").style.display = "none";
-  });
-});
-
-</script>
+    const tabs=document.querySelectorAll('.tabs button');
+    const sections=document.querySelectorAll('.content-section');
+    tabs.forEach(tab=>{
+      tab.addEventListener('click',()=>{
+        tabs.forEach(btn=>btn.classList.remove('active'));
+        tab.classList.add('active');
+        sections.forEach(sec=>sec.classList.remove('active'));
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
