@@ -1,168 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Instant Story Saver — Stories, Posts & Reels</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instant Story Saver — Stories / Posts / Reels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
   <style>
-    /* ===== THEME CSS ===== */
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-    body{background:#f5f8ff;color:#333;min-height:100vh;}
-    header{background:#2563eb;color:#fff;padding:15px;display:flex;align-items:center;justify-content:space-between;}
-    header h1{font-size:18px;font-weight:600;}
-    .menu-btn{font-size:22px;cursor:pointer;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #f9f9f9;
+      color: #333;
+      overflow-x: hidden;
+    }
+    header {
+      width: 100%;
+      height: 60px;
+      background: #1976d2;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .menu-btn {
+      font-size: 24px;
+      cursor: pointer;
+    }
 
     /* Drawer */
-    .drawer{position:fixed;top:0;left:-260px;width:240px;height:100%;background:#fff;box-shadow:2px 0 8px rgba(0,0,0,0.1);transition:0.3s;padding-top:60px;z-index:999;}
-    .drawer.active{left:0;}
-    .drawer ul{list-style:none;}
-    .drawer ul li{border-bottom:1px solid #eee;}
-    .drawer ul li a{display:block;padding:15px;color:#333;text-decoration:none;font-weight:500;transition:0.3s;}
-    .drawer ul li a:hover{background:#2563eb;color:#fff;}
+    .drawer {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: #fff;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      transition: left 0.3s ease;
+      z-index: 1500;
+      padding-top: 60px;
+    }
+    .drawer.open {
+      left: 0;
+    }
+    .drawer ul {
+      list-style: none;
+    }
+    .drawer ul li {
+      border-bottom: 1px solid #eee;
+    }
+    .drawer ul li a {
+      display: block;
+      padding: 15px 20px;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .drawer ul li a:hover {
+      background: #f0f0f0;
+    }
 
-    .container{max-width:900px;margin:20px auto;padding:15px;}
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      z-index: 1400;
+    }
+    .overlay.show {
+      display: block;
+    }
 
-    .tabs{display:flex;justify-content:space-around;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:20px;}
-    .tab{flex:1;text-align:center;padding:12px 0;cursor:pointer;font-weight:500;transition:all 0.3s;}
-    .tab.active{background:#2563eb;color:#fff;font-weight:600;}
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      background: #fff;
+      margin-top: 60px;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 60px;
+      z-index: 900;
+    }
+    .tabs button {
+      flex: 1;
+      padding: 15px;
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      transition: 0.3s;
+    }
+    .tabs button.active {
+      color: #1976d2;
+      border-bottom: 3px solid #1976d2;
+    }
 
-    .content{display:none;animation:fadeIn 0.4s ease-in-out;}
-    .content.active{display:block;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-
-    /* Stories */
-    .stories-list{display:flex;gap:15px;overflow-x:auto;padding-bottom:10px;}
-    .story{text-align:center;flex:0 0 auto;}
-    .story img{width:70px;height:70px;border-radius:50%;border:3px solid #2563eb;object-fit:cover;margin-bottom:6px;}
-    .story span{font-size:13px;font-weight:500;}
-
-    /* Posts */
-    .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;}
-    .post-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-    .post-card img{width:100%;height:150px;object-fit:cover;}
-    .post-card .info{padding:10px;text-align:center;}
-
-    /* Reels */
-    .reels-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;}
-    .reel{position:relative;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-    .reel img{width:100%;height:300px;object-fit:cover;display:block;}
-    .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.6);color:#fff;border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-size:22px;}
-
-    /* Button */
-    .btn{display:inline-block;background:#2563eb;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:13px;margin-top:8px;transition:0.3s;}
-    .btn:hover{background:#1d4ed8;}
+    /* Content sections */
+    .content-section {
+      display: none;
+      padding: 20px;
+    }
+    .content-section.active {
+      display: block;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #1976d2;
+    }
+    .card p {
+      font-size: 14px;
+      color: #555;
+    }
   </style>
 </head>
 <body>
-
+  <!-- Header -->
   <header>
-    <span class="menu-btn" onclick="toggleDrawer()">☰</span>
+    <div class="menu-btn" id="menuBtn">&#9776;</div>
     <h1>Instant Story Saver</h1>
+    <div></div>
   </header>
 
   <!-- Drawer -->
   <div class="drawer" id="drawer">
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Stories</a></li>
-      <li><a href="#">Posts</a></li>
-      <li><a href="#">Reels</a></li>
-      <li><a href="#">Subscription</a></li>
-      <li><a href="#">Privacy Policy</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="#">📷 Stories</a></li>
+      <li><a href="#">📝 Posts</a></li>
+      <li><a href="#">🎬 Reels</a></li>
+      <li><a href="#">⭐ Subscription</a></li>
+      <li><a href="#">📄 Privacy Policy</a></li>
+      <li><a href="#">📜 Terms & Conditions</a></li>
+      <li><a href="#">📞 Contact</a></li>
     </ul>
   </div>
 
-  <div class="container">
-    <!-- Tabs -->
-    <div class="tabs">
-      <div class="tab active" onclick="showTab('stories')">Stories</div>
-      <div class="tab" onclick="showTab('posts')">Posts</div>
-      <div class="tab" onclick="showTab('reels')">Reels</div>
-    </div>
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
 
-    <!-- Stories -->
-    <div id="stories" class="content active">
-      <div class="stories-list">
-        <div class="story">
-          <img src="https://via.placeholder.com/70" alt="story1">
-          <span>User1</span><br>
-          <a href="#" class="btn">Download</a>
-        </div>
-        <div class="story">
-          <img src="https://via.placeholder.com/70" alt="story2">
-          <span>User2</span><br>
-          <a href="#" class="btn">Download</a>
-        </div>
-        <div class="story">
-          <img src="https://via.placeholder.com/70" alt="story3">
-          <span>User3</span><br>
-          <a href="#" class="btn">Download</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Posts -->
-    <div id="posts" class="content">
-      <div class="posts-grid">
-        <div class="post-card">
-          <img src="https://via.placeholder.com/300" alt="post1">
-          <div class="info">
-            <p>Post 1</p>
-            <a href="#" class="btn">Download</a>
-          </div>
-        </div>
-        <div class="post-card">
-          <img src="https://via.placeholder.com/300" alt="post2">
-          <div class="info">
-            <p>Post 2</p>
-            <a href="#" class="btn">Download</a>
-          </div>
-        </div>
-        <div class="post-card">
-          <img src="https://via.placeholder.com/300" alt="post3">
-          <div class="info">
-            <p>Post 3</p>
-            <a href="#" class="btn">Download</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Reels -->
-    <div id="reels" class="content">
-      <div class="reels-list">
-        <div class="reel">
-          <img src="https://via.placeholder.com/400x300" alt="reel1">
-          <div class="play-btn">▶</div>
-          <div style="padding:10px; text-align:center;">
-            <a href="#" class="btn">Download</a>
-          </div>
-        </div>
-        <div class="reel">
-          <img src="https://via.placeholder.com/400x300" alt="reel2">
-          <div class="play-btn">▶</div>
-          <div style="padding:10px; text-align:center;">
-            <a href="#" class="btn">Download</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="active" data-target="stories">Stories</button>
+    <button data-target="posts">Posts</button>
+    <button data-target="reels">Reels</button>
   </div>
 
-  <script>
-    function toggleDrawer(){
-      document.getElementById("drawer").classList.toggle("active");
-    }
-    function showTab(tab){
-      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-      document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
-      document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
-      document.getElementById(tab).classList.add('active');
-    }
-  </script>
+  <!-- Content -->
+  <div class="content-section active" id="stories">
+    <div class="card">
+      <h3>Story 1</h3>
+      <p>Yeh sample story ka content hai. Yahan real Instagram/Facebook stories ka preview aayega.</p>
+    </div>
+    <div class="card">
+      <h3>Story 2</h3>
+      <p>Dusri story ka sample content.</p>
+    </div>
+  </div>
 
+  <div class="content-section" id="posts">
+    <div class="card">
+      <h3>Post 1</h3>
+      <p>Yeh ek sample post ka content hai. Yahan user ke posts dikhaye jayenge.</p>
+    </div>
+    <div class="card">
+      <h3>Post 2</h3>
+      <p>Dusra sample post content.</p>
+    </div>
+  </div>
+
+  <div class="content-section" id="reels">
+    <div class="card">
+      <h3>Reel 1</h3>
+      <p>Yeh sample reel ka content hai. Yahan reels ke previews dikhaye jayenge.</p>
+    </div>
+    <div class="card">
+      <h3>Reel 2</h3>
+      <p>Dusra sample reel content.</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+
+    menuBtn.addEventListener('click', () => {
+      drawer.classList.add('open');
+      overlay.classList.add('show');
+    });
+
+    overlay.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      overlay.classList.remove('show');
+    });
+
+    // Tabs logic
+    const tabs = document.querySelectorAll('.tabs button');
+    const sections = document.querySelectorAll('.content-section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(btn => btn.classList.remove('active'));
+        tab.classList.add('active');
+
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
