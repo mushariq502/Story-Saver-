@@ -1,127 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Instant Story Saver — Stories</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"><!-- tumhara existing CSS yahan link hoga -->
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Instant Story Saver — Stories, Posts & Reels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== THEME CSS ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #f5f8ff;
+      color: #333;
+      min-height: 100vh;
+    }
+    header {
+      background: #2563eb;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 15px;
+    }
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 0;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .tab.active {
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+    }
+    .content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    .content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Stories Style */
+    .stories-list {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    .story {
+      text-align: center;
+      flex: 0 0 auto;
+    }
+    .story img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 3px solid #2563eb;
+      object-fit: cover;
+      margin-bottom: 6px;
+    }
+    .story span {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* Posts Grid */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    .post-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .post-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .post-card .info {
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Reels */
+    .reels-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .reel {
+      position: relative;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .reel img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      margin-top: 8px;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #1d4ed8;
+    }
+  </style>
 </head>
 <body>
 
-<div class="device">
-  <div class="device-inner">
+  <header>Instant Story Saver</header>
 
-    <!-- Topbar -->
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <div class="title">Instagram</div>
-          <div style="font-size:11px;color:var(--muted)">Stories · Posts · Reels</div>
+  <div class="container">
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('stories')">Stories</div>
+      <div class="tab" onclick="showTab('posts')">Posts</div>
+      <div class="tab" onclick="showTab('reels')">Reels</div>
+    </div>
+
+    <!-- Stories -->
+    <div id="stories" class="content active">
+      <div class="stories-list">
+        <div class="story">
+          <img src="https://via.placeholder.com/70" alt="story1">
+          <span>User1</span><br>
+          <a href="#" class="btn">Download</a>
+        </div>
+        <div class="story">
+          <img src="https://via.placeholder.com/70" alt="story2">
+          <span>User2</span><br>
+          <a href="#" class="btn">Download</a>
+        </div>
+        <div class="story">
+          <img src="https://via.placeholder.com/70" alt="story3">
+          <span>User3</span><br>
+          <a href="#" class="btn">Download</a>
         </div>
       </div>
-      <button class="menu-btn" id="openMenu">☰</button>
     </div>
 
-    <!-- Hero -->
-    <div class="hero">
-      <div class="badge">✨ Explore & Download</div>
-      <h1>Stories · Posts · Reels</h1>
-      <p>Login to view your feed or paste a public link below</p>
-    </div>
-
-    <!-- Tabs -->
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
-        <button class="btn" onclick="showSection('stories')">📸 Stories</button>
-        <button class="btn" onclick="showSection('posts')">🖼️ Posts</button>
-        <button class="btn" onclick="showSection('reels')">🎬 Reels</button>
+    <!-- Posts -->
+    <div id="posts" class="content">
+      <div class="posts-grid">
+        <div class="post-card">
+          <img src="https://via.placeholder.com/300" alt="post1">
+          <div class="info">
+            <p>Post 1</p>
+            <a href="#" class="btn">Download</a>
+          </div>
+        </div>
+        <div class="post-card">
+          <img src="https://via.placeholder.com/300" alt="post2">
+          <div class="info">
+            <p>Post 2</p>
+            <a href="#" class="btn">Download</a>
+          </div>
+        </div>
+        <div class="post-card">
+          <img src="https://via.placeholder.com/300" alt="post3">
+          <div class="info">
+            <p>Post 3</p>
+            <a href="#" class="btn">Download</a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Stories Section -->
-    <div id="stories" class="card section">
-      <div style="font-weight:600;margin-bottom:10px">Recent Stories</div>
-      <div class="grid">
-        <div class="thumb"><div class="play">JPG</div></div>
-        <div class="thumb"><div class="play">MP4</div></div>
-        <div class="thumb"><div class="play">JPG</div></div>
+    <!-- Reels -->
+    <div id="reels" class="content">
+      <div class="reels-list">
+        <div class="reel">
+          <img src="https://via.placeholder.com/400x300" alt="reel1">
+          <div class="play-btn">▶</div>
+          <div style="padding:10px; text-align:center;">
+            <a href="#" class="btn">Download</a>
+          </div>
+        </div>
+        <div class="reel">
+          <img src="https://via.placeholder.com/400x300" alt="reel2">
+          <div class="play-btn">▶</div>
+          <div style="padding:10px; text-align:center;">
+            <a href="#" class="btn">Download</a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Posts Section -->
-    <div id="posts" class="card section" style="display:none">
-      <div style="font-weight:600;margin-bottom:10px">Recent Posts</div>
-      <div class="grid">
-        <div class="thumb"></div>
-        <div class="thumb"></div>
-        <div class="thumb"></div>
-      </div>
-    </div>
-
-    <!-- Reels Section -->
-    <div id="reels" class="card section" style="display:none">
-      <div style="font-weight:600;margin-bottom:10px">Recent Reels</div>
-      <div class="grid">
-        <div class="thumb"><div class="play">▶</div></div>
-        <div class="thumb"><div class="play">▶</div></div>
-        <div class="thumb"><div class="play">▶</div></div>
-      </div>
-    </div>
-
-    <!-- Premium Strip -->
-    <div class="premium">
-      <div>Unlock <strong>Unlimited downloads</strong> with Premium</div>
-      <button class="cta" onclick="location.href='subscription.html'">Upgrade</button>
-    </div>
-
-    <!-- Bottom Nav -->
-    <div class="bottom">
-      <div class="tab">
-        <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
-        <div>Home</div>
-      </div>
-      <div class="tab active">
-        <button class="tab-btn">📸</button>
-        <div>Stories</div>
-      </div>
-      <div class="tab">
-        <button class="tab-btn" onclick="location.href='recents.html'">🆕</button>
-        <div>Downloads</div>
-      </div>
-    </div>
-
-    <!-- Drawer -->
-    <div class="drawer" id="drawer">
-      <div class="back" id="backdrop"></div>
-      <nav class="panel">
-        <a class="navlink" href="index.html">🏠 Home</a>
-        <a class="navlink" href="stories.html">📸 Stories · Posts · Reels</a>
-        <a class="navlink" href="facebook.html">📘 Facebook</a>
-        <a class="navlink" href="whatsapp.html">💬 WhatsApp</a>
-        <a class="navlink" href="subscription.html">⭐ Subscription</a>
-        <a class="navlink" href="privacy.html">🔒 Privacy</a>
-        <a class="navlink" href="terms.html">📄 Terms</a>
-        <a class="navlink" href="contact.html">📨 Contact</a>
-      </nav>
-    </div>
   </div>
-</div>
 
-<script>
-  // Drawer toggle
-  const drawer = document.getElementById("drawer");
-  const openMenu = document.getElementById("openMenu");
-  const backdrop = document.getElementById("backdrop");
-  openMenu.onclick = ()=> drawer.classList.add("open");
-  backdrop.onclick = ()=> drawer.classList.remove("open");
+  <script>
+    function showTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+      document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
+      document.getElementById(tab).classList.add('active');
+    }
+  </script>
 
-  // Section switch
-  function showSection(id){
-    document.querySelectorAll(".section").forEach(sec=>sec.style.display="none");
-    document.getElementById(id).style.display="block";
-  }
-</script>
 </body>
 </html>
