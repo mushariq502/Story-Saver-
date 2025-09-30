@@ -1,153 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Instant Story Saver — Stories</title>
-
-  <!-- Poppins Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #0d1117; /* dark bg */
-      color: #fff;
-    }
-
-    header {
-      background: #111827;
-      padding: 15px;
-      text-align: center;
-      font-size: 20px;
-      font-weight: 600;
-      color: #4f9cf9;
-      border-bottom: 1px solid #1f2937;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      background: #1f2937;
-      padding: 10px;
-    }
-
-    nav button {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      padding: 8px 14px;
-      border-radius: 6px;
-      transition: 0.3s;
-    }
-
-    nav button.active,
-    nav button:hover {
-      background: #2563eb;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 15px;
-      padding: 15px;
-    }
-
-    .card {
-      background: #161b22;
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: scale(1.03);
-    }
-
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-
-    .download-btn {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      background: #2563eb;
-      color: #fff;
-      font-size: 12px;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      border: none;
-      transition: 0.3s;
-    }
-
-    .download-btn:hover {
-      background: #1d4ed8;
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Instant Story Saver — Stories</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><!-- tumhara existing CSS yahan link hoga -->
 </head>
 <body>
 
-  <header>Instant Story Saver</header>
+<div class="device">
+  <div class="device-inner">
 
-  <nav>
-    <button class="active" onclick="showCategory('stories')">Stories</button>
-    <button onclick="showCategory('posts')">Posts</button>
-    <button onclick="showCategory('reels')">Reels</button>
-  </nav>
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div class="title">Instagram</div>
+          <div style="font-size:11px;color:var(--muted)">Stories · Posts · Reels</div>
+        </div>
+      </div>
+      <button class="menu-btn" id="openMenu">☰</button>
+    </div>
 
-  <!-- Grid Container -->
-  <div id="content" class="grid"></div>
+    <!-- Hero -->
+    <div class="hero">
+      <div class="badge">✨ Explore & Download</div>
+      <h1>Stories · Posts · Reels</h1>
+      <p>Login to view your feed or paste a public link below</p>
+    </div>
 
-  <script>
-    // Dummy Data (baad me API se ayega)
-    const data = {
-      stories: [
-        {img: "https://placekitten.com/300/300"},
-        {img: "https://placekitten.com/301/300"},
-        {img: "https://placekitten.com/302/300"},
-      ],
-      posts: [
-        {img: "https://placekitten.com/300/250"},
-        {img: "https://placekitten.com/310/250"},
-        {img: "https://placekitten.com/320/250"},
-      ],
-      reels: [
-        {img: "https://placekitten.com/300/400"},
-        {img: "https://placekitten.com/310/400"},
-        {img: "https://placekitten.com/320/400"},
-      ]
-    };
+    <!-- Tabs -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+        <button class="btn" onclick="showSection('stories')">📸 Stories</button>
+        <button class="btn" onclick="showSection('posts')">🖼️ Posts</button>
+        <button class="btn" onclick="showSection('reels')">🎬 Reels</button>
+      </div>
+    </div>
 
-    function showCategory(category) {
-      document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
+    <!-- Stories Section -->
+    <div id="stories" class="card section">
+      <div style="font-weight:600;margin-bottom:10px">Recent Stories</div>
+      <div class="grid">
+        <div class="thumb"><div class="play">JPG</div></div>
+        <div class="thumb"><div class="play">MP4</div></div>
+        <div class="thumb"><div class="play">JPG</div></div>
+      </div>
+    </div>
 
-      const container = document.getElementById("content");
-      container.innerHTML = "";
-      data[category].forEach(item => {
-        container.innerHTML += `
-          <div class="card">
-            <img src="${item.img}" alt="">
-            <button class="download-btn">Download</button>
-          </div>
-        `;
-      });
-    }
+    <!-- Posts Section -->
+    <div id="posts" class="card section" style="display:none">
+      <div style="font-weight:600;margin-bottom:10px">Recent Posts</div>
+      <div class="grid">
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+      </div>
+    </div>
 
-    // Default: Show Stories
-    showCategory("stories");
-  </script>
+    <!-- Reels Section -->
+    <div id="reels" class="card section" style="display:none">
+      <div style="font-weight:600;margin-bottom:10px">Recent Reels</div>
+      <div class="grid">
+        <div class="thumb"><div class="play">▶</div></div>
+        <div class="thumb"><div class="play">▶</div></div>
+        <div class="thumb"><div class="play">▶</div></div>
+      </div>
+    </div>
 
+    <!-- Premium Strip -->
+    <div class="premium">
+      <div>Unlock <strong>Unlimited downloads</strong> with Premium</div>
+      <button class="cta" onclick="location.href='subscription.html'">Upgrade</button>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom">
+      <div class="tab">
+        <button class="tab-btn" onclick="location.href='index.html'">🏠</button>
+        <div>Home</div>
+      </div>
+      <div class="tab active">
+        <button class="tab-btn">📸</button>
+        <div>Stories</div>
+      </div>
+      <div class="tab">
+        <button class="tab-btn" onclick="location.href='recents.html'">🆕</button>
+        <div>Downloads</div>
+      </div>
+    </div>
+
+    <!-- Drawer -->
+    <div class="drawer" id="drawer">
+      <div class="back" id="backdrop"></div>
+      <nav class="panel">
+        <a class="navlink" href="index.html">🏠 Home</a>
+        <a class="navlink" href="stories.html">📸 Stories · Posts · Reels</a>
+        <a class="navlink" href="facebook.html">📘 Facebook</a>
+        <a class="navlink" href="whatsapp.html">💬 WhatsApp</a>
+        <a class="navlink" href="subscription.html">⭐ Subscription</a>
+        <a class="navlink" href="privacy.html">🔒 Privacy</a>
+        <a class="navlink" href="terms.html">📄 Terms</a>
+        <a class="navlink" href="contact.html">📨 Contact</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Drawer toggle
+  const drawer = document.getElementById("drawer");
+  const openMenu = document.getElementById("openMenu");
+  const backdrop = document.getElementById("backdrop");
+  openMenu.onclick = ()=> drawer.classList.add("open");
+  backdrop.onclick = ()=> drawer.classList.remove("open");
+
+  // Section switch
+  function showSection(id){
+    document.querySelectorAll(".section").forEach(sec=>sec.style.display="none");
+    document.getElementById(id).style.display="block";
+  }
+</script>
 </body>
 </html>
