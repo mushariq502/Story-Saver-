@@ -1,226 +1,426 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instant Story Saver — Stories · Posts · Reels</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Instant Story Saver — Feed</title>
+
+  <!-- Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(145deg, #1a2a6c, #b21f1f, #fdbb2d);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    :root{
+      --bg1: #e6f0ff;
+      --bg2: #ffffff;
+      --accent: #0b63ff; /* main blue */
+      --muted: #6b7280;
+      --glass: rgba(255,255,255,0.65);
+      --card-shadow: 0 8px 24px rgba(11,99,255,0.08);
+      --radius: 14px;
+      --safe-vh: 100vh;
+      font-family: 'Poppins', sans-serif;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-    }
-    header h1 {
-      font-size: 18px;
-      font-weight: 700;
-    }
-    .menu-btn {
-      font-size: 22px;
-      cursor: pointer;
+    /* viewport fix for mobile browsers */
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,var(--bg1),var(--bg2));
+      -webkit-font-smoothing:antialiased;
+      color:#0f1724;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
     }
 
-    /* Drawer */
-    .drawer {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      width: 240px;
-      height: 100%;
-      background: rgba(10,10,25,0.95);
-      color: #fff;
-      padding: 60px 20px;
-      transition: left 0.3s ease;
-      z-index: 999;
+    /* App container (centered card look) */
+    .app {
+      width:100%;
+      max-width:980px;
+      margin:24px auto;
+      padding:20px;
+      box-sizing:border-box;
     }
-    .drawer.open { left: 0; }
-    .drawer a {
-      display: block;
-      color: #fff;
-      padding: 12px 0;
-      text-decoration: none;
-      font-weight: 500;
+
+    /* Header */
+    header.app-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
     }
+    .hamburger{
+      width:44px;height:44px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.75));
+      box-shadow:var(--card-shadow);display:flex;align-items:center;justify-content:center;cursor:pointer;
+    }
+    .app-title{
+      display:flex;flex-direction:column;
+    }
+    .app-title h1{margin:0;font-size:18px;font-weight:700;}
+    .app-title p{margin:0;font-size:12px;color:var(--muted);}
 
     /* Premium strip */
-    .premium-strip {
-      text-align: center;
-      background: linear-gradient(to right, #9b5cff, #ff4d97);
-      padding: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 6px;
-      margin: 10px 15px;
+    .premium-strip{
+      margin-top:16px;
+      padding:12px;border-radius:12px;background:linear-gradient(90deg, rgba(11,99,255,0.12), rgba(11,99,255,0.04));
+      display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--card-shadow);
     }
+    .premium-strip .left{display:flex;gap:12px;align-items:center;}
+    .premium-badge{background:linear-gradient(180deg,var(--accent),#0046d6);color:white;padding:8px 12px;border-radius:10px;font-weight:600;font-size:13px;}
 
-    /* Tabs */
-    .tabs {
-      display: flex;
-      justify-content: space-around;
-      margin: 15px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 8px;
-      overflow: hidden;
+    /* Login buttons */
+    .login-row{display:flex;gap:12px;margin-top:16px;}
+    .btn{
+      flex:1;padding:12px;border-radius:12px;border:none;cursor:pointer;font-weight:600;
+      box-shadow:0 6px 18px rgba(16,24,40,0.06);
+      display:flex;align-items:center;gap:10px;justify-content:center;
     }
-    .tab {
-      flex: 1;
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-      font-weight: 600;
-      color: #ddd;
-    }
-    .tab.active {
-      background: linear-gradient(to right, #ff512f, #dd2476);
-      color: #fff;
-    }
+    .btn.ig{background:linear-gradient(180deg,#fff,#f7fbff);border:1px solid rgba(11,99,255,0.08);}
+    .btn.fb{background:linear-gradient(180deg,#1877f2,#155ecb);color:white;}
+    .btn svg{width:18px;height:18px;display:block}
 
-    /* Content */
-    .content-section {
-      display: none;
-      padding: 15px;
+    /* Stories */
+    .stories{
+      margin-top:18px;display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;
+      -webkit-overflow-scrolling:touch;
     }
-    .content-section.active { display: block; }
+    .story{
+      min-width:72px;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+    }
+    .story .ring{
+      width:72px;height:72px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#ff7a7a,#ffd36b,#7ad3ff);display:flex;align-items:center;justify-content:center;
+    }
+    .story img{
+      width:60px;height:60px;border-radius:50%;object-fit:cover;border:3px solid white;box-shadow:0 6px 18px rgba(2,6,23,0.08);
+    }
+    .story small{font-size:12px;color:var(--muted);max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
-    .card {
-      background: rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 15px;
-      text-align: center;
+    /* Content sections */
+    .section{margin-top:20px;}
+    .section h2{margin:0 0 12px 0;font-size:16px;display:flex;justify-content:space-between;align-items:center;}
+    .reels{
+      display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;
     }
-    .card img {
-      width: 100%;
-      border-radius: 8px;
+    .reel{
+      min-width:280px;background:white;border-radius:12px;padding:12px;box-shadow:var(--card-shadow);
+      display:flex;flex-direction:column;gap:8px;
     }
-    .download-btn {
-      margin-top: 10px;
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 20px;
-      background: linear-gradient(to right, #36d1dc, #5b86e5);
-      color: #fff;
-      font-weight: 600;
-      font-size: 14px;
-      text-decoration: none;
-    }
+    .reel .thumb{height:160px;border-radius:10px;background:#eef3ff;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+    .reel .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);}
 
-    /* Bottom nav */
-    .bottom-nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background: rgba(0,0,0,0.6);
-      padding: 10px 0;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      border-top: 1px solid rgba(255,255,255,0.2);
+    /* Posts grid */
+    .posts{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px;
     }
-    .bottom-nav a {
-      text-align: center;
-      color: #fff;
-      font-size: 12px;
-      text-decoration: none;
+    .post{
+      background:white;border-radius:12px;overflow:hidden;box-shadow:var(--card-shadow);
+      display:flex;flex-direction:column;
     }
-    .bottom-nav a span {
-      display: block;
-      font-size: 18px;
+    .post img{width:100%;height:140px;object-fit:cover;display:block;}
+    .post .pmeta{padding:10px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;}
+
+    /* bottom nav */
+    .bottom-nav{
+      position:fixed;left:0;right:0;bottom:18px;display:flex;justify-content:center;pointer-events:none;
+    }
+    .bottom-nav .nav-card{
+      width:calc(100% - 40px);max-width:980px;background:rgba(255,255,255,0.98);border-radius:16px;padding:10px 16px;display:flex;gap:10px;justify-content:space-between;align-items:center;box-shadow:0 10px 30px rgba(8,20,48,0.08);pointer-events:auto;
+    }
+    .nav-btn{flex:1;padding:10px;border-radius:12px;text-align:center;font-weight:600;cursor:pointer;border:1px solid transparent;}
+    .nav-btn.active{background:linear-gradient(90deg,var(--accent),#3a7dff);color:white;box-shadow:0 8px 24px rgba(11,99,255,0.12);}
+
+    /* Drawer */
+    .drawer{
+      position:fixed;left:16px;top:16px;width:260px;max-width:86%;height:calc(var(--safe-vh) - 32px);
+      background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.9));
+      border-radius:16px;padding:14px;box-shadow:0 30px 60px rgba(2,6,23,0.12);transform:translateX(-110%);transition:transform .32s cubic-bezier(.22,.9,.32,1);z-index:60;
+    }
+    .drawer.open{transform:translateX(0);}
+    .drawer h3{margin:0 0 10px 0;}
+    .drawer .item{padding:10px;border-radius:10px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+    .overlay{position:fixed;inset:0;background:rgba(3,6,23,0.28);opacity:0;pointer-events:none;transition:opacity .22s;}
+    .overlay.show{opacity:1;pointer-events:auto;}
+
+    /* responsive tweaks */
+    @media (max-width:640px){
+      .app{padding:14px;margin:12px;}
+      .reel{min-width:240px;}
+      .story .ring{width:60px;height:60px;}
+      .story img{width:52px;height:52px;}
     }
   </style>
 </head>
 <body>
+
+  <div class="app">
+
+    <header class="app-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="hamburger" id="hamburger" title="Menu">
+          <!-- simple icon -->
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect y="1" width="18" height="2" rx="1" fill="#0b63ff"/><rect y="9" width="18" height="2" rx="1" fill="#0b63ff"/></svg>
+        </div>
+
+        <div class="app-title">
+          <h1>Instant Story Saver</h1>
+          <p>Stories • Reels • Posts</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div style="font-size:13px;color:var(--muted)">Logged: <strong id="user-status">Guest</strong></div>
+        <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(180deg,#fff,#f7fbff);display:flex;align-items:center;justify-content:center;box-shadow:var(--card-shadow)">
+          <!-- profile placeholder -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="#0b63ff" stroke-width="1.6"/><path d="M4 19c1.7-3.6 6-6 8-6s6.3 2.4 8 6" stroke="#0b63ff" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <div class="premium-strip">
+      <div class="left">
+        <div class="premium-badge">PREMIUM</div>
+        <div>
+          <div style="font-weight:700">Unlimited downloads</div>
+          <div style="font-size:13px;color:var(--muted)">Get ad-free experience & fast downloads</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" id="upgradeBtn" style="padding:10px 14px;font-weight:700">Go Premium</button>
+      </div>
+    </div>
+
+    <!-- Login -->
+    <div class="login-row">
+      <button class="btn ig" id="ig-login">
+        <!-- IG icon -->
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z" stroke="#E1306C" stroke-width="1.6"/></svg>
+        Login with Instagram
+      </button>
+      <button class="btn fb" id="fb-login">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 3h3v3h-3v3h-3v-3h-2v-3h2V3h3z" fill="white"/></svg>
+        Login with Facebook
+      </button>
+    </div>
+
+    <!-- Stories -->
+    <div class="section">
+      <h2>Stories <small style="font-size:13px;color:var(--muted)">Latest from your accounts</small></h2>
+      <div class="stories" id="storiesContainer">
+        <!-- stories injected here -->
+      </div>
+    </div>
+
+    <!-- Reels -->
+    <div class="section">
+      <h2 style="display:flex;align-items:center;justify-content:space-between;">
+        <span>Reels</span>
+        <small style="font-size:13px;color:var(--muted)">Swipe → to browse</small>
+      </h2>
+      <div class="reels" id="reelsContainer">
+        <!-- reels injected here -->
+      </div>
+    </div>
+
+    <!-- Posts -->
+    <div class="section">
+      <h2>Posts</h2>
+      <div class="posts" id="postsContainer">
+        <!-- posts injected here -->
+      </div>
+    </div>
+
+  </div>
+
   <!-- Drawer -->
   <div class="drawer" id="drawer">
-    <a href="#">🏠 Home</a>
-    <a href="#">📥 Downloads</a>
-    <a href="#">✨ Premium</a>
-    <a href="#">📄 Privacy Policy</a>
-    <a href="#">📜 Terms</a>
-    <a href="#">✉️ Contact</a>
+    <h3>Menu</h3>
+    <div class="item" onclick="go('home')">Home</div>
+    <div class="item" onclick="go('recents')">Recents</div>
+    <div class="item" onclick="go('subscriptions')">Subscriptions</div>
+    <div class="item" onclick="go('settings')">Settings</div>
+    <div style="height:10px"></div>
+    <div class="item" onclick="logout()">Logout</div>
   </div>
-
-  <!-- Header -->
-  <header>
-    <h1>Instant Story Saver</h1>
-    <div class="menu-btn" onclick="toggleDrawer()">☰</div>
-  </header>
-
-  <!-- Premium strip -->
-  <div class="premium-strip">🚀 Ultra-Fast · Safe · Clean</div>
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active" onclick="showSection('stories')">Stories</div>
-    <div class="tab" onclick="showSection('posts')">Posts</div>
-    <div class="tab" onclick="showSection('reels')">Reels</div>
-  </div>
-
-  <!-- Sections -->
-  <div id="stories" class="content-section active">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x180.png?text=Story+1" alt="Story 1"/>
-      <a href="#" class="download-btn">⬇ Download</a>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x180.png?text=Story+2" alt="Story 2"/>
-      <a href="#" class="download-btn">⬇ Download</a>
-    </div>
-  </div>
-
-  <div id="posts" class="content-section">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x180.png?text=Post+1" alt="Post 1"/>
-      <a href="#" class="download-btn">⬇ Download</a>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x180.png?text=Post+2" alt="Post 2"/>
-      <a href="#" class="download-btn">⬇ Download</a>
-    </div>
-  </div>
-
-  <div id="reels" class="content-section">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x180.png?text=Reel+1" alt="Reel 1"/>
-      <a href="#" class="download-btn">⬇ Download</a>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x180.png?text=Reel+2" alt="Reel 2"/>
-      <a href="#" class="download-btn">⬇ Download</a>
-    </div>
-  </div>
+  <div class="overlay" id="overlay"></div>
 
   <!-- Bottom nav -->
   <div class="bottom-nav">
-    <a href="#"><span>🏠</span>Home</a>
-    <a href="#"><span>📥</span>Downloads</a>
-    <a href="#"><span>✉️</span>Contact</a>
+    <div class="nav-card">
+      <div class="nav-btn active" onclick="focusSection('stories')">Stories</div>
+      <div class="nav-btn" onclick="focusSection('reels')">Reels</div>
+      <div class="nav-btn" onclick="focusSection('posts')">Posts</div>
+      <div class="nav-btn" onclick="focusSection('recents')">Recents</div>
+    </div>
   </div>
 
   <script>
-    function toggleDrawer() {
-      document.getElementById("drawer").classList.toggle("open");
-    }
-    function showSection(section) {
-      document.querySelectorAll(".content-section").forEach(el => el.classList.remove("active"));
-      document.getElementById(section).classList.add("active");
+    // ---------- UI behavior ----------
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    document.getElementById('hamburger').addEventListener('click', ()=> {
+      drawer.classList.toggle('open');
+      overlay.classList.toggle('show');
+    });
+    overlay.addEventListener('click', ()=> {
+      drawer.classList.remove('open');
+      overlay.classList.remove('show');
+    });
 
-      document.querySelectorAll(".tab").forEach(el => el.classList.remove("active"));
-      document.querySelector(`.tab[onclick="showSection('${section}')"]`).classList.add("active");
+    function go(route){
+      alert('Navigate to: '+route);
+      drawer.classList.remove('open'); overlay.classList.remove('show');
     }
+
+    function focusSection(id){
+      // simple scroll to section
+      const sections = {
+        stories: document.getElementById('storiesContainer'),
+        reels: document.getElementById('reelsContainer'),
+        posts: document.getElementById('postsContainer'),
+        recents: document.querySelector('.premium-strip')
+      };
+      sections[id].scrollIntoView({behavior:'smooth', block:'center'});
+      document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+      event.currentTarget?.classList?.add('active');
+    }
+
+    // ---------- Mock data ----------
+    const MOCK = {
+      stories: [
+        {id:1,name:'ali',img:'https://picsum.photos/seed/1/200'},
+        {id:2,name:'sara',img:'https://picsum.photos/seed/2/200'},
+        {id:3,name:'humesha',img:'https://picsum.photos/seed/3/200'},
+        {id:4,name:'zain',img:'https://picsum.photos/seed/4/200'},
+        {id:5,name:'rumi',img:'https://picsum.photos/seed/5/200'},
+      ],
+      reels: [
+        {id:11,title:'Funny clip',thumb:'https://picsum.photos/seed/11/600/400',dur:'0:30'},
+        {id:12,title:'Travel reel',thumb:'https://picsum.photos/seed/12/600/400',dur:'1:02'},
+        {id:13,title:'Tutorial',thumb:'https://picsum.photos/seed/13/600/400',dur:'0:45'},
+      ],
+      posts: Array.from({length:9}).map((_,i)=>({
+        id:200+i, img:`https://picsum.photos/seed/post${i}/600/600`, likes:Math.floor(Math.random()*1000)
+      }))
+    };
+
+    // ---------- Renderers ----------
+    const storiesContainer = document.getElementById('storiesContainer');
+    const reelsContainer = document.getElementById('reelsContainer');
+    const postsContainer = document.getElementById('postsContainer');
+
+    function renderStories(list){
+      storiesContainer.innerHTML = '';
+      list.forEach(s=>{
+        const div = document.createElement('div'); div.className='story';
+        div.innerHTML = `
+          <div class="ring"><img src="${s.img}" alt="${s.name}" loading="lazy"></div>
+          <small>${s.name}</small>
+        `;
+        div.addEventListener('click', ()=> openStory(s));
+        storiesContainer.appendChild(div);
+      });
+    }
+
+    function renderReels(list){
+      reelsContainer.innerHTML = '';
+      list.forEach(r=>{
+        const el = document.createElement('div'); el.className='reel';
+        el.innerHTML = `
+          <div class="thumb"><img src="${r.thumb}" style="width:100%;height:100%;object-fit:cover"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-weight:700">${r.title}</div>
+            <div style="font-size:13px;color:var(--muted)">${r.dur}</div>
+          </div>
+          <div class="meta"><div>by user</div><div>1200 views</div></div>
+        `;
+        reelsContainer.appendChild(el);
+      });
+    }
+
+    function renderPosts(list){
+      postsContainer.innerHTML='';
+      list.forEach(p=>{
+        const el = document.createElement('div'); el.className='post';
+        el.innerHTML = `
+          <img src="${p.img}" alt="post-${p.id}" loading="lazy">
+          <div class="pmeta"><div>by user</div><div>❤ ${p.likes}</div></div>
+        `;
+        el.addEventListener('click', ()=> openPost(p));
+        postsContainer.appendChild(el);
+      });
+    }
+
+    // ---------- Open handlers (placeholders) ----------
+    function openStory(s){
+      alert('Open story: '+s.name + '\nYahan pe story viewer modal open karo (video/audio).');
+    }
+    function openPost(p){
+      alert('Open post id: '+p.id + '\nYahan post detail modal ya downloader open karo.');
+    }
+
+    // ---------- Login buttons (placeholders for OAuth) ----------
+    document.getElementById('ig-login').addEventListener('click', async ()=>{
+      // Integrate Instagram OAuth here:
+      // 1) Redirect to Instagram OAuth endpoint (server-side recommended).
+      // 2) On success, exchange code on server for access token.
+      // 3) Use token to call Instagram Graph API or your backend endpoint to fetch stories/posts.
+      // For demo we simulate login:
+      simulateLogin('Instagram User');
+    });
+
+    document.getElementById('fb-login').addEventListener('click', async ()=>{
+      // Integrate Facebook OAuth here:
+      // 1) Use Facebook Login (FB SDK) or server-side OAuth to get long-lived token.
+      // 2) Call Graph API (/me/media, /{user-id}/stories) from server.
+      simulateLogin('Facebook User');
+    });
+
+    function simulateLogin(name){
+      document.getElementById('user-status').innerText = name;
+      // after login, fetch real data from your backend:
+      // fetchDataFromServer();
+      loadMockData();
+    }
+
+    // ---------- Data fetching (replace these with real API calls) ----------
+    async function fetchDataFromServer(){
+      // EXAMPLE (recommended server-side):
+      // const resp = await fetch('/api/fetch-user-content', {credentials:'include'});
+      // const data = await resp.json();
+      // renderStories(data.stories); renderReels(data.reels); renderPosts(data.posts);
+
+      // If you must call social APIs from client (not recommended), ensure tokens are kept secure.
+    }
+
+    function loadMockData(){
+      // demo uses mock
+      renderStories(MOCK.stories);
+      renderReels(MOCK.reels);
+      renderPosts(MOCK.posts);
+    }
+
+    // on load show mock data
+    loadMockData();
+
+    // ---------- Notes for integration (copy to your dev docs) ----------
+    /* 
+      Integration checklist:
+      1) OAuth:
+         - Instagram: Use Server-side OAuth to exchange code for short-lived token, then exchange for long-lived token.
+            Graph API endpoints: /{ig-user-id}/media, /{ig-user-id}/stories (requires proper permissions).
+         - Facebook: Use Facebook Login + Graph API to get /{user-id}/posts or media endpoints.
+         - Do NOT call access_token exchange from client; do it server-side to keep secrets safe.
+      2) Backend:
+         - Create endpoints like /api/instagram/content and /api/facebook/content that your frontend calls.
+         - Backend should fetch data from Graph APIs, parse into a unified schema {stories,reels,posts}.
+      3) Caching:
+         - Cache media thumbnails on your server or CDN to speed up load and reduce API limits.
+      4) File downloads:
+         - When user taps download, your server should request the original media and serve it (respecting TOS).
+      5) Rate limits & permissions:
+         - Request minimum permissions, inform users why you need them, and handle errors gracefully.
+    */
+
   </script>
 </body>
 </html>
