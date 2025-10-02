@@ -552,6 +552,21 @@ window.addEventListener('resize', ()=>{
     // Real app: Instagram login / OAuth flow here
     alert('Proceed to Instagram login (demo).');
   });
+// Instagram login success ke baad
+function onInstagramLoginSuccess() {
+  // Baad me yahan se backend call karke token save karna hoga
+  window.location.href = "feed.html";
+}
+
+// Facebook login success ke baad
+function onFacebookLoginSuccess() {
+  // Baad me backend ke sath integrate hoga
+  window.location.href = "feed.html";
+}
+
+// Buttons ke liye attach karo
+document.getElementById("igLogin").addEventListener("click", onInstagramLoginSuccess);
+document.getElementById("fbLogin").addEventListener("click", onFacebookLoginSuccess);
 
   function flashElement(el){
     el.style.transition='box-shadow .15s';
