@@ -274,6 +274,19 @@
       drawer.classList.remove('open');
       overlay.classList.remove('show');
     });
+    document.addEventListener("DOMContentLoaded", () => {
+  const userData = localStorage.getItem("userData");
+  if(userData){
+    const parsed = JSON.parse(userData);
+    document.getElementById("user-status").innerText = parsed.name || "User";
+    // Yahan se tum fetch kar sakte ho backend se user stories/posts
+    // fetch(`/api/content?token=${parsed.token}`)
+  } else {
+    // Agar data nahi hai to wapas Subscription page bhej do
+    window.location.href = "subscription.html";
+  }
+});
+
 
     function go(route){
       alert('Navigate to: '+route);
@@ -407,7 +420,7 @@
       renderReels(MOCK.reels);
       renderPosts(MOCK.posts);
     }
-
+    
     // on load show mock data
     loadMockData();
 
