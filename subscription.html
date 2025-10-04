@@ -531,27 +531,6 @@ window.addEventListener('resize', ()=>{
     }, 1100);
   });
 
-  /* Login CTA behavior */
-  document.getElementById('fbLogin').addEventListener('click', ()=>{
-    if(!isSubscribed()){ 
-      // highlight subscription card & scroll
-      document.getElementById('monthlyCard').scrollIntoView({behavior:'smooth', block:'center'});
-      flashElement(document.getElementById('monthlyCard'));
-      return;
-    }
-    // In real app: start Facebook OAuth flow here
-    alert('Proceed to Facebook login (demo).');
-  });
-
-  document.getElementById('igLogin').addEventListener('click', ()=>{
-    if(!isSubscribed()){
-      document.getElementById('yearlyCard').scrollIntoView({behavior:'smooth', block:'center'});
-      flashElement(document.getElementById('yearlyCard'));
-      return;
-    }
-    // Real app: Instagram login / OAuth flow here
-    alert('Proceed to Instagram login (demo).');
-  });
 // Instagram login success ke baad
 function onInstagramLoginSuccess() {
   // Baad me yahan se backend call karke token save karna hoga
