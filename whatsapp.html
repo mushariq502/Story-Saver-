@@ -88,55 +88,59 @@ body{
 .ghost{ padding:10px 12px; border-radius:12px; background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--muted); cursor:pointer }
 
 /* Drawer CSS */
-.drawer {
-  position: fixed;
-  top: 0;
-  left: -260px;
-  width: 240px;
-  height: 100%;
-  background: linear-gradient(180deg, #1e2a47, #0c1a2a);
-  box-shadow: 4px 0 20px rgba(0,0,0,0.6);
-  transition: left 0.3s ease;
-  z-index: 2500;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 16px;
-  border-right: 1px solid rgba(255,255,255,0.08);
+/* DRAWER */
+.drawer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:999;
+  display:flex;
 }
-.drawer.open { left: 0; }
+.drawer .back{
+  position:absolute;
+  inset:0;
+  background:rgba(2,6,23,0.55);
+  opacity:0;
+  transition:opacity .3s;
+}
+.drawer .panel{
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:300px; /* thoda bada drawer */
+  transform:translateX(-100%);
+  transition:transform .36s cubic-bezier(.2,.9,.3,1);
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+  backdrop-filter: blur(10px);
+  border-right:1px solid rgba(255,255,255,0.04);
+  box-shadow: 10px 0 34px rgba(2,6,23,0.6);
+  padding:22px 18px; /* thoda padding bada */
+  z-index:1000;
+}
+.drawer.open{
+  pointer-events:auto;
+}
+.drawer.open .back{
+  opacity:1;
+}
+.drawer.open .panel{
+  transform:translateX(0);
+}
+.navlink{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px; /* thoda bada padding */
+  border-radius:10px;
+  color:#fff;
+  text-decoration:none;
+  transition:background .18s, transform .12s;
+  border:1px solid transparent;
+}
+.navlink:hover{background:rgba(255,255,255,0.04)}
+.navlink svg{opacity:.95}
 
-.drawer .back {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-  z-index: 2400;
-}
-.drawer.open .back {
-  opacity: 1;
-  visibility: visible;
-}
-.drawer .panel {
-  position: relative;
-  margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.drawer .navlink {
-  color: #e6eef8;
-  text-decoration: none;
-  font-size: 15px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  transition: background 0.25s ease, transform 0.2s ease;
-}
-.drawer .navlink:hover {
-  background: rgba(255,255,255,0.06);
-  transform: translateX(6px);
-}
 
 @media (max-width:420px){ .thumb{ width:84px; height:84px } .preview .box{ max-width:94% } }
 </style>
