@@ -35,8 +35,8 @@
     .device{
       width:96vw;
       max-width:392px; /* privacy page wider for readability */
-      height: calc(var(--vh, 1vh) * 92);
-      border-radius:20px;
+      height: calc(var(--vh, 1vh) * 100);
+      border-radius:28px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border:1px solid rgba(255,255,255,0.03);
       box-shadow: 0 24px 80px rgba(2,6,23,0.6);
@@ -47,13 +47,14 @@
     }
 
     .device-inner{
-      padding:18px;
+      padding:80px;
       overflow-y:auto;
       height:100%;
     }
 
     /* header */
     .topbar{
+      height: 56px;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -63,14 +64,13 @@
       background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
       backdrop-filter: blur(6px);
     }
-    .brand{display:flex;gap:12px;align-items:center}
+    .brand{display:flex;gap:10px;align-items:center}
     .logo{
-      width:48px;height:48px;border-radius:12px;
+      width:46px;height:46px;border-radius:12px;
       background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
-      box-shadow:0 8px 26px rgba(81,91,212,0.12);
-      flex-shrink:0;
-    }
-    .brand .title{font-weight:700;font-size:16px}
+      box-shadow:0 6px 20px rgba(0,0,0,0.3);flex-shrink:0;
+    };
+    .brand .title{font-weight:700;font-size:16px;line-height:1.2;}
     .top-actions{display:flex;gap:8px;align-items:center}
     .btn-ghost{
       background:transparent;border:1px solid rgba(255,255,255,0.06);
