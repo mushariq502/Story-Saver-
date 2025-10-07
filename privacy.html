@@ -35,8 +35,9 @@
     /* device frame */
     .device{
       width:96vw;
+      min-height: 100vh;
       max-width:392px; /* privacy page wider for readability */
-      height: calc(var(--vh, 1vh) * 80);
+      height: auto;
       border-radius:28px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border:1px solid rgba(255,255,255,0.03);
@@ -50,7 +51,6 @@
     .device-inner{
       padding:20px 18px;
       overflow-y:auto;
-      height:80%;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
