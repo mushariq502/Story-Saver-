@@ -6,13 +6,12 @@
   <title>Terms & Conditions</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #2563eb;
-      --bg1: #f9fafb;
-      --bg2: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --radius: 16px;
+     :root{
+      --bg1:#aeccfd; --bg2:#0c1a2a;
+      --panel: rgba(255,255,255,0.03);
+      --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
+      --muted: rgba(230,238,248,0.72);
+      --success: #25D366;
     }
 
     * {
@@ -141,16 +140,20 @@
 </head>
 <body>
   <!-- Drawer -->
-  <div id="drawer">
-    <h2>Menu</h2>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="subscription.html">Subscription</a></li>
-      <li><a href="terms.html">Terms & Conditions</a></li>
-      <li><a href="privacy.html">Privacy Policy</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="back" id="backdrop" tabindex="-1"></div>
+    <nav class="panel" role="navigation" aria-label="Main menu">
+      <a class="navlink" href="index.html">🏠 Home — Instagram</a>
+      <a class="navlink" href="facebook.html">📘 Facebook Downloader</a>
+      <a class="navlink" href="whatsapp.html">💬 WhatsApp Downloader</a>
+      <a class="navlink" href="subscription.html">⭐ Subscription</a>
+      <a class="navlink" href="privacy.html">🔒 Privacy Policy</a>
+      <a class="navlink" href="terms.html">📄 Terms & Conditions</a>
+      <a class="navlink" href="contact.html">📨 Feedback & Support</a>
+      <a class="navlink" href="about.html">ℹ️ About</a>
+    </nav>
   </div>
+</div>
 
   <!-- Header -->
   <header>
@@ -180,9 +183,22 @@
   </nav>
 
   <script>
-    function toggleDrawer() {
-      document.getElementById("drawer").classList.toggle("open");
-    }
+     /* Drawer controls */
+  const drawer = document.getElementById('drawer');
+  const menuOpen = document.getElementById('menuOpen');
+  const drawerBack = document.getElementById('backdrop');
+
+  function openDrawer(){ 
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden','false'); 
+  }
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden','true'); 
+  }
+  menuOpen.addEventListener('click', openDrawer);
+  drawerBack.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
   </script>
 </body>
 </html>
