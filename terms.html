@@ -29,55 +29,7 @@
       height: 100vh;
     }
 
-    /* Drawer */
-   .drawer{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:999;
-  display:flex}
-.drawer .back{
-  position:absolute;
-  inset:0;
-  background:rgba(2,6,23,0.55);
-  opacity:0;
-  transition:opacity .3s}
-.drawer .panel{
-  position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:280px;
-  transform:translateX(-100%);
-  transition:transform .36s cubic-bezier(.2,.9,.3,1);
-  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
-  backdrop-filter: blur(10px);
-  border-right:1px solid rgba(255,255,255,0.04);
-  box-shadow: 10px 0 34px rgba(2,6,23,0.6);
-  padding:18px;
-  z-index:1000;
-}
-.drawer.open{
-  pointer-events:auto}
-.drawer.open .back{
-  opacity:1}
-.drawer.open .panel{
-  transform:translateX(0)}
-.navlink{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 12px;
-  border-radius:10px;
-  color:#fff;
-  text-decoration:none;
-  transition:background .18s, transform .12s;
-  border:1px solid transparent;
-}
-.navlink:hover{
-  background:rgba(255,255,255,0.04)}
-.navlink svg{
-  opacity:.95}
+   
 
     /* Topbar */
     header {
@@ -126,6 +78,55 @@
       margin-bottom: 12px;
       line-height: 1.6;
     }
+     /* Drawer */
+   .drawer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:999;
+  display:flex}
+.drawer .back{
+  position:absolute;
+  inset:0;
+  background:rgba(2,6,23,0.55);
+  opacity:0;
+  transition:opacity .3s}
+.drawer .panel{
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:280px;
+  transform:translateX(-100%);
+  transition:transform .36s cubic-bezier(.2,.9,.3,1);
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+  backdrop-filter: blur(10px);
+  border-right:1px solid rgba(255,255,255,0.04);
+  box-shadow: 10px 0 34px rgba(2,6,23,0.6);
+  padding:18px;
+  z-index:1000;
+}
+.drawer.open{
+  pointer-events:auto}
+.drawer.open .back{
+  opacity:1}
+.drawer.open .panel{
+  transform:translateX(0)}
+.navlink{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:10px;
+  color:#fff;
+  text-decoration:none;
+  transition:background .18s, transform .12s;
+  border:1px solid transparent;
+}
+.navlink:hover{
+  background:rgba(255,255,255,0.04)}
+.navlink svg{
+  opacity:.95}
 
     /* Bottom Nav */
     nav {
