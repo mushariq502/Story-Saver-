@@ -101,6 +101,20 @@
 
 
     /* footer actions */
+
+    .footer-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:14px;
+  gap:10px;
+  flex-wrap:wrap;
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  backdrop-filter: blur(8px);
+  padding: 12px 0;
+}
     
     .primary{
       background:linear-gradient(90deg,var(--accent3),var(--accent4));
@@ -186,12 +200,12 @@
         <h2>10. Contact Us</h2>
         <p>If you have questions about this Privacy Policy, please contact us:</p>
         <p><strong>Email:</strong> <a class="inline-link" href="mailto:support@instantstorysaver.com">support@instantstorysaver.com</a></p>
-        <div class="footer-actions">
+      
           <button class="secondary" onclick="location.href='index.html'">Back to App</button>
           <div style="display:flex;gap:8px">
             <button class="secondary" onclick="downloadPolicy()">Download (PDF)</button>
             <button class="primary" onclick="agreeAndReturn()">Agree & Continue</button>
-          </div>
+          
         </div>
       </div>
     </div>
