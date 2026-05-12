@@ -1,236 +1,452 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Privacy Policy — Instant Story Saver</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg1:#aeccfd; --bg2:#0c1a2a;
-      --panel: rgba(255,255,255,0.03);
-      --accent1:#f58529; --accent2:#dd2a7b; --accent3:#8134af; --accent4:#515bd4;
-      --muted: rgba(230,238,248,0.72);
-      --txt:#e6eef8;
-      --stroke: rgba(255,255,255,0.04);
-      --glass: rgba(255,255,255,0.05);
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — Instant Story Saver</title>
 
-    /* reset */
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      font-family:'Poppins',system-ui,Arial;
-      background: radial-gradient(900px 500px at 15% 10%, rgba(129,52,175,0.06), transparent 8%),
-                  linear-gradient(180deg,var(--bg1),var(--bg2));
-      color:var(--txt);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:8px;
-      padding-bottom: 1px;
-      min-height:100vh;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    /* device frame */
-    .device{
-      width:96vw;
-      min-height: 100vh;
-      max-width:392px; /* privacy page wider for readability */
-      height: auto;
-      border-radius:28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.03);
-      box-shadow: 0 24px 80px rgba(2,6,23,0.6);
-      overflow:hidden;
-      position:relative;
-      display:flex;
-      flex-direction:column;
-    }
+<style>
+:root{
+  --bg1:#aeccfd;
+  --bg2:#0c1a2a;
+  --accent1:#f58529;
+  --accent2:#dd2a7b;
+  --accent3:#8134af;
+  --accent4:#515bd4;
+  --text:#eaf2ff;
+  --muted:rgba(234,242,255,0.72);
+  --glass:rgba(255,255,255,0.05);
+  --border:rgba(255,255,255,0.08);
+}
 
-    .device-inner{
-      padding:20px 18px;
-      overflow-y:auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: stretch;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    /* header */
-    .topbar{
-      height: 56px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px 18px;
-      border-bottom:1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-      backdrop-filter: blur(6px);
-    }
-    .brand{display:flex;gap:10px;align-items:center}
-    .logo{
-      width:46px;height:46px;border-radius:12px;
-      background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
-      box-shadow:0 6px 20px rgba(0,0,0,0.3);flex-shrink:0;
-    }
-    .brand .title{font-weight:700;font-size:16px;line-height:1.2;}
-    .top-actions{display:flex;gap:8px;align-items:center}
-    .btn-ghost{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);
-      padding:8px 12px;border-radius:10px;color:var(--txt);cursor:pointer;
-    }
+html,body{
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+}
 
-    /* content card */
-    .content{
-      margin-top:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:12px;
-      padding:18px;
-      border:1px solid var(--stroke);
-      box-shadow:0 12px 34px rgba(2,6,23,0.45);
-    }
+body{
+  font-family:'Poppins',sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(129,52,175,0.22), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(81,91,212,0.18), transparent 30%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  padding:12px;
+}
 
-    h1{font-size:20px;margin-bottom:8px;background:linear-gradient(90deg,var(--accent3),var(--accent4)); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
-    h2{font-size:16px;margin-top:12px;margin-bottom:8px;color:var(--txt)}
-    p, li{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:8px}
-    ul{margin-left:16px;margin-bottom:8px}
+/* DEVICE */
+.device{
+  width:100%;
+  max-width:420px;
+  min-height:100vh;
+  border-radius:30px;
+  overflow:hidden;
+  position:relative;
+  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(9,18,35,0.55);
+  backdrop-filter:blur(18px);
+  box-shadow:0 25px 80px rgba(0,0,0,0.45);
+}
 
-    .small-note{font-size:13px;color:rgba(230,238,248,0.6);margin-top:6px}
-
-
-    /* footer actions */
-
-    .footer-actions{
+/* TOP BAR */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-top:14px;
+  padding:16px;
+  background:rgba(8,15,28,0.55);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4));
+  box-shadow:0 8px 20px rgba(0,0,0,0.35);
+  flex-shrink:0;
+}
+
+.brand-text h2{
+  font-size:16px;
+  font-weight:700;
+  line-height:1.2;
+}
+
+.brand-text p{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.btn-ghost{
+  border:none;
+  outline:none;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.07);
+  color:var(--text);
+  padding:10px 13px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13px;
+  transition:0.3s;
+}
+
+.btn-ghost:hover{
+  transform:translateY(-2px);
+  background:rgba(255,255,255,0.08);
+}
+
+/* CONTENT */
+.content-wrapper{
+  padding:18px 16px 30px;
+}
+
+.policy-card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  padding:22px 18px;
+  backdrop-filter:blur(12px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+}
+
+.page-title{
+  font-size:24px;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--accent2),var(--accent4));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:10px;
+}
+
+.updated{
+  color:rgba(255,255,255,0.6);
+  font-size:12px;
+  margin-bottom:20px;
+}
+
+.policy-section{
+  margin-bottom:24px;
+}
+
+.policy-section h3{
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:10px;
+  color:#ffffff;
+}
+
+.policy-section p,
+.policy-section li{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+}
+
+.policy-section ul{
+  padding-left:18px;
+  margin-top:10px;
+}
+
+.policy-section li{
+  margin-bottom:10px;
+}
+
+.inline-link{
+  color:#ff7ad9;
+  text-decoration:none;
+}
+
+/* FOOTER BUTTONS */
+.footer-actions{
+  margin-top:30px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.button-row{
+  display:flex;
   gap:10px;
   flex-wrap:wrap;
-  position: sticky;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  backdrop-filter: blur(8px);
-  padding: 12px 0;
 }
-    
-    .primary{
-      background:linear-gradient(90deg,var(--accent3),var(--accent4));
-      padding:10px 16px;border-radius:12px;border:none;color:#fff;font-weight:700;cursor:pointer;
-    }
-    .secondary{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:12px;color:var(--txt);cursor:pointer;
-    }
 
-    /* responsive adjustments */
-    @media (max-width:540px){
-      .device{max-width:420px;height:98vh}
-      .content{padding:14px}
-      h1{font-size:18px}
-    }
+.primary-btn,
+.secondary-btn{
+  flex:1;
+  min-width:140px;
+  border:none;
+  outline:none;
+  padding:14px 16px;
+  border-radius:16px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    /* link style */
-    a.inline-link{color:var(--accent2);text-decoration:underline;cursor:pointer}
-  </style>
+.primary-btn{
+  background:linear-gradient(90deg,var(--accent3),var(--accent4));
+  color:#fff;
+  box-shadow:0 10px 25px rgba(81,91,212,0.3);
+}
+
+.secondary-btn{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  color:var(--text);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover{
+  transform:translateY(-2px);
+}
+
+/* MOBILE */
+@media(max-width:480px){
+
+  body{
+    padding:0;
+  }
+
+  .device{
+    max-width:100%;
+    border-radius:0;
+    min-height:100vh;
+  }
+
+  .topbar{
+    padding:14px;
+  }
+
+  .policy-card{
+    border-radius:20px;
+    padding:18px 15px;
+  }
+
+  .page-title{
+    font-size:22px;
+  }
+
+  .top-actions{
+    gap:6px;
+  }
+
+  .btn-ghost{
+    padding:9px 11px;
+    font-size:12px;
+  }
+
+  .button-row{
+    flex-direction:column;
+  }
+
+  .primary-btn,
+  .secondary-btn{
+    width:100%;
+  }
+}
+</style>
 </head>
+
 <body>
-  <div class="device" role="document" aria-label="Privacy Policy — Instant Story Saver">
-    <div class="topbar" role="banner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <div class="title">Instant Story Saver</div>
-          <div style="font-size:12px;color:var(--muted)">Privacy & Terms</div>
-        </div>
-      </div>
-      <div class="top-actions">
-        <button class="btn-ghost" onclick="location.href='index.html'">← Back</button>
-        <button class="btn-ghost" onclick="window.print()">Print</button>
+
+<div class="device">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+
+    <div class="brand">
+      <div class="logo"></div>
+
+      <div class="brand-text">
+        <h2>Instant Story Saver</h2>
+        <p>Privacy & Terms</p>
       </div>
     </div>
 
-    <div class="device-inner">
-      <div class="content" role="main">
-        <h1>Privacy Policy</h1>
-        <p class="small-note">Last updated: <strong><!-- Put date here -->September 14, 2025</strong></p>
-
-        <p><strong>Instant Story Saver</strong> (“we”, “our”, “us”) values your privacy. This Privacy Policy explains how our application collects, uses, and protects information when you use our services. By using Instant Story Saver, you agree to this policy.</p>
-
-        <h2>1. About the App</h2>
-        <p>Instant Story Saver is a mobile application that helps users view and download statuses/stories from WhatsApp, Instagram, and Facebook for personal use. <strong>We are not affiliated, endorsed, or sponsored by Meta, WhatsApp, Instagram, or Facebook.</strong></p>
-
-        <h2>2. Information We Collect</h2>
-        <ul>
-          <li><strong>No personal data collection:</strong> We do not collect, store, or share personal information from users as part of standard operation.</li>
-          <li><strong>Optional login:</strong> If you sign in via Facebook or Instagram, those platforms handle authentication. We do not store your login credentials on our servers in this app demo.</li>
-          <li><strong>Automatic/technical data:</strong> We may collect anonymous analytics or crash reports (device model, OS version, app usage) to improve stability and performance.</li>
-        </ul>
-
-        <h2>3. How We Use Information</h2>
-        <ul>
-          <li>To provide core app functionality (saving and accessing statuses).</li>
-          <li>To improve app performance, troubleshoot crashes, and enhance user experience.</li>
-          <li>To serve advertisements in the free version (if enabled) and to manage premium subscriptions.</li>
-        </ul>
-
-        <h2>4. Third-Party Services</h2>
-        <p>We may use third-party services, such as ad networks or analytics providers (for example, Google AdMob or Firebase). These third parties have their own privacy policies and may collect or use data in accordance with their terms. Please consult their policies for details.</p>
-
-        <h2>5. Permissions</h2>
-        <p>The app may request the following permissions for normal operation:</p>
-        <ul>
-          <li><strong>Storage / Media access:</strong> To save media files (images/videos) to your device.</li>
-          <li><strong>Internet access:</strong> To fetch content, validate logins, and display ads.</li>
-        </ul>
-
-        <h2>6. Children’s Privacy</h2>
-        <p>This app is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you believe your child has provided personal information, contact us and we will remove it.</p>
-
-        <h2>7. Ads & Premium Version</h2>
-        <p>The free version may display ads to support development. A premium (ads-free) subscription may be offered inside the app. Payment processing (if any) is handled by the platform (Google Play or App Store) and the app does not store payment details directly.</p>
-
-        <h2>8. Data Security</h2>
-        <p>We take reasonable measures to protect information. However, no method of transmission over the internet or electronic storage is fully secure. We cannot guarantee absolute security.</p>
-
-        <h2>9. Changes to this Policy</h2>
-        <p>We may update this policy occasionally. We will post changes in-app or on our website. Continued use of the app indicates acceptance of the updated policy.</p>
-
-        <h2>10. Contact Us</h2>
-        <p>If you have questions about this Privacy Policy, please contact us:</p>
-        <p><strong>Email:</strong> <a class="inline-link" href="mailto:support@instantstorysaver.com">support@instantstorysaver.com</a></p>
-      
-          <button class="secondary" onclick="location.href='index.html'">Back to App</button>
-          <div style="display:flex;gap:8px">
-            <button class="secondary" onclick="downloadPolicy()">Download (PDF)</button>
-            <button class="primary" onclick="agreeAndReturn()">Agree & Continue</button>
-          
-        </div>
-      </div>
+    <!-- SAME DRAWER/TOP BUTTON STYLE -->
+    <div class="top-actions">
+      <button class="btn-ghost" onclick="location.href='index.html'">← Back</button>
+      <button class="btn-ghost" onclick="window.print()">Print</button>
     </div>
   </div>
-  
+
+
+  <!-- CONTENT -->
+  <div class="content-wrapper">
+
+    <div class="policy-card">
+
+      <h1 class="page-title">Privacy Policy</h1>
+
+      <div class="updated">
+        Last Updated: September 14, 2025
+      </div>
+
+
+      <div class="policy-section">
+        <p>
+          <strong>Instant Story Saver</strong> (“we”, “our”, “us”) values your privacy. This Privacy Policy explains how our application collects, uses, and protects information when you use our services.
+        </p>
+      </div>
+
+
+      <div class="policy-section">
+        <h3>1. About the App</h3>
+        <p>
+          Instant Story Saver helps users save and access stories/statuses from supported social media platforms for personal use only.
+        </p>
+      </div>
+
+
+      <div class="policy-section">
+        <h3>2. Information We Collect</h3>
+
+        <ul>
+          <li>No personal information is collected during normal app usage.</li>
+          <li>Optional social logins are handled securely by Facebook or Instagram directly.</li>
+          <li>Anonymous analytics and crash reports may be collected to improve performance.</li>
+        </ul>
+      </div>
+
+
+      <div class="policy-section">
+        <h3>3. Permissions</h3>
+
+        <ul>
+          <li><strong>Storage Access:</strong> To save media files to your device.</li>
+          <li><strong>Internet Access:</strong> To load content and advertisements.</li>
+        </ul>
+      </div>
+
+
+      <div class="policy-section">
+        <h3>4. Third-Party Services</h3>
+
+        <p>
+          The app may use Google AdMob, Firebase Analytics, or similar services. These services may process limited anonymous data according to their own policies.
+        </p>
+      </div>
+
+
+      <div class="policy-section">
+        <h3>5. Ads & Premium</h3>
+
+        <p>
+          The free version may contain ads. A premium ads-free subscription may be available through Google Play or the App Store.
+        </p>
+      </div>
+
+
+      <div class="policy-section">
+        <h3>6. Children's Privacy</h3>
+
+        <p>
+          This app is not intended for children under 13 years of age.
+        </p>
+      </div>
+
+
+      <div class="policy-section">
+        <h3>7. Contact Us</h3>
+
+        <p>
+          Email:
+          <a class="inline-link" href="mailto:support@instantstorysaver.com">
+            support@instantstorysaver.com
+          </a>
+        </p>
+      </div>
+
+
+      <!-- FOOTER -->
+      <div class="footer-actions">
+
+        <button class="secondary-btn" onclick="location.href='index.html'">
+          Back to App
+        </button>
+
+        <div class="button-row">
+
+          <button class="secondary-btn" onclick="downloadPolicy()">
+            Download Policy
+          </button>
+
+          <button class="primary-btn" onclick="agreeAndContinue()">
+            Agree & Continue
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 <script>
-  // helper: mark as accepted and go back to app
-  function agreeAndReturn(){
-    try{ localStorage.setItem('policyAccepted','yes'); }catch(e){}
-    // if running as webview/native wrapper you might close or navigate back
-    location.href = 'index.html';
-  }
+function agreeAndContinue(){
+  try{
+    localStorage.setItem('policyAccepted','yes');
+  }catch(e){}
 
-  // optional: create a simple downloadable text (basic PDF not generated here)
-  function downloadPolicy(){
-    const text = document.querySelector('.content').innerText;
-    const blob = new Blob([text], {type: 'text/plain'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Privacy-Policy-Instant-Story-Saver.txt';
-    document.body.appendChild(a); a.click();
-    a.remove(); URL.revokeObjectURL(url);
-  }
+  location.href='index.html';
+}
+
+function downloadPolicy(){
+
+  const text = document.querySelector('.policy-card').innerText;
+
+  const blob = new Blob([text], {
+    type:'text/plain'
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Instant-Story-Saver-Privacy-Policy.txt';
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+}
 </script>
+
 </body>
 </html>
+```
+
